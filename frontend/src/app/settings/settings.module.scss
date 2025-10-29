@@ -1,0 +1,426 @@
+@import '../../styles/base';
+@import '../../styles/mixins';
+
+.dashboard {
+  min-height: 100vh;
+  background: color(bg-primary);
+  display: flex;
+}
+
+.sidebar {
+  width: 80px;
+  background: color(bg-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: spacing(6) 0;
+  gap: spacing(6);
+  border-right: 1px solid color(border-primary);
+}
+
+.sidebarIcon {
+  @include neu-icon(medium);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all map-get($transitions, base) $transition-easing;
+
+  &.active {
+    background: color(primary);
+    
+    svg {
+      color: white;
+    }
+  }
+
+  svg {
+    color: color(text-secondary);
+    transition: color map-get($transitions, base) $transition-easing;
+  }
+
+  &:hover {
+    svg {
+      color: color(text-primary);
+    }
+  }
+}
+
+.mainContent {
+  flex: 1;
+  padding: spacing(8);
+  overflow-y: auto;
+  @include custom-scrollbar();
+}
+
+.header {
+  margin-bottom: spacing(8);
+}
+
+.title {
+  font-size: font-size(3xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+
+  .primaryText {
+    color: color(primary);
+  }
+}
+
+// Error/Success Cards
+.errorCard {
+  @include neu-card(medium);
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  margin-bottom: spacing(4);
+  padding: spacing(4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.errorText {
+  color: color(error);
+}
+
+.successCard {
+  @include neu-card(medium);
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  margin-bottom: spacing(4);
+  padding: spacing(4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.successText {
+  color: color(success);
+}
+
+.closeButton {
+  @include neu-icon(light);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    color: color(text-secondary);
+  }
+
+  &:hover svg {
+    color: color(text-primary);
+  }
+}
+
+// Settings Cards
+.settingsCard {
+  @include neu-card(medium);
+  margin-bottom: spacing(6);
+  padding: spacing(6);
+
+  @include responsive(sm) {
+    padding: spacing(4);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: spacing(4);
+  margin-bottom: spacing(6);
+
+  svg {
+    color: color(primary);
+  }
+}
+
+.cardTitle {
+  font-size: font-size(2xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+}
+
+// Settings List
+.settingsList {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(6);
+  margin-bottom: spacing(6);
+}
+
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: spacing(4);
+  @include neu-card(light);
+  border-radius: map-get($border-radius, base);
+
+  @include responsive(sm) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: spacing(3);
+  }
+}
+
+.settingInfo {
+  flex: 1;
+}
+
+.settingLabel {
+  font-size: font-size(lg);
+  font-weight: font-weight(semi);
+  color: color(text-primary);
+  margin-bottom: spacing(1);
+}
+
+.settingDescription {
+  font-size: font-size(sm);
+  color: color(text-secondary);
+}
+
+// Toggle Switch
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  cursor: pointer;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  input:disabled + .toggleSlider {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.toggleSlider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: color(bg-tertiary);
+  border-radius: map-get($border-radius, full);
+  transition: all map-get($transitions, base) $transition-easing;
+  @include neu-inset(light);
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background: color(surface);
+    border-radius: 50%;
+    transition: all map-get($transitions, base) $transition-easing;
+    box-shadow: 
+      2px 2px 4px color(shadow-dark),
+      -2px -2px 4px color(shadow-light);
+  }
+}
+
+.toggle input:checked + .toggleSlider {
+  background: color(primary);
+  box-shadow: 
+    inset 4px 4px 8px rgba(139, 92, 246, 0.5),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+
+  &::before {
+    transform: translateX(24px);
+    background: white;
+  }
+}
+
+// Password Form
+.passwordForm {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(5);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.inputLabel {
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  color: color(text-primary);
+}
+
+.passwordInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  @include neu-input(medium);
+  padding-right: spacing(12);
+}
+
+.passwordToggle {
+  position: absolute;
+  right: spacing(3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: spacing(1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: color(text-secondary);
+    transition: color map-get($transitions, base) $transition-easing;
+  }
+
+  &:hover svg {
+    color: color(text-primary);
+  }
+}
+
+// Save Button
+.saveButton {
+  @include neu-button-primary(medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: spacing(2);
+  padding: spacing(4) spacing(6);
+  width: 100%;
+  margin-top: spacing(4);
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Guide Section
+.guideContent {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(6);
+}
+
+.guideSection {
+  padding-bottom: spacing(6);
+  border-bottom: 1px solid color(border-primary);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.guideSectionTitle {
+  font-size: font-size(xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin-bottom: spacing(3);
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+}
+
+.guideText {
+  font-size: font-size(base);
+  color: color(text-secondary);
+  line-height: 1.6;
+  margin-bottom: spacing(3);
+}
+
+.guideList {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(3);
+}
+
+.guideItem {
+  font-size: font-size(base);
+  color: color(text-secondary);
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: spacing(2);
+
+  strong {
+    color: color(text-primary);
+    font-weight: font-weight(semi);
+  }
+
+  svg {
+    color: color(primary);
+    flex-shrink: 0;
+    margin-top: spacing(0.5);
+  }
+}
+
+.guideSubList {
+  margin-top: spacing(2);
+  margin-left: spacing(4);
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.colorIndicator {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin-right: spacing(2);
+  vertical-align: middle;
+}
+
+// Loading States
+.loadingContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color(bg-primary);
+}
+
+.loadingSpinner {
+  @include neu-icon(medium);
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: color(primary);
+    animation: spin 1s linear infinite;
+  }
+}
+

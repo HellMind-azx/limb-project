@@ -1,0 +1,190 @@
+// ===== NEUMORPHISM DESIGN - BASE STYLES =====
+
+// === COLOR PALETTE ===
+$colors: (
+  // Primary colors - dark theme with purple accents
+  primary: #1e0974,      // Purple
+  primary-dark: #101c7b,
+  primary-light: #a78bfa,
+  
+  // Gradient colors
+  gradient-2: #101c7b,
+  
+  // Accent colors - matching the photo
+  accent-1: #f97316,     // Orange
+  accent-2: #eab308,     // Yellow
+  accent-3: #06b6d4,     // Cyan
+  
+  // Dark theme background colors
+  bg-primary: #1a1a1a,   // Very dark gray/black
+  bg-secondary: #2a2a2a, // Dark gray
+  bg-tertiary: #3a3a3a,  // Medium dark gray
+  bg-light: #ffffff,
+  
+  // Surface colors for dark neumorphism
+  surface: #2a2a2a,
+  surface-light: #3a3a3a,
+  surface-dark: #1a1a1a,
+  
+  // Text colors for dark theme
+  text-primary: #ffffff,   // White
+  text-secondary: #d1d5db, // Light gray
+  text-muted: #9ca3af,     // Medium gray
+  
+  // Border colors
+  border-primary: #374151,  // Dark border
+  border-light: #4b5563,    // Medium border
+  border-dark: #1f2937,     // Very dark border
+  
+  // State colors
+  success: #10b981,
+  warning: #f59e0b,
+  error: #ef4444,
+  info: #06b6d4,
+  
+  // Dark neumorphism shadows
+  shadow-light: #404040,
+  shadow-dark: #000000
+);
+
+// Color function
+@function color($name) {
+  @return map-get($colors, $name);
+}
+
+// === TYPOGRAPHY ===
+$font-family-base: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-heading: 'Space Grotesk', 'Inter', sans-serif;
+$font-family-mono: 'Crisp', 'Fira Code';
+
+$font-sizes: (
+  xs: 0.75rem,    // 12px
+  sm: 0.875rem,   // 14px
+  base: 1rem,     // 16px
+  lg: 1.125rem,   // 18px
+  xl: 1.25rem,    // 20px
+  '2xl': 1.5rem,  // 24px
+  '3xl': 1.875rem,// 30px
+  '4xl': 2.25rem, // 36px
+  '5xl': 3rem,    // 48px
+  '6xl': 3.75rem  // 60px
+);
+
+@function font-size($name) {
+  @return map-get($font-sizes, $name);
+}
+
+$font-weights: (
+  light: 300,
+  regular: 400,
+  medium: 500,
+  semi: 600,
+  bold: 700,
+  extra: 800
+);
+
+@function font-weight($name) {
+  @return map-get($font-weights, $name);
+}
+
+$line-heights: (
+  tight: 1.25,
+  snug: 1.375,
+  normal: 1.5,
+  relaxed: 1.625,
+  loose: 2
+);
+
+// === SPACING ===
+$spacing: (
+  0: 0,
+  1: 0.25rem,  // 4px
+  2: 0.5rem,   // 8px
+  3: 0.75rem,  // 12px
+  4: 1rem,     // 16px
+  5: 1.25rem,  // 20px
+  6: 1.5rem,   // 24px
+  8: 2rem,     // 32px
+  10: 2.5rem,  // 40px
+  12: 3rem,    // 48px
+  16: 4rem,    // 64px
+  20: 5rem,    // 80px
+  24: 6rem     // 96px
+);
+
+@function spacing($size) {
+  @return map-get($spacing, $size);
+}
+
+// === BORDERS & RADIUS ===
+$border-radius: (
+  none: 0,
+  sm: 0.5rem,     // 8px
+  base: 1rem,     // 16px
+  md: 1.25rem,    // 20px
+  lg: 1.5rem,     // 24px
+  xl: 2rem,       // 32px
+  '2xl': 2.5rem,  // 40px
+  full: 9999px
+);
+
+$border-widths: (
+  0: 0,
+  1: 1px,
+  2: 2px,
+  3: 3px,
+  4: 4px
+);
+
+// === NEUMORPHISM SHADOWS ===
+$neu-shadows: (
+  raised: (
+    light: '8px 8px 16px #{color(shadow-dark)}, -8px -8px 16px #{color(shadow-light)}',
+    medium: '12px 12px 24px #{color(shadow-dark)}, -12px -12px 24px #{color(shadow-light)}',
+    large: '16px 16px 32px #{color(shadow-dark)}, -16px -16px 32px #{color(shadow-light)}'
+  ),
+  inset: (
+    light: 'inset 8px 8px 16px #{color(shadow-dark)}, inset -8px -8px 16px #{color(shadow-light)}',
+    medium: 'inset 12px 12px 24px #{color(shadow-dark)}, inset -12px -12px 24px #{color(shadow-light)}',
+    large: 'inset 16px 16px 32px #{color(shadow-dark)}, inset -16px -16px 32px #{color(shadow-light)}'
+  ),
+  pressed: (
+    light: 'inset 4px 4px 8px #{color(shadow-dark)}, inset -4px -4px 8px #{color(shadow-light)}',
+    medium: 'inset 6px 6px 12px #{color(shadow-dark)}, inset -6px -6px 12px #{color(shadow-light)}'
+  )
+);
+
+// === BREAKPOINTS ===
+$breakpoints: (
+  xs: 480px,
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  '2xl': 1536px
+);
+
+// === TRANSITIONS ===
+$transitions: (
+  fast: 150ms,
+  base: 200ms,
+  slow: 300ms,
+  slower: 500ms
+);
+
+$transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+// === Z-INDEX ===
+$z-index: (
+  dropdown: 1000,
+  sticky: 1020,
+  fixed: 1030,
+  backdrop: 1040,
+  modal: 1050,
+  popover: 1060,
+  tooltip: 1070
+);
+
+// === CONTAINER ===
+$container-max-width: 1280px;
+$container-padding: 1.5rem;

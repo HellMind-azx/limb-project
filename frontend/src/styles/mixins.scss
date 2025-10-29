@@ -1,0 +1,513 @@
+// ===== NEUMORPHISM DESIGN - MIXINS =====
+
+// === NEUMORPHISM CORE MIXINS ===
+
+// Raised neumorphism effect
+@mixin neu-raised($size: medium) {
+  background: color(surface);
+  border-radius: map-get($border-radius, base);
+  box-shadow: map-get(map-get($neu-shadows, raised), $size);
+  border: none;
+}
+
+// Inset neumorphism effect
+@mixin neu-inset($size: medium) {
+  background: color(surface);
+  border-radius: map-get($border-radius, base);
+  box-shadow: map-get(map-get($neu-shadows, inset), $size);
+  border: none;
+}
+
+// Pressed neumorphism effect
+@mixin neu-pressed($size: medium) {
+  background: color(surface);
+  border-radius: map-get($border-radius, base);
+  box-shadow: map-get(map-get($neu-shadows, pressed), $size);
+  border: none;
+}
+
+// === NEUMORPHISM BUTTONS ===
+@mixin neu-button($size: medium) {
+  @include neu-raised($size);
+  padding: spacing(4) spacing(6);
+  color: color(text-primary);
+  font-weight: font-weight(semi);
+  cursor: pointer;
+  transition: all map-get($transitions, base) $transition-easing;
+  border: none;
+  outline: none;
+  
+  &:hover {
+    @include neu-raised(large);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    @include neu-pressed($size);
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Primary button variant
+@mixin neu-button-primary($size: medium) {
+  @include neu-button($size);
+  background: linear-gradient(135deg, color(primary) 0%, color(primary-dark) 100%);
+  color: white;
+  box-shadow: 
+    8px 8px 16px rgba(139, 92, 246, 0.4),
+    -8px -8px 16px rgba(64, 64, 64, 0.8);
+  
+  &:hover {
+    box-shadow: 
+      12px 12px 24px rgba(139, 92, 246, 0.5),
+      -12px -12px 24px rgba(64, 64, 64, 0.9);
+  }
+  
+  &:active {
+    box-shadow: 
+      inset 4px 4px 8px rgba(139, 92, 246, 0.5),
+      inset -4px -4px 8px rgba(64, 64, 64, 0.6);
+  }
+}
+
+// Secondary button variant
+@mixin neu-button-secondary($size: medium) {
+  @include neu-button($size);
+  background: color(surface-light);
+  
+  &:hover {
+    background: color(surface);
+  }
+}
+
+// Success button variant
+@mixin neu-button-success($size: medium) {
+  @include neu-button($size);
+  background: linear-gradient(135deg, color(success) 0%, darken(color(success), 10%) 100%);
+  color: white;
+  box-shadow: 
+    8px 8px 16px rgba(16, 185, 129, 0.3),
+    -8px -8px 16px rgba(255, 255, 255, 0.8);
+}
+
+// Error button variant
+@mixin neu-button-error($size: medium) {
+  @include neu-button($size);
+  background: linear-gradient(135deg, color(error) 0%, darken(color(error), 10%) 100%);
+  color: white;
+  box-shadow: 
+    8px 8px 16px rgba(239, 68, 68, 0.3),
+    -8px -8px 16px rgba(255, 255, 255, 0.8);
+}
+
+// === NEUMORPHISM CARDS ===
+@mixin neu-card($size: medium) {
+  @include neu-raised($size);
+  padding: spacing(6);
+  background: color(surface);
+  transition: all map-get($transitions, base) $transition-easing;
+  
+  &:hover {
+    @include neu-raised(large);
+    transform: translateY(-4px);
+  }
+}
+
+// Card variants
+@mixin neu-card-light($size: medium) {
+  @include neu-card($size);
+  background: color(surface-light);
+}
+
+@mixin neu-card-dark($size: medium) {
+  @include neu-card($size);
+  background: color(surface-dark);
+}
+
+// === NEUMORPHISM INPUTS ===
+@mixin neu-input($size: medium) {
+  @include neu-inset($size);
+  padding: spacing(4) spacing(5);
+  color: color(text-primary);
+  font-size: font-size(sm);
+  transition: all map-get($transitions, base) $transition-easing;
+  border: none;
+  outline: none;
+  width: 100%;
+  
+  &:focus {
+    @include neu-inset(large);
+    box-shadow: 
+      inset 16px 16px 32px color(shadow-dark),
+      inset -16px -16px 32px color(shadow-light),
+      0 0 0 3px rgba(99, 102, 241, 0.2);
+  }
+  
+  &::placeholder {
+    color: color(text-muted);
+  }
+}
+
+// === NEUMORPHISM PANELS ===
+@mixin neu-panel($size: medium) {
+  @include neu-raised($size);
+  padding: spacing(8);
+  background: color(surface);
+  border-radius: map-get($border-radius, lg);
+}
+
+// Panel variants
+@mixin neu-panel-light($size: medium) {
+  @include neu-panel($size);
+  background: color(surface-light);
+}
+
+@mixin neu-panel-dark($size: medium) {
+  @include neu-panel($size);
+  background: color(surface-dark);
+}
+
+// === NEUMORPHISM ICONS ===
+@mixin neu-icon($size: medium) {
+  @include neu-raised($size);
+  width: spacing(12);
+  height: spacing(12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: map-get($border-radius, base);
+  transition: all map-get($transitions, base) $transition-easing;
+  
+  &:hover {
+    @include neu-raised(large);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    @include neu-pressed($size);
+  }
+}
+
+// === NEUMORPHISM TOGGLE ===
+@mixin neu-toggle($size: medium) {
+  position: relative;
+  width: spacing(16);
+  height: spacing(8);
+  background: color(surface);
+  border-radius: map-get($border-radius, full);
+  box-shadow: map-get(map-get($neu-shadows, inset), $size);
+  cursor: pointer;
+  transition: all map-get($transitions, base) $transition-easing;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: spacing(6);
+    height: spacing(6);
+    background: color(surface-light);
+    border-radius: 50%;
+    box-shadow: map-get(map-get($neu-shadows, raised), light);
+    transition: all map-get($transitions, base) $transition-easing;
+  }
+  
+  &.active {
+    background: color(primary);
+    
+    &::before {
+      transform: translateX(spacing(8));
+      background: white;
+    }
+  }
+}
+
+// === NEUMORPHISM PROGRESS BAR ===
+@mixin neu-progress($size: medium) {
+  width: 100%;
+  height: spacing(4);
+  background: color(surface);
+  border-radius: map-get($border-radius, full);
+  box-shadow: map-get(map-get($neu-shadows, inset), $size);
+  overflow: hidden;
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, color(primary) 0%, color(accent-1) 100%);
+    border-radius: map-get($border-radius, full);
+    box-shadow: map-get(map-get($neu-shadows, raised), light);
+    transition: width map-get($transitions, slow) $transition-easing;
+  }
+}
+
+// === NEUMORPHISM SLIDER ===
+@mixin neu-slider($size: medium) {
+  width: 100%;
+  height: spacing(2);
+  background: color(surface);
+  border-radius: map-get($border-radius, full);
+  box-shadow: map-get(map-get($neu-shadows, inset), $size);
+  position: relative;
+  cursor: pointer;
+  
+  .slider-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: spacing(6);
+    height: spacing(6);
+    background: color(surface-light);
+    border-radius: 50%;
+    box-shadow: map-get(map-get($neu-shadows, raised), medium);
+    cursor: grab;
+    transition: all map-get($transitions, base) $transition-easing;
+    
+    &:hover {
+      box-shadow: map-get(map-get($neu-shadows, raised), large);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    &:active {
+      cursor: grabbing;
+      box-shadow: map-get(map-get($neu-shadows, pressed), medium);
+    }
+  }
+}
+
+// === ANIMATIONS ===
+@mixin animate-slide-in($direction: 'up', $duration: 0.3s) {
+  animation: slide-in-#{$direction} $duration ease-out;
+}
+
+@mixin animate-fade-in($duration: 0.3s) {
+  animation: fade-in $duration ease-out;
+}
+
+@mixin animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@mixin animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+// === HOVER EFFECTS ===
+@mixin hover-lift {
+  transition: transform map-get($transitions, base) $transition-easing;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@mixin hover-scale($scale: 1.05) {
+  transition: transform map-get($transitions, base) $transition-easing;
+  
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+// === RESPONSIVE ===
+@mixin responsive($breakpoint) {
+  @media screen and (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// === FOCUS STYLES ===
+@mixin focus-ring {
+  outline: none;
+  box-shadow: 
+    0 0 0 3px rgba(139, 92, 246, 0.4),
+    map-get(map-get($neu-shadows, raised), medium);
+}
+
+// === SCROLLBAR ===
+@mixin custom-scrollbar($width: 8px) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: color(surface);
+    border-radius: map-get($border-radius, full);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: color(border-dark);
+    border-radius: map-get($border-radius, full);
+    box-shadow: map-get(map-get($neu-shadows, inset), light);
+    
+    &:hover {
+      background: color(primary);
+    }
+  }
+}
+
+// === SOFT DARK UI MIXINS (Premium Style) ===
+
+// Soft card - тонкие внешние тени, БЕЗ inset эффектов
+@mixin soft-card {
+  background: color(surface-light);
+  border-radius: spacing(6); // 24px - сильно скругленные углы
+  border: 1px solid rgba(255, 255, 255, 0.08); // обычный цвет, не градиент
+  padding: spacing(4); // компактный padding
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  // НЕТ inset shadows!
+  transition: all map-get($transitions, base) $transition-easing;
+  
+  &:hover {
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.25),
+      0 2px 4px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+}
+
+// Gradient button - градиенты для кнопок (2-3 цвета), borders без градиентов
+@mixin gradient-button($color1: #3b82f6, $color2: #8b5cf6, $color3: #a855f7) {
+  background: linear-gradient(135deg, 
+    $color1 0%,
+    $color2 50%,
+    $color3 100%
+  );
+  border: 1px solid $color1; // обычный цвет, НЕ градиент
+  border-radius: 12px;
+  padding: spacing(3) spacing(5);
+  color: white;
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); // только внешняя тень
+  transition: all map-get($transitions, base) $transition-easing;
+  // НЕТ inset!
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); // только внешняя, без inset
+  }
+}
+
+// Soft shadow - только внешние тени, многослойные
+@mixin soft-shadow($intensity: 1) {
+  $multiplier: $intensity;
+  box-shadow: 
+    0 2px * $multiplier 8px * $multiplier rgba(0, 0, 0, 0.15 * $multiplier),
+    0 1px * $multiplier 2px * $multiplier rgba(0, 0, 0, 0.08 * $multiplier);
+  // НЕТ inset shadows!
+}
+
+// === UTILITIES ===
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// === KEYFRAME ANIMATIONS ===
+@keyframes slide-in-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-down {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 
+      8px 8px 16px color(shadow-dark),
+      -8px -8px 16px color(shadow-light),
+      0 0 20px rgba(139, 92, 246, 0.4);
+  }
+  to {
+    box-shadow: 
+      8px 8px 16px color(shadow-dark),
+      -8px -8px 16px color(shadow-light),
+      0 0 30px rgba(139, 92, 246, 0.7);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

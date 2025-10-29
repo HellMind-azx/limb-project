@@ -1,0 +1,172 @@
+@import '../base';
+@import '../mixins';
+
+.faqSection {
+  padding: 6rem 0;
+  background-color: color(bg-secondary);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.faqCard {
+  max-width: 64rem;
+  margin: 0 auto;
+  @include neu-card;
+  padding: 2rem;
+  background-color: color(surface-light);
+  backdrop-filter: blur(10px);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 2.25rem;
+  font-weight: font-weight(bold);
+  color: white;
+  margin-bottom: 1.5rem;
+
+  @include responsive(md) {
+    font-size: 3rem;
+  }
+}
+
+.sectionDescription {
+  font-size: 1.125rem;
+  color: color(text-secondary);
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.searchContainer {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  color: color(text-secondary);
+  font-size: 1.25rem;
+  pointer-events: none;
+}
+
+.searchInput {
+  @include neu-input;
+  width: 100%;
+  padding-left: 3rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: color(surface);
+  border: 1px solid color(border-primary);
+  border-radius: 0.75rem;
+  color: white;
+  font-size: 1rem;
+
+  &::placeholder {
+    color: color(text-secondary);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: color(primary);
+    transition: border-color 0.2s ease;
+  }
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.faqItem {
+  @include neu-card;
+  background-color: color(surface);
+}
+
+.faqButton {
+  width: 100%;
+  padding: 1.5rem;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 0.75rem;
+
+  &:hover {
+    background-color: color(surface-light);
+  }
+}
+
+.faqQuestion {
+  font-size: 1.125rem;
+  font-weight: font-weight(semi);
+  color: white;
+  padding-right: 1rem;
+}
+
+.faqIcon {
+  flex-shrink: 0;
+  font-size: 1.25rem;
+
+  &.expand {
+    color: color(primary);
+  }
+
+  &.collapse {
+    color: color(text-secondary);
+  }
+}
+
+.faqAnswer {
+  padding: 0 1.5rem 1.5rem;
+  color: color(text-secondary);
+  line-height: 1.6;
+}
+
+.contactSection {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid color(border-primary);
+}
+
+.contactTitle {
+  font-size: 1.25rem;
+  font-weight: font-weight(semi);
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.contactDescription {
+  color: color(text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.contactButton {
+  @include neu-button-primary;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: white;
+}
+
+.contactIcon {
+  font-size: 1.125rem;
+}

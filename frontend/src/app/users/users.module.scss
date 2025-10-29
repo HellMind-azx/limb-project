@@ -1,0 +1,328 @@
+@import '../../styles/base';
+@import '../../styles/mixins';
+
+.dashboard {
+  min-height: 100vh;
+  background: color(bg-primary);
+  display: flex;
+}
+
+.sidebar {
+  width: 80px;
+  background: color(bg-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: spacing(6) 0;
+  gap: spacing(6);
+  border-right: 1px solid color(border-primary);
+}
+
+.sidebarIcon {
+  @include neu-icon(medium);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all map-get($transitions, base) $transition-easing;
+
+  &.active {
+    background: color(primary);
+    
+    svg {
+      color: white;
+    }
+  }
+
+  svg {
+    color: color(text-secondary);
+    transition: color map-get($transitions, base) $transition-easing;
+  }
+
+  &:hover {
+    svg {
+      color: color(text-primary);
+    }
+  }
+}
+
+.mainContent {
+  flex: 1;
+  padding: spacing(8);
+  overflow-y: auto;
+  @include custom-scrollbar();
+}
+
+.header {
+  margin-bottom: spacing(8);
+}
+
+.title {
+  font-size: font-size(3xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+
+  .primaryText {
+    color: color(primary);
+  }
+}
+
+// Search Card
+.searchCard {
+  @include neu-card(medium);
+  margin-bottom: spacing(6);
+  padding: spacing(6);
+
+  @include responsive(sm) {
+    padding: spacing(4);
+  }
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: spacing(3);
+}
+
+.searchIcon {
+  position: absolute;
+  left: spacing(4);
+  color: color(text-secondary);
+  pointer-events: none;
+}
+
+.searchInput {
+  @include neu-input(medium);
+  padding-left: spacing(12);
+  padding-right: spacing(12);
+  width: 100%;
+}
+
+.clearButton {
+  position: absolute;
+  right: spacing(4);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: spacing(1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: color(text-secondary);
+    transition: color map-get($transitions, base) $transition-easing;
+  }
+
+  &:hover svg {
+    color: color(text-primary);
+  }
+}
+
+.searchResults {
+  font-size: font-size(sm);
+  color: color(text-secondary);
+  padding-left: spacing(4);
+}
+
+// Users Grid
+.usersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: spacing(6);
+
+  @include responsive(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.userCard {
+  @include neu-card(medium);
+  padding: spacing(5);
+  transition: all map-get($transitions, base) $transition-easing;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.userHeader {
+  display: flex;
+  align-items: center;
+  gap: spacing(4);
+  margin-bottom: spacing(5);
+  padding-bottom: spacing(4);
+  border-bottom: 1px solid color(border-primary);
+}
+
+.userAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: font-size(2xl);
+  font-weight: font-weight(bold);
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.3),
+    -2px -2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.userName {
+  font-size: font-size(lg);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin-bottom: spacing(1);
+}
+
+.userUsername {
+  font-size: font-size(sm);
+  color: color(text-secondary);
+}
+
+.userStats {
+  display: flex;
+  gap: spacing(6);
+  margin-bottom: spacing(5);
+}
+
+.statItem {
+  flex: 1;
+  text-align: center;
+  padding: spacing(3);
+  @include neu-card(light);
+  border-radius: map-get($border-radius, base);
+}
+
+.statValue {
+  font-size: font-size(2xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin-bottom: spacing(1);
+}
+
+.statLabel {
+  font-size: font-size(xs);
+  color: color(text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.userActions {
+  display: flex;
+  gap: spacing(3);
+}
+
+.actionButton {
+  @include neu-button(medium);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: spacing(2);
+  padding: spacing(3) spacing(4);
+  font-size: font-size(sm);
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &.follow {
+    background: color(primary);
+    color: white;
+    box-shadow: 
+      8px 8px 16px rgba(139, 92, 246, 0.4),
+      -8px -8px 16px rgba(64, 64, 64, 0.8);
+
+    &:hover {
+      box-shadow: 
+        12px 12px 24px rgba(139, 92, 246, 0.5),
+        -12px -12px 24px rgba(64, 64, 64, 0.9);
+    }
+  }
+
+  &.following {
+    background: color(success);
+    color: white;
+    box-shadow: 
+      8px 8px 16px rgba(16, 185, 129, 0.3),
+      -8px -8px 16px rgba(64, 64, 64, 0.8);
+
+    &:hover {
+      background: color(error);
+      box-shadow: 
+        8px 8px 16px rgba(239, 68, 68, 0.3),
+        -8px -8px 16px rgba(64, 64, 64, 0.8);
+
+      svg {
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  &.message {
+    background: color(bg-tertiary);
+    color: color(text-secondary);
+    opacity: 0.7;
+    cursor: not-allowed;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+// Empty State
+.emptyState {
+  text-align: center;
+  padding: spacing(16);
+  color: color(text-secondary);
+}
+
+.emptyStateText {
+  font-size: font-size(lg);
+  color: color(text-muted);
+}
+
+// Loading States
+.loadingContainer {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingSpinner {
+  @include neu-icon(medium);
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: color(primary);
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
