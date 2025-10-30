@@ -7,47 +7,7 @@
   display: flex;
 }
 
-.sidebar {
-  width: 80px;
-  background: color(bg-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: spacing(6) 0;
-  gap: spacing(6);
-  border-right: 1px solid color(border-primary);
-}
-
-.sidebarIcon {
-  @include neu-icon(medium);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all map-get($transitions, base) $transition-easing;
-
-  &.active {
-    background: color(primary);
-    
-    svg {
-      color: white;
-    }
-  }
-
-  svg {
-    color: color(text-secondary);
-    transition: color map-get($transitions, base) $transition-easing;
-  }
-
-  &:hover {
-    svg {
-      color: color(text-primary);
-    }
-  }
-}
+// sidebar removed; using global SidebarNav
 
 .mainContent {
   flex: 1;
@@ -70,6 +30,65 @@
     align-items: flex-start;
     gap: spacing(4);
   }
+}
+
+// Mini date strip
+.dateStripRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: spacing(3);
+}
+
+.dateStrip {
+  display: flex;
+  gap: spacing(2);
+  margin-top: spacing(2);
+  margin-bottom: spacing(3);
+  overflow-x: auto;
+  @include custom-scrollbar();
+}
+
+.datePill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  padding: spacing(2);
+  border-radius: spacing(2);
+  background: color(bg-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: color(text-secondary);
+  transition: all map-get($transitions, base) $transition-easing;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: color(text-primary);
+  }
+}
+
+.selected {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  border: 1px solid #3b82f6;
+  color: #fff;
+}
+
+.dateDow {
+  font-size: font-size(xs);
+  opacity: 0.8;
+}
+
+.dateNum {
+  font-size: font-size(base);
+  font-weight: font-weight(bold);
+}
+
+.addHabitBtn {
+  @include gradient-button(#3b82f6, #8b5cf6, #a855f7);
+  padding: spacing(2) spacing(4);
+  border-radius: spacing(2);
+  white-space: nowrap;
 }
 
 .headerLeft {
@@ -131,7 +150,7 @@
   height: 32px;
   border-radius: 50%;
   background: color(accent-2);
-  
+
   &:nth-child(2) {
     background: color(accent-1);
   }
@@ -167,75 +186,7 @@
 
 // Main Layout: 3 columns, 2 rows
 .mainLayout {
-  display: grid;
-  grid-template-columns: auto 1fr 1fr; // Календарь авто-ширины, остальные по 1fr
-  grid-template-rows: auto auto; // 2 ряда
-  gap: spacing(4);
-  margin-bottom: spacing(4);
-  align-items: start; // Выравнивание по верху
-  max-width: 100%;
-
-  // Явное позиционирование для дочерних элементов bentoGrid (с display: contents)
-  // Calendar уже позиционирован через .calendarCard
-  > .bentoGrid > .habitCard:nth-child(1),
-  > .bentoGrid > .habitCard:first-child {
-    grid-row: 1;
-    grid-column: 2;
-  }
-  
-  > .bentoGrid > .habitCard:nth-child(2) {
-    grid-row: 1;
-    grid-column: 3;
-  }
-  
-  // Habit Details и Bottom Stats позиционируются через их классы
-  > .bentoGrid > .habitDetailsContainer {
-    grid-row: 2;
-    grid-column: 1 / span 2;
-  }
-  
-  > .bentoGrid > .bottomStatsCard {
-    grid-row: 2;
-    grid-column: 3;
-  }
-
-  @include responsive(lg) {
-    grid-template-columns: auto 1fr 1fr;
-  }
-
-  @include responsive(md) {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: spacing(4);
-    
-    > .bentoGrid > .habitCard,
-    > .bentoGrid > .habitDetailsContainer,
-    > .bentoGrid > .bottomStatsCard {
-      grid-row: auto;
-      grid-column: auto;
-    }
-  }
-}
-
-// Calendar Card - Left Side
-.calendarCard {
-  @include soft-card;
-  padding: spacing(3); // Компактнее padding
-  border-radius: spacing(6);
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 380px;
-  grid-row: 1;
-  grid-column: 1;
-  
-  @include responsive(lg) {
-    max-width: 350px;
-  }
-
-  @include responsive(md) {
-    grid-row: auto;
-    grid-column: auto;
-  }
+  display: block;
 }
 
 .calendarHeaderWrapper {
@@ -346,7 +297,7 @@
 
   &:hover {
     background: color(primary);
-    
+
     svg {
       color: white;
     }
@@ -597,16 +548,32 @@
 
 // Bento Grid - Simple Container (children positioned directly in parent grid)
 .bentoGrid {
-  display: contents; // Делает контейнер "прозрачным" для grid родителя
-  // Все дочерние элементы позиционируются относительно .mainLayout
+  display: block;
 }
 
 // Bento Grid Item Sizes
+// Unified cards grid below KPI row
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: spacing(4);
 
-// Habit Details Container - занимает 2 колонки во втором ряду
-// Позиционирование задается через .mainLayout > .bentoGrid > .habitDetailsContainer
+  @include responsive(md) {
+    grid-template-columns: 1fr 1fr; // 2 колонки
+  }
+
+  @include responsive(lg) {
+    grid-template-columns: 1fr 1fr 1fr; // 3 колонки
+  }
+}
+
+
 .habitDetailsContainer {
-  // Позиционирование задается через родительский селектор .mainLayout
+  padding: spacing(3);
+  border-radius: spacing(2);
+  background: color(bg-primary-light);
+  margin-top: spacing(2);
+  margin-bottom: spacing(2);
   width: 100%;
 }
 
@@ -615,25 +582,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: spacing(3);
-  
+
   @include responsive(sm) {
     grid-template-columns: 1fr;
   }
-}
-
-// Bottom Stats Card - третья колонка второго ряда
-// Позиционирование задается через .mainLayout > .bentoGrid > .bottomStatsCard
-.bottomStatsCard {
-  @include soft-card;
-  padding: spacing(4);
-  border-radius: spacing(6);
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
-  border: 1px solid #3b82f6;
-  box-shadow: 
-    0 4px 16px rgba(59, 130, 246, 0.3),
-    0 2px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 0;
-  // Позиционирование задается через родительский селектор
 }
 
 // Content Grid (legacy - kept for compatibility)
@@ -650,8 +602,239 @@
 .habitCard {
   @include soft-card;
   padding: spacing(3);
-  border-radius: spacing(6);
+  border-radius: spacing(2);
+  margin-top: spacing(2);
+  margin-bottom: spacing(2);
+  background: color(bg-primary-light);
   // Позиционирование задается через .mainLayout > .bentoGrid > .habitCard
+}
+
+// Deprecated span helpers (no longer used)
+// (removed to avoid empty rulesets)
+
+// На средних экранах wideCard по-прежнему тянется на 2 колонки
+@include responsive(md) {
+  .tallCard {
+    grid-row: span 2;
+  }
+}
+
+// На маленьких экранах по умолчанию одна колонка (см. .mainLayout)
+
+// KPI row styles
+.kpiRow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(160px, 1fr);
+  gap: spacing(3);
+  margin-bottom: spacing(3);
+  overflow-x: auto;
+  @include custom-scrollbar();
+
+  @include responsive(md) {
+    grid-auto-flow: initial;
+    grid-auto-columns: initial;
+    grid-template-columns: repeat(5, 1fr);
+    overflow: visible;
+  }
+}
+
+.kpiCard {
+  @include soft-card;
+  margin-top: spacing(3);
+  padding: spacing(4);
+  border-radius: spacing(2);
+
+  &:nth-child(1) {
+    background: rgba(color(success), 0.08);
+    border: 1px solid rgba(color(success), 1);
+  }
+
+  &:nth-child(2) {
+    background: rgba(color(info), 0.08);
+    border: 1px solid rgba(color(info), 1);
+  }
+
+  &:nth-child(3) {
+    background: rgba(color(warning), 0.08);
+    border: 1px solid rgba(color(warning), 1);
+  }
+
+  &:nth-child(4) {
+    background: rgba(color(error), 0.08);
+    border: 1px solid rgba(color(error), 1);
+  }
+
+  &:nth-child(5) {
+    background: rgba(color(primary-light), 0.08);
+    border: 1px solid rgba(color(primary-light), 1);
+  }
+}
+
+.kpiTitle {
+  color: color(text-secondary);
+  font-size: font-size(sm);
+  margin-bottom: spacing(1);
+}
+
+.kpiValue {
+  color: color(text-primary);
+  font-weight: font-weight(bold);
+  font-size: font-size(xl);
+}
+
+// Task list styles
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.taskRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: spacing(3);
+}
+
+.taskMeta {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+}
+
+.taskTitleWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskTitle {
+  color: color(text-primary);
+  font-weight: font-weight(medium);
+}
+
+.taskBadge {
+  font-size: font-size(xs);
+  color: color(text-secondary);
+}
+
+.taskMetaLine {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  margin-top: 2px;
+}
+
+.taskTagMuted {
+  font-size: font-size(xs);
+  color: color(text-muted);
+}
+
+.taskTagPending {
+  font-size: font-size(xs);
+  color: #f59e0b;
+}
+
+.taskTagDone {
+  font-size: font-size(xs);
+  color: #10b981;
+}
+
+.taskTagInfo {
+  font-size: font-size(xs);
+  color: color(text-secondary);
+}
+
+.taskBarWrap {
+  width: 100%;
+}
+
+.taskBarBg {
+  width: 100%;
+  height: 8px;
+  border-radius: 8px;
+  background: color(bg-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.taskBarFill {
+  height: 100%;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+// Donut placeholder
+.donutRow {
+  display: flex;
+  align-items: center;
+  gap: spacing(3);
+}
+
+.donut {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(#3b82f6 0deg, #8b5cf6 220deg, rgba(255, 255, 255, 0.06) 220deg 360deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donutCenter {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: color(bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: color(text-primary);
+  font-weight: font-weight(bold);
+}
+
+.donutLegend {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(1);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
+  color: color(text-secondary);
+  font-size: font-size(sm);
+}
+
+.legendCompleted {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #3b82f6;
+  display: inline-block;
+}
+
+.legendMissed {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+}
+
+// Idea chips
+.ideaGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing(2);
+}
+
+.ideaChip {
+  padding: spacing(1) spacing(2);
+  border-radius: 12px;
+  background: color(bg-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: color(text-secondary);
 }
 
 .habitCardTitle {
@@ -870,6 +1053,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -943,4 +1127,3 @@
     color: white;
   }
 }
-

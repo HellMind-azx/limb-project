@@ -1,6 +1,7 @@
 import '../styles/globals.scss';
 import '../styles/polygon.scss';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/Navbar'; 
+import WithSidebar from '@/components/WithSidebar';
 
 export const metadata = {
   title: 'Progressor - Self Development Tracker',
@@ -12,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Navbar />
-        {children}
+        <WithSidebar>{children}</WithSidebar>
       </body>
     </html>
   );

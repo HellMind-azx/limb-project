@@ -1,0 +1,19 @@
+.page { min-height: 100vh; padding: 24px; }
+.card { background: #0b1220; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; }
+.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.title { color: #fff; font-weight: 700; font-size: 18px; }
+.navRow { display: flex; align-items: center; gap: 8px; }
+.navBtn { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.06); }
+.monthTitle { color: #fff; font-weight: 600; font-size: 16px; min-width: 160px; text-align: center; }
+.weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-top: 8px; margin-bottom: 4px; }
+.weekday { text-align: center; color: rgba(255,255,255,0.6); font-size: 10px; text-transform: uppercase; padding: 4px 0; }
+.grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.cell { position: relative; width: 34px; height: 34px; max-width: 100%; margin: 0 auto; border-radius: 5px; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; }
+.empty { background: rgba(255,255,255,0.02); opacity: 0.4; }
+.completed { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%); border: 1px solid #3b82f6; }
+.partial { background: linear-gradient(135deg, #3b82f6 0%, rgba(139,92,246,0.6) 60%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(59,130,246,0.5); }
+.missed { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); }
+.today { outline: 2px solid #22d3ee; }
+.dayNum { color: rgba(255,255,255,0.8); font-size: 10px; font-weight: 600; }
+.percent { position: absolute; bottom: 1px; right: 1px; color: rgba(255,255,255,0.9); font-size: 6px; font-weight: 700; }
+
