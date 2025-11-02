@@ -3,7 +3,8 @@
 
 .faqSection {
   padding: 6rem 0;
-  background-color: color(bg-secondary);
+  background-color: var(--bg-secondary);
+  transition: background-color 0.3s ease;
 }
 
 .container {
@@ -17,8 +18,9 @@
   margin: 0 auto;
   @include neu-card;
   padding: 2rem;
-  background-color: color(surface-light);
+  background-color: var(--surface-light);
   backdrop-filter: blur(10px);
+  transition: background-color 0.3s ease;
 }
 
 .sectionHeader {
@@ -39,9 +41,10 @@
 
 .sectionDescription {
   font-size: 1.125rem;
-  color: color(text-secondary);
+  color: var(--text-secondary);
   max-width: 32rem;
   margin: 0 auto;
+  transition: color 0.3s ease;
 }
 
 .searchContainer {
@@ -54,9 +57,10 @@
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
-  color: color(text-secondary);
+  color: var(--text-secondary);
   font-size: 1.25rem;
   pointer-events: none;
+  transition: color 0.3s ease;
 }
 
 .searchInput {
@@ -66,19 +70,20 @@
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: color(surface);
-  border: 1px solid color(border-primary);
+  background-color: var(--surface);
+  border: 1px solid var(--border-primary);
   border-radius: 0.75rem;
   color: white;
   font-size: 1rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 
   &::placeholder {
-    color: color(text-secondary);
+    color: var(--text-secondary);
   }
 
   &:focus {
     outline: none;
-    border-color: color(primary);
+    border-color: #1e0974;
     transition: border-color 0.2s ease;
   }
 }
@@ -92,7 +97,8 @@
 
 .faqItem {
   @include neu-card;
-  background-color: color(surface);
+  background-color: var(--surface);
+  transition: background-color 0.3s ease;
 }
 
 .faqButton {
@@ -109,7 +115,7 @@
   border-radius: 0.75rem;
 
   &:hover {
-    background-color: color(surface-light);
+    background-color: var(--surface-light);
   }
 }
 
@@ -129,20 +135,22 @@
   }
 
   &.collapse {
-    color: color(text-secondary);
+    color: var(--text-secondary);
   }
 }
 
 .faqAnswer {
   padding: 0 1.5rem 1.5rem;
-  color: color(text-secondary);
+  color: var(--text-secondary);
   line-height: 1.6;
+  transition: color 0.3s ease;
 }
 
 .contactSection {
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid color(border-primary);
+  border-top: 1px solid var(--border-primary);
+  transition: border-color 0.3s ease;
 }
 
 .contactTitle {
@@ -153,8 +161,9 @@
 }
 
 .contactDescription {
-  color: color(text-secondary);
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
+  transition: color 0.3s ease;
 }
 
 .contactButton {

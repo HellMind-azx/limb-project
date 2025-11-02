@@ -11,43 +11,44 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: color(bg-primary);
-  color: color(text-primary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 // Background utilities
 .bg-primary {
-  background-color: color(bg-primary);
+  background-color: var(--bg-primary);
 }
 
 .bg-secondary {
-  background-color: color(bg-secondary);
+  background-color: var(--bg-secondary);
 }
 
 .bg-tertiary {
-  background-color: color(bg-tertiary);
+  background-color: var(--bg-tertiary);
 }
 
 // Text utilities
 .text-white {
-  color: color(text-primary);
+  color: var(--text-primary);
 }
 
 .text-secondary {
-  color: color(text-secondary);
+  color: var(--text-secondary);
 }
 
 .text-muted {
-  color: color(text-muted);
+  color: var(--text-muted);
 }
 
 .text-primary {
-  color: color(primary);
+  color: #1e0974; // Keep primary brand color
 }
 
 .text-accent-1 {
-  color: color(accent-1);
+  color: color(accent-1); // Keep accent colors
 }
 
 .text-accent-2 {
@@ -59,18 +60,18 @@ body {
 }
 
 .text-success {
-  color: color(success);
+  color: color(success); // Keep state colors
 }
 
 // Neumorphism components
 .neu-card {
   @include neu-card;
-  background-color: color(surface);
+  background-color: var(--surface);
 }
 
 .neu-icon {
   @include neu-icon;
-  background-color: color(surface);
+  background-color: var(--surface);
 }
 
 .neu-button {
@@ -352,7 +353,7 @@ body {
 
 // Background color utilities
 .bg-accent-1 {
-  background-color: color(accent-1);
+  background-color: color(accent-1); // Keep accent colors
 }
 
 .bg-accent-2 {
@@ -364,7 +365,7 @@ body {
 }
 
 .bg-primary {
-  background-color: color(primary);
+  background-color: #1e0974; // Keep primary brand color
 }
 
 .bg-white {
@@ -377,12 +378,12 @@ body {
 }
 
 .from-primary {
-  --tw-gradient-from: color(primary);
+  --tw-gradient-from: #1e0974;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(139, 92, 246, 0));
 }
 
 .to-accent-1 {
-  --tw-gradient-to: color(accent-1);
+  --tw-gradient-to: color(accent-1); // Keep accent colors
 }
 
 // Transition utilities
@@ -394,11 +395,11 @@ body {
 
 // Hover utilities
 .hover\:text-white:hover {
-  color: color(text-primary);
+  color: var(--text-primary);
 }
 
 .hover\:bg-tertiary:hover {
-  background-color: color(bg-tertiary);
+  background-color: var(--bg-tertiary);
 }
 
 // Animation utilities
@@ -457,7 +458,8 @@ button:focus {
   z-index: 50;
   background: rgba(26, 26, 26, 0.8);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid color(border-primary);
+  border-bottom: 1px solid var(--border-primary);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 // Button styles
@@ -474,7 +476,7 @@ button:focus {
 }
 
 .btn-primary {
-  background: color(primary);
+  background: #1e0974; // Keep primary brand color
   color: white;
   box-shadow: 
     8px 8px 16px rgba(139, 92, 246, 0.4),
@@ -489,26 +491,28 @@ button:focus {
 }
 
 .btn-secondary {
-  background: color(surface);
-  color: color(text-primary);
+  background: var(--surface);
+  color: var(--text-primary);
   box-shadow: 
-    8px 8px 16px color(shadow-dark),
-    -8px -8px 16px color(shadow-light);
+    8px 8px 16px var(--shadow-dark),
+    -8px -8px 16px var(--shadow-light);
+  transition: all 0.3s ease;
   
   &:hover {
-    background: color(surface-light);
+    background: var(--surface-light);
     transform: translateY(-2px);
   }
 }
 
 .btn-outline {
   background: transparent;
-  color: color(text-primary);
-  border: 2px solid color(border-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-primary);
+  transition: all 0.3s ease;
   
   &:hover {
-    background: color(surface);
-    border-color: color(primary);
+    background: var(--surface);
+    border-color: #1e0974;
   }
 }
 
@@ -527,15 +531,17 @@ button:focus {
 }
 
 ::-webkit-scrollbar-track {
-  background: color(surface);
+  background: var(--surface);
   border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: color(border-dark);
+  background: var(--border-dark);
   border-radius: 4px;
+  transition: background 0.3s ease;
   
   &:hover {
-    background: color(primary);
+    background: #1e0974;
   }
 }

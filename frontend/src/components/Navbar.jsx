@@ -1,16 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getStoredUser, clearTokens, clearStoredUser } from '@/lib/auth';
-import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi';
+import { FiArrowRight, FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
 import styles from '@/styles/components/Navbar.module.scss';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const pathname = usePathname();
   const user = getStoredUser();
+
+  useEffect(() => {
+    // Check localStorage for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = isDarkMode ? 'light' : 'dark';
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
 
   const handleLogout = () => {
     clearTokens();
@@ -53,6 +72,11 @@ export default function Navbar() {
 
         {/* Auth Section */}
         <div className={styles.authSection}>
+          {/* Theme Toggle */}
+          <button onClick={toggleTheme} className={styles.themeToggle}>
+            {isDarkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+          </button>
+
           {user ? (
             <>
               <span className={styles.userName}>

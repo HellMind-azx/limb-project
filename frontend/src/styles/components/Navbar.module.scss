@@ -5,14 +5,14 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: color(primary); 
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(50px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--navbar-bg); 
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--navbar-border);
   padding: 0 2rem;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, border-color 0.3s ease;
 
   @include responsive(sm) {
     padding: 0 1rem;
@@ -31,9 +31,10 @@
 .logo {
   font-size: 1.25rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
   white-space: nowrap;
+  transition: color 0.3s ease;
 }
 
 .navContainer {
@@ -50,40 +51,56 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 2rem;
   padding: 0.25rem;
   box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme='light'] .navLinks {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 .navLink {
   padding: 0.5rem 1.5rem;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 500;
   border-radius: 1.5rem;
   transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   &:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
     transform: translateY(-1px);
   }
 
   &.active {
-    background: rgba(255, 255, 255, 0.25);
-    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
     box-shadow: 
-      0 2px 8px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      0 2px 8px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+[data-theme='light'] .navLink {
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  &.active {
+    background: rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -93,11 +110,48 @@
   gap: 1rem;
 }
 
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 2.5rem;
+  height: 2.5rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+[data-theme='light'] .themeToggle {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+  }
+}
+
 .userName {
   display: none;
-  color: white;
+  color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 500;
+  transition: color 0.3s ease;
 
   @include responsive(lg) {
     display: block;
@@ -109,11 +163,11 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1.25rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
   font-size: 0.875rem;
   font-weight: 500;
@@ -121,19 +175,26 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 2px 8px rgba(0, 0, 0, 0.08);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.18);
     transform: translateY(-2px);
     box-shadow: 
-      0 8px 24px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      0 4px 12px rgba(0, 0, 0, 0.12);
   }
 
   &:active {
     transform: translateY(0);
+  }
+}
+
+[data-theme='light'] .signInButton {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -152,7 +213,7 @@
   padding: 0.5rem;
   background: transparent;
   border: none;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
   border-radius: 0.5rem;
   transition: background 0.2s ease;
@@ -166,29 +227,41 @@
   }
 }
 
+[data-theme='light'] .mobileMenuButton:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .mobileMenu {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(124, 58, 237, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 9, 116, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: background 0.3s ease, border-color 0.3s ease;
 
   @include responsive(md) {
     display: none;
   }
 }
 
+[data-theme='light'] .mobileMenu {
+  border-top-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.3);
+}
+
 .mobileNavLink {
   padding: 0.75rem 1rem;
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
   border-radius: 0.5rem;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -196,6 +269,18 @@
 
   &.active {
     background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+[data-theme='light'] .mobileNavLink {
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  &.active {
+    background: rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -203,11 +288,11 @@
 .mobileSignInButton {
   margin-top: 0.5rem;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
   font-size: 0.875rem;
   font-weight: 500;
@@ -216,18 +301,26 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 2px 8px rgba(0, 0, 0, 0.08);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.18);
     transform: translateY(-1px);
     box-shadow: 
-      0 6px 20px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      0 4px 12px rgba(0, 0, 0, 0.12);
   }
 
   &:active {
     transform: translateY(0);
+  }
+}
+
+[data-theme='light'] .mobileLogoutButton,
+[data-theme='light'] .mobileSignInButton {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
   }
 }

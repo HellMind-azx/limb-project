@@ -18,13 +18,14 @@ body {
   font-size: font-size(base);
   font-weight: font-weight(regular);
   line-height: map-get($line-heights, normal);
-  color: color(text-primary);
-  background: color(bg-primary);
+  color: var(--text-primary);
+  background: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @include custom-scrollbar();
   overflow-x: hidden;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 // ===== TYPOGRAPHY =====
@@ -32,12 +33,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-heading;
   font-weight: font-weight(bold);
   line-height: map-get($line-heights, tight);
-  color: color(text-primary);
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 h1 { 
   font-size: font-size('5xl'); 
-  background: linear-gradient(135deg, color(text-primary) 0%, color(text-secondary) 100%);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -52,7 +54,8 @@ h6 { font-size: font-size(lg); }
 p {
   font-family: $font-family-base;
   margin-bottom: spacing(4);
-  color: color(text-secondary);
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
 }
 
 // ===== NEUMORPHISM BUTTONS =====
@@ -85,9 +88,10 @@ p {
   
   &.btn-outline {
     background: transparent;
-    border: 2px solid color(primary);
-    color: color(primary);
+    border: 2px solid #1e0974;
+    color: #1e0974;
     box-shadow: none;
+    transition: all 0.3s ease;
     
     &:hover {
       @include neu-button-primary();
@@ -105,8 +109,8 @@ p {
 .card {
   @include neu-card();
   @include hover-lift();
-  background: color(surface);
-  transition: all map-get($transitions, base) $transition-easing;
+  background: var(--surface);
+  transition: all map-get($transitions, base) $transition-easing, background 0.3s ease;
   position: relative;
   overflow: hidden;
   
@@ -138,11 +142,11 @@ p {
   @include neu-input();
   
   &.form-input-light {
-    background: color(surface-light);
+    background: var(--surface-light);
   }
   
   &.form-input-dark {
-    background: color(surface-dark);
+    background: var(--surface-dark);
   }
 }
 
@@ -150,8 +154,9 @@ p {
   display: block;
   margin-bottom: spacing(2);
   font-weight: font-weight(semi);
-  color: color(text-secondary);
+  color: var(--text-secondary);
   font-size: font-size(sm);
+  transition: color 0.3s ease;
 }
 
 .form-group {
@@ -244,15 +249,15 @@ p {
 .max-w-lg { max-width: 36rem; }
 .max-w-xl { max-width: 42rem; }
 
-.text-primary { color: color(text-primary); }
-.text-secondary { color: color(text-secondary); }
-.text-primary-color { color: color(primary); }
+.text-primary { color: var(--text-primary); transition: color 0.3s ease; }
+.text-secondary { color: var(--text-secondary); transition: color 0.3s ease; }
+.text-primary-color { color: #1e0974; }
 .text-success { color: color(success); }
 .text-error { color: color(error); }
 
-.bg-primary { background: color(primary); }
-.bg-surface { background: color(surface); }
-.bg-surface-light { background: color(surface-light); }
+.bg-primary { background: #1e0974; }
+.bg-surface { background: var(--surface); transition: background 0.3s ease; }
+.bg-surface-light { background: var(--surface-light); transition: background 0.3s ease; }
 
 // ===== LOADING SPINNER =====
 .animate-spin {
@@ -267,12 +272,13 @@ p {
 // ===== HEADER =====
 .header {
   @include neu-panel();
-  background: color(surface-light);
+  background: var(--surface-light);
   position: sticky;
   top: 0;
   z-index: map-get($z-index, sticky);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  transition: background 0.3s ease;
 }
 
 // ===== PAGE TRANSITIONS =====

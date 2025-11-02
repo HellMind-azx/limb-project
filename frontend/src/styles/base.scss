@@ -3,8 +3,8 @@
 // === COLOR PALETTE ===
 $colors: (
   // Primary colors - dark theme with purple accents
-  primary: #1e0974,      // Purple
-  primary-dark: #101c7b,
+  primary: #c0d684 ,      // Purple
+  primary-dark: #889e42,
   primary-light: #a78bfa,
   
   // Gradient colors
@@ -31,6 +31,7 @@ $colors: (
   text-primary: #ffffff,   // White
   text-secondary: #d1d5db, // Light gray
   text-muted: #9ca3af,     // Medium gray
+  text-dark: #000000,
   
   // Border colors
   border-primary: #374151,  // Dark border
@@ -53,9 +54,52 @@ $colors: (
   @return map-get($colors, $name);
 }
 
+// === THEME VARIABLES ===
+:root {
+  &[data-theme='dark'] {
+    --bg-primary: #000000;
+    --bg-primary-light: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --bg-tertiary: #3a3a3a;
+    --surface: #2a2a2a;
+    --surface-light: #3a3a3a;
+    --surface-dark: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --border-primary: #374151;
+    --border-light: #4b5563;
+    --border-dark: #1f2937;
+    --shadow-light: #404040;
+    --shadow-dark: #000000;
+    --navbar-bg: rgba(30, 9, 116, 0.15);
+    --navbar-border: rgba(255, 255, 255, 0.08);
+  }
+
+  &[data-theme='light'] {
+    --bg-primary: #f5f5f5;
+    --bg-primary-light: #ffffff;
+    --bg-secondary: #e5e5e5;
+    --bg-tertiary: #d5d5d5;
+    --surface: #ffffff;
+    --surface-light: #f5f5f5;
+    --surface-dark: #e5e5e5;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-muted: #6a6a6a;
+    --border-primary: #cacaca;
+    --border-light: #b5b5b5;
+    --border-dark: #a0a0a0;
+    --shadow-light: #ffffff;
+    --shadow-dark: #c5c5c5;
+    --navbar-bg: rgba(255, 255, 255, 0.8);
+    --navbar-border: rgba(0, 0, 0, 0.08);
+  }
+}
+
 // === TYPOGRAPHY ===
-$font-family-base: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-$font-family-heading: 'Space Grotesk', 'Inter', sans-serif;
+$font-family-base: 'Poppins', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-heading: 'Space Grotesk';
 $font-family-mono: 'Crisp', 'Fira Code';
 
 $font-sizes: (

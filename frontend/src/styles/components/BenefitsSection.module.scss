@@ -3,7 +3,8 @@
 
 .benefitsSection {
   padding: 6rem 0;
-  background-color: color(primary);
+  background-color: color(primary); // Keep primary brand color
+  transition: background-color 0.3s ease;
 }
 
 .container {

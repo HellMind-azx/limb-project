@@ -1,9 +1,10 @@
+@import '../styles/base';
 .sidebar {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #0b1220;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: color(bg-primary);
+  border-right: 1px solid color(border-primary);
   transition: width 0.2s ease, transform 0.2s ease;
   width: 260px;
   position: sticky;
@@ -41,8 +42,13 @@
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
+  background: color(bg-primary);
+  border: 1px solid color(primary);
   flex: 0 0 36px;
+
+  svg {
+    color: color(primary);
+  }
 }
 
 .brand {
@@ -79,8 +85,8 @@
 }
 
 .active {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
-  color: #fff;
+  background: color(primary);
+  color: color(text-dark);
 }
 
 .iconWrap { display: inline-flex; width: 24px; justify-content: center; }

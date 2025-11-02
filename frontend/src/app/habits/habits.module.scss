@@ -5,6 +5,7 @@
   min-height: 100vh;
   background: color(bg-primary);
   display: flex;
+  font-family: $font-family-heading;
 }
 
 // sidebar removed; using global SidebarNav
@@ -55,10 +56,11 @@
   align-items: center;
   justify-content: center;
   min-width: 56px;
+  font-family: $font-family-heading;
   padding: spacing(2);
   border-radius: spacing(2);
-  background: color(bg-tertiary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color(bg-primary-light);
+  border: 1px solid color(text-primary);
   color: color(text-secondary);
   transition: all map-get($transitions, base) $transition-easing;
 
@@ -69,9 +71,14 @@
 }
 
 .selected {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
-  border: 1px solid #3b82f6;
-  color: #fff;
+  background: color(primary);
+  border: 1px solid color(text-primary);
+  color: color(text-dark);
+
+  &:hover {
+    background: color(primary-dark);
+    color: color(text-dark);
+  }
 }
 
 .dateDow {
@@ -85,10 +92,19 @@
 }
 
 .addHabitBtn {
-  @include gradient-button(#3b82f6, #8b5cf6, #a855f7);
-  padding: spacing(2) spacing(4);
+  color: color(text-primary);
+  background: color(bg-primary);
+  padding: spacing(3) spacing(6);
+  border: 1px solid color(text-secondary);
   border-radius: spacing(2);
   white-space: nowrap;
+  transition: all 0.3s ease;
+  font-family: $font-family-heading;
+
+  &:hover { 
+    background: color(bg-primary-light);
+
+  }
 }
 
 .headerLeft {
@@ -105,14 +121,6 @@
   .primaryText {
     color: color(primary);
   }
-}
-
-.searchIcon {
-  @include neu-icon(light);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
 }
 
 .headerRight {
@@ -140,53 +148,71 @@
   margin-bottom: 2px;
 }
 
-.avatarGroup {
-  display: flex;
-  gap: spacing(2);
-}
+// Main Grid - 2 columns (60/40)
+.mainGrid {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: spacing(4);
+  margin-bottom: spacing(4);
+  width: 100%;
+  align-items: stretch; // Растягиваем карточки на одинаковую высоту
 
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: color(accent-2);
+  @include responsive(lg) {
+    grid-template-columns: 1.5fr 1fr;
+  }
 
-  &:nth-child(2) {
-    background: color(accent-1);
+  // Ensure grid items don't overflow and respect grid columns
+  > * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  // Первая колонка (Today's tasks)
+  > .habitCard:first-child {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  // Вторая колонка (rightColumn)
+  > .rightColumn {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 }
 
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: spacing(3);
-}
-
-.userAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: color(primary);
-}
-
-.userDetails {
+.rightColumn {
   display: flex;
   flex-direction: column;
-}
-
-.userName {
-  color: color(text-primary);
-  font-weight: font-weight(medium);
-}
-
-.userRole {
-  font-size: font-size(sm);
-  color: color(text-secondary);
-}
-
-// Main Layout: 3 columns, 2 rows
-.mainLayout {
-  display: block;
+  gap: spacing(4);
+  min-width: 0; // Prevent overflow
+  max-width: 100%;
+  box-sizing: border-box;
+  
+  // Все дочерние карточки должны занимать 100% ширины колонки
+  > * {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  // Habit Details карточка
+  > .habitCard {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  // Analytics карточка
+  > .analyticsCard {
+    flex: 1;
+    min-height: 0;
+  }
 }
 
 .calendarHeaderWrapper {
@@ -546,45 +572,20 @@
   color: color(text-secondary);
 }
 
-// Bento Grid - Simple Container (children positioned directly in parent grid)
-.bentoGrid {
-  display: block;
-}
 
-// Bento Grid Item Sizes
-// Unified cards grid below KPI row
-.cardsGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: spacing(4);
-
-  @include responsive(md) {
-    grid-template-columns: 1fr 1fr; // 2 колонки
-  }
-
-  @include responsive(lg) {
-    grid-template-columns: 1fr 1fr 1fr; // 3 колонки
-  }
-}
-
-
-.habitDetailsContainer {
-  padding: spacing(3);
-  border-radius: spacing(2);
-  background: color(bg-primary-light);
-  margin-top: spacing(2);
-  margin-bottom: spacing(2);
-  width: 100%;
-}
 
 // Habit Details Grid
 .habitDetails {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: spacing(3);
-
-  @include responsive(sm) {
-    grid-template-columns: 1fr;
+  overflow: visible;
+  flex: 1;
+  min-height: 0;
+  
+  // Заголовок карточки не должен скроллиться
+  + .habitCardTitle {
+    flex-shrink: 0;
   }
 }
 
@@ -602,11 +603,39 @@
 .habitCard {
   @include soft-card;
   padding: spacing(3);
-  border-radius: spacing(2);
-  margin-top: spacing(2);
-  margin-bottom: spacing(2);
-  background: color(bg-primary-light);
-  // Позиционирование задается через .mainLayout > .bentoGrid > .habitCard
+  border: 1px solid color(border-light);
+  border-radius: spacing(4);
+  background: color(bg-primary);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  
+  // Для карточек внутри mainGrid - скролл если контент превышает высоту
+  .mainGrid & {
+    overflow: hidden;
+  }
+}
+
+// Специфичные стили для карточек внутри mainGrid
+.mainGrid > .habitCard,
+.mainGrid .rightColumn .habitCard,
+.mainGrid .rightColumn .analyticsCard {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  flex-shrink: 1;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+// Для карточек вне grid (allHabitsSection)
+.allHabitsSection {
+  
+  width: 100%;
+  height: auto;
+  margin-top: spacing(4);
 }
 
 // Deprecated span helpers (no longer used)
@@ -687,14 +716,21 @@
 .taskList {
   display: flex;
   flex-direction: column;
-  gap: spacing(2);
+  gap: spacing(3);
+  overflow: visible;
+  flex: 1;
+  min-height: 0;
 }
 
 .taskRow {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: spacing(3);
+  gap: spacing(4);
+  padding: spacing(3);
+  background: color(bg-primary);
+  border-radius: spacing(4);
+  border: 1px solid color(border-light);
 }
 
 .taskMeta {
@@ -711,6 +747,8 @@
 .taskTitle {
   color: color(text-primary);
   font-weight: font-weight(medium);
+  font-size: font-size(base);
+  margin-bottom: 4px;
 }
 
 .taskBadge {
@@ -725,24 +763,34 @@
   margin-top: 2px;
 }
 
-.taskTagMuted {
+.taskTag {
   font-size: font-size(xs);
+  padding: 2px spacing(2);
+  border-radius: 4px;
+}
+
+.taskTagMuted {
+  @extend .taskTag;
   color: color(text-muted);
+  background: rgba(156, 163, 175, 0.1);
 }
 
 .taskTagPending {
-  font-size: font-size(xs);
+  @extend .taskTag;
   color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
 }
 
 .taskTagDone {
-  font-size: font-size(xs);
+  @extend .taskTag;
   color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
 }
 
 .taskTagInfo {
-  font-size: font-size(xs);
+  @extend .taskTag;
   color: color(text-secondary);
+  background: rgba(209, 213, 219, 0.1);
 }
 
 .taskBarWrap {
@@ -751,8 +799,8 @@
 
 .taskBarBg {
   width: 100%;
-  height: 8px;
-  border-radius: 8px;
+  height: 10px;
+  border-radius: 10px;
   background: color(bg-tertiary);
   border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
@@ -843,6 +891,7 @@
   color: color(text-primary);
   margin-bottom: spacing(3); // Уменьшено
   line-height: 1.3; // Компактнее
+  flex-shrink: 0; // Заголовок не сжимается
 }
 
 .habitList {
@@ -858,8 +907,8 @@
 }
 
 .habitIcon {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -869,11 +918,13 @@
   flex: 1;
 }
 
-// Habit Details (обновлено для bento grid)
+// Habit Details (обновлено для expanded layout)
 .habitDetailCard {
   @include soft-card;
-  padding: spacing(3);
+  padding: spacing(4);
   border-radius: spacing(4);
+  border: 1px solid color(border-light);
+  background: color(bg-primary);
 }
 
 .habitDetailHeader {
@@ -927,8 +978,8 @@
 .habitMeta {
   display: flex;
   align-items: center;
-  gap: spacing(3);
-  margin-bottom: spacing(2); // Уменьшено
+  gap: spacing(4);
+  margin-bottom: spacing(3);
 }
 
 .metaItem {
@@ -957,28 +1008,33 @@
 
 .miniHeatmap {
   display: flex;
-  gap: spacing(1);
+  gap: spacing(1.5);
 }
 
 .miniCell {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
 }
 
 .miniCellCompleted {
   @extend .miniCell;
   background: color(accent-2);
+  border: 1px solid rgba(234, 179, 8, 0.5);
 }
 
 .miniCellIncomplete {
   @extend .miniCell;
   background: color(bg-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .categoryLabel {
   font-size: font-size(xs);
   color: color(text-secondary);
+  padding: 4px spacing(2);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
 }
 
 // Bottom Statistics Card (styles moved above for bento grid)
@@ -1126,4 +1182,558 @@
     background: color(primary);
     color: white;
   }
+}
+
+// Analytics Card
+.analyticsCard {
+  @include soft-card;
+  padding: spacing(4);
+  border-radius: spacing(4);
+  border: 1px solid color(border-light);
+  background: color(bg-primary);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.analyticsTitle {
+  font-size: font-size(base);
+  font-weight: font-weight(semi);
+  color: color(text-primary);
+  margin-bottom: spacing(4);
+  flex-shrink: 0; // Заголовок не скроллится
+}
+
+.analyticsContent {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+  flex: 1;
+  min-height: 0;
+}
+
+.analyticsMainMetric {
+  text-align: center;
+  padding: spacing(4) 0;
+}
+
+.analyticsPercentage {
+  font-size: font-size(4xl);
+  font-weight: font-weight(bold);
+  color: color(primary);
+  line-height: 1;
+  margin-bottom: spacing(2);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.analyticsLabel {
+  font-size: font-size(sm);
+  color: color(text-secondary);
+  font-weight: font-weight(medium);
+}
+
+.analyticsStats {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: spacing(3) 0;
+  border-top: 1px solid color(border-light);
+  border-bottom: 1px solid color(border-light);
+}
+
+.analyticsStatItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing(1);
+  flex: 1;
+}
+
+.analyticsStatValue {
+  font-size: font-size(2xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+}
+
+.analyticsStatLabel {
+  font-size: font-size(xs);
+  color: color(text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.analyticsStatDivider {
+  width: 1px;
+  height: 40px;
+  background: color(border-light);
+}
+
+// Circular Progress Bar
+.analyticsCircularProgress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: spacing(2) auto;
+}
+
+.analyticsCircularSvg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.analyticsCircularTrack {
+  fill: none;
+  stroke: color(bg-tertiary);
+  stroke-width: 8;
+}
+
+.analyticsCircularProgressPath {
+  fill: none;
+  stroke: url(#progressGradient);
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.analyticsCircularGradient {
+  .stop1 {
+    stop-color: #3b82f6;
+  }
+  .stop2 {
+    stop-color: #8b5cf6;
+  }
+  .stop3 {
+    stop-color: #a855f7;
+  }
+}
+
+.analyticsCircularContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.analyticsCircularPercentage {
+  font-size: font-size(3xl);
+  font-weight: font-weight(bold);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.analyticsCircularLabel {
+  font-size: font-size(xs);
+  color: color(text-secondary);
+  margin-top: spacing(1);
+}
+
+.analyticsStreak {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  padding: spacing(2) spacing(3);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: spacing(2);
+  font-size: font-size(sm);
+  color: color(text-secondary);
+  
+  svg {
+    color: color(success);
+  }
+}
+
+// All Habits Section стили уже определены выше
+
+.habitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: spacing(3);
+
+  @include responsive(sm) {
+    grid-template-columns: repeat(6, );
+  }
+}
+
+.habitCardItem {
+  background: color(bg-primary-light);
+  padding: spacing(3);
+  border-radius: spacing(2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: spacing(3);
+  transition: all map-get($transitions, base) $transition-easing;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+  }
+}
+
+.habitCardIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.habitCardInfo {
+  flex: 1;
+}
+
+.habitCardName {
+  color: color(text-primary);
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  margin-bottom: 4px;
+}
+
+.habitCardMeta {
+  font-size: font-size(xs);
+  color: color(text-muted);
+}
+
+// Modal Styles
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background: color(bg-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  @include custom-scrollbar();
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: spacing(6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modalTitle {
+  font-size: font-size(xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin: 0;
+}
+
+.modalCloseBtn {
+  background: transparent;
+  border: none;
+  color: color(text-secondary);
+  cursor: pointer;
+  padding: spacing(2);
+  border-radius: spacing(1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: color(text-primary);
+  }
+}
+
+.modalForm {
+  padding: spacing(6);
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+}
+
+.modalError {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: color(error);
+  padding: spacing(3);
+  border-radius: spacing(2);
+  font-size: font-size(sm);
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.formLabel {
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  color: color(text-primary);
+}
+
+.formInput,
+.formSelect {
+  padding: spacing(3);
+  background: color(bg-primary-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(2);
+  color: color(text-primary);
+  font-size: font-size(base);
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: color(primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &::placeholder {
+    color: color(text-muted);
+  }
+}
+
+.formSelect {
+  cursor: pointer;
+}
+
+// Icon Selector
+.iconGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: spacing(2);
+  
+  @include responsive(sm) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.iconOption {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: color(text-secondary);
+
+  &:hover {
+    border-color: color(primary);
+    background: rgba(59, 130, 246, 0.1);
+    transform: scale(1.05);
+  }
+}
+
+.iconSelected {
+  border-width: 2px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+// Color Selector
+.colorSelector {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(3);
+}
+
+.colorPalette {
+  display: flex;
+  gap: spacing(2);
+  flex-wrap: wrap;
+}
+
+.colorOption {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.colorSelected {
+  border-color: white !important;
+  box-shadow: 0 0 0 2px color(bg-primary), 0 0 0 4px white;
+}
+
+.customColorBtn {
+  padding: spacing(2) spacing(4);
+  background: color(bg-primary-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(2);
+  color: color(text-primary);
+  font-size: font-size(sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: color(primary);
+  }
+}
+
+.customColorActive {
+  background: color(primary);
+  border-color: color(primary);
+  color: white;
+}
+
+.colorPickerWrapper {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  margin-top: spacing(2);
+}
+
+.colorPicker {
+  width: 60px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(2);
+  cursor: pointer;
+  background: transparent;
+  
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: spacing(1);
+  }
+}
+
+// Icon Preview
+.iconPreview {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.previewIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+// Modal Actions
+.modalActions {
+  display: flex;
+  gap: spacing(3);
+  justify-content: flex-end;
+  margin-top: spacing(2);
+  padding-top: spacing(4);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cancelBtn {
+  padding: spacing(3) spacing(6);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: spacing(2);
+  color: color(text-primary);
+  font-size: font-size(base);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.submitBtn {
+  padding: spacing(3) spacing(6);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  border: none;
+  border-radius: spacing(2);
+  color: white;
+  font-size: font-size(base);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
 }
