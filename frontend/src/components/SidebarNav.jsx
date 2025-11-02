@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   FiMenu,
+  FiX,
   FiHome,
   FiTarget,
   FiActivity,
@@ -18,7 +19,7 @@ import styles from "./SidebarNav.module.scss";
 import { clearTokens, clearStoredUser } from "@/lib/auth";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Dashboard", icon: FiHome },
+  { href: "/", label: "Home", icon: FiHome },
   { href: "/habits", label: "Habits", icon: FiTarget },
   { href: "/calendar", label: "Calendar", icon: FiCalendar },
   { href: "/activity", label: "Activity", icon: FiActivity },
@@ -92,7 +93,7 @@ export default function SidebarNav() {
             aria-expanded={expanded}
             onClick={() => setExpanded((v) => !v)}
           >
-            <FiMenu size={20} />
+            {expanded ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
           <div className={styles.brand} aria-hidden={!expanded}>
             Progressor

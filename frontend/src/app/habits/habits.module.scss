@@ -3,7 +3,7 @@
 
 .dashboard {
   min-height: 100vh;
-  background: color(bg-primary);
+  background: color(border-dark);
   display: flex;
   font-family: $font-family-heading;
 }
@@ -58,9 +58,9 @@
   min-width: 56px;
   font-family: $font-family-heading;
   padding: spacing(2);
-  border-radius: spacing(2);
-  background: color(bg-primary-light);
-  border: 1px solid color(text-primary);
+  border-radius: spacing(5);
+  background: color(border-dark);
+  border: 2px solid color(primary);
   color: color(text-secondary);
   transition: all map-get($transitions, base) $transition-easing;
 
@@ -72,11 +72,11 @@
 
 .selected {
   background: color(primary);
-  border: 1px solid color(text-primary);
+  border: 1px solid color(border-primary);
   color: color(text-dark);
 
   &:hover {
-    background: color(primary-dark);
+    background: rgba(color(primary), 0.9);
     color: color(text-dark);
   }
 }
@@ -92,18 +92,25 @@
 }
 
 .addHabitBtn {
-  color: color(text-primary);
-  background: color(bg-primary);
+  background: color(border-dark);
+  color: color(primary);
   padding: spacing(3) spacing(6);
-  border: 1px solid color(text-secondary);
-  border-radius: spacing(2);
+  border: 2px solid color(primary);
+  border-radius: spacing(6);
   white-space: nowrap;
   transition: all 0.3s ease;
   font-family: $font-family-heading;
+  font-size: font-size(base);
 
   &:hover { 
-    background: color(bg-primary-light);
+    background: color(border-primary);
+  }
 
+  .addHabitBtnIcon {
+    display: inline-block;
+    margin-right: spacing(2);
+    position: relative;
+    top: 2px;
   }
 }
 
@@ -601,11 +608,10 @@
 }
 
 .habitCard {
-  @include soft-card;
   padding: spacing(3);
   border: 1px solid color(border-light);
-  border-radius: spacing(4);
-  background: color(bg-primary);
+  border-radius: spacing(6);
+  background: color(border-primary);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -632,7 +638,6 @@
 
 // Для карточек вне grid (allHabitsSection)
 .allHabitsSection {
-  
   width: 100%;
   height: auto;
   margin-top: spacing(4);
@@ -672,32 +677,9 @@
   @include soft-card;
   margin-top: spacing(3);
   padding: spacing(4);
-  border-radius: spacing(2);
-
-  &:nth-child(1) {
-    background: rgba(color(success), 0.08);
-    border: 1px solid rgba(color(success), 1);
-  }
-
-  &:nth-child(2) {
-    background: rgba(color(info), 0.08);
-    border: 1px solid rgba(color(info), 1);
-  }
-
-  &:nth-child(3) {
-    background: rgba(color(warning), 0.08);
-    border: 1px solid rgba(color(warning), 1);
-  }
-
-  &:nth-child(4) {
-    background: rgba(color(error), 0.08);
-    border: 1px solid rgba(color(error), 1);
-  }
-
-  &:nth-child(5) {
-    background: rgba(color(primary-light), 0.08);
-    border: 1px solid rgba(color(primary-light), 1);
-  }
+  border-radius: spacing(6);
+  background: color(border-primary);
+  
 }
 
 .kpiTitle {
@@ -728,8 +710,8 @@
   align-items: center;
   gap: spacing(4);
   padding: spacing(3);
-  background: color(bg-primary);
-  border-radius: spacing(4);
+  background: color(border-primary);
+  border-radius: spacing(6);
   border: 1px solid color(border-light);
 }
 
@@ -795,14 +777,15 @@
 
 .taskBarWrap {
   width: 100%;
+  background: color(border-primary);  
 }
 
 .taskBarBg {
   width: 100%;
   height: 10px;
   border-radius: 10px;
-  background: color(bg-tertiary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color(border-primary);
+  border: 1px solid color(border-light);
   overflow: hidden;
 }
 
@@ -920,11 +903,10 @@
 
 // Habit Details (обновлено для expanded layout)
 .habitDetailCard {
-  @include soft-card;
   padding: spacing(4);
-  border-radius: spacing(4);
+  border-radius: spacing(6);
   border: 1px solid color(border-light);
-  background: color(bg-primary);
+  background: color(border-primary);
 }
 
 .habitDetailHeader {
@@ -1019,14 +1001,15 @@
 
 .miniCellCompleted {
   @extend .miniCell;
-  background: color(accent-2);
+  background: color(primary-light);
   border: 1px solid rgba(234, 179, 8, 0.5);
 }
 
 .miniCellIncomplete {
   @extend .miniCell;
-  background: color(bg-tertiary);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: color(border-primary);
+  border: 2px solid color(border-light);
+  margin: 2px;
 }
 
 .categoryLabel {
@@ -1186,11 +1169,10 @@
 
 // Analytics Card
 .analyticsCard {
-  @include soft-card;
   padding: spacing(4);
-  border-radius: spacing(4);
+  border-radius: spacing(6);
   border: 1px solid color(border-light);
-  background: color(bg-primary);
+  background: color(border-primary);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1292,7 +1274,7 @@
 
 .analyticsCircularTrack {
   fill: none;
-  stroke: color(bg-tertiary);
+  stroke: color(border-dark);
   stroke-width: 8;
 }
 
@@ -1327,10 +1309,7 @@
 .analyticsCircularPercentage {
   font-size: font-size(3xl);
   font-weight: font-weight(bold);
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: color(primary);
   line-height: 1;
 }
 
@@ -1368,10 +1347,10 @@
 }
 
 .habitCardItem {
-  background: color(bg-primary-light);
+  background: color(border-primary);
   padding: spacing(3);
-  border-radius: spacing(2);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  border: 1px solid color(border-light);
   display: flex;
   align-items: center;
   gap: spacing(3);
@@ -1433,15 +1412,14 @@
 }
 
 .modalContent {
-  background: color(bg-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: spacing(4);
+  background: color(border-primary);
+  border: 1px solid color(border-light);
+  border-radius: spacing(6);
   width: 90%;
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
   @include custom-scrollbar();
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: slideUp 0.3s ease-out;
 }
 
@@ -1477,7 +1455,7 @@
   color: color(text-secondary);
   cursor: pointer;
   padding: spacing(2);
-  border-radius: spacing(1);
+  border-radius: spacing(6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1520,17 +1498,16 @@
 .formInput,
 .formSelect {
   padding: spacing(3);
-  background: color(bg-primary-light);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: color(border-primary);
+  border: 1px solid color(border-light);
   border-radius: spacing(2);
-  color: color(text-primary);
+  color: color(text-muted);
   font-size: font-size(base);
   transition: all 0.2s ease;
 
   &:focus {
     outline: none;
     border-color: color(primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
 
   &::placeholder {
@@ -1607,23 +1584,22 @@
 }
 
 .colorSelected {
-  border-color: white !important;
-  box-shadow: 0 0 0 2px color(bg-primary), 0 0 0 4px white;
+  border-color: color(primary) !important;
 }
 
 .customColorBtn {
   padding: spacing(2) spacing(4);
-  background: color(bg-primary-light);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: color(border-primary);
+  border: 1px solid color(border-light);
   border-radius: spacing(2);
-  color: color(text-primary);
+  color: color(text-muted);
   font-size: font-size(sm);
   cursor: pointer;
   transition: all 0.2s ease;
   align-self: flex-start;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: color(border-primary);
     border-color: color(primary);
   }
 }
@@ -1690,7 +1666,7 @@
   padding: spacing(3) spacing(6);
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: spacing(2);
+  border-radius: spacing(6);
   color: color(text-primary);
   font-size: font-size(base);
   font-weight: font-weight(medium);
@@ -1710,9 +1686,9 @@
 
 .submitBtn {
   padding: spacing(3) spacing(6);
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  background: color(primary);
   border: none;
-  border-radius: spacing(2);
+  border-radius: spacing(6);
   color: white;
   font-size: font-size(base);
   font-weight: font-weight(medium);
@@ -1723,8 +1699,7 @@
   gap: spacing(2);
 
   &:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    background: rgba(color(primary), 0.9);
   }
 
   &:disabled {

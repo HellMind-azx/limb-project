@@ -38,8 +38,8 @@ export default function Navbar() {
   };
 
   const navItems = [
+    { href: '/', label: 'Home' },
     { href: '/habits', label: 'Habits' },
-    { href: '/dashboard', label: 'Dashboard' },
     { href: '/profile', label: 'Profile' },
   ];
 
@@ -73,10 +73,6 @@ export default function Navbar() {
         {/* Auth Section */}
         <div className={styles.authSection}>
           {/* Theme Toggle */}
-          <button onClick={toggleTheme} className={styles.themeToggle}>
-            {isDarkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
-          </button>
-
           {user ? (
             <>
               <span className={styles.userName}>

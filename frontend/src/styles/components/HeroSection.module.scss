@@ -19,26 +19,6 @@
   z-index: 1;
   background: var(--bg-primary);
   transition: background 0.3s ease;
-
-  // Geometric patterns
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-      radial-gradient(circle at 20% 50%, rgba(167, 139, 250, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 40% 20%, rgba(16, 185, 129, 0.02) 0%, transparent 50%);
-    opacity: 1;
-  }
-
-  // Grid pattern
-  background-image: linear-gradient(rgba(167, 139, 250, 0.02) 1px, transparent 1px),
-  linear-gradient(90deg, rgba(167, 139, 250, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
 }
 
 .heroContainer {
@@ -180,6 +160,8 @@
   bottom: 0;
   z-index: 3;
   pointer-events: none;
+  overflow: hidden;
+
 
   @include responsive(lg) {
     pointer-events: all;
@@ -213,26 +195,26 @@
 
   // Диагональное расположение карточек
   &:nth-child(1) {
-    top: 10%;
+    top: 13.5%;
     right: 5%;
     width: 260px;
   }
 
   &:nth-child(2) {
-    top: 28%;
-    right: 10%;
+    top: 55%;
+    right: 27%;
     width: 280px;
   }
 
   &:nth-child(3) {
-    top: 48%;
-    left: 55%;
+    top: 30%;
+    left: 52%;
     width: 300px;
   }
 
   &:nth-child(4) {
-    top: 68%;
-    left: 42%;
+    top: 55%;
+    right: 1%;
     width: 320px;
   }
 }
@@ -325,6 +307,7 @@
 // Progress Card
 .progressCard {
   @extend .widget;
+  position: absolute;
 }
 
 .progressHeader {

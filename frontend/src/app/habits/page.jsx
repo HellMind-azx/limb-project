@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { isAuthenticated, getStoredUser } from '@/lib/auth';
 import { getHabits, getProgress, toggleProgress, getStats, createHabit, createCategory, getCategories } from '@/lib/api';
-import { 
-  FiSettings, 
-  FiBell, 
-  FiTrendingUp, 
+import {
+  FiSettings,
+  FiBell,
+  FiTrendingUp,
   FiTarget,
   FiLoader,
   FiUsers,
@@ -35,7 +35,8 @@ import {
   FiPenTool,
   FiShoppingBag,
   FiPlay,
-  FiRadio
+  FiRadio,
+  FiPlus
 } from 'react-icons/fi';
 import styles from './habits.module.scss';
 
@@ -51,7 +52,7 @@ export default function HabitsDashboard() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  
+
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -85,7 +86,7 @@ export default function HabitsDashboard() {
     try {
       setLoading(true);
       setError(null);
-      
+
       const [habitsData, progressData, statsData] = await Promise.all([
         getHabits(),
         getProgress(),
@@ -93,7 +94,7 @@ export default function HabitsDashboard() {
       ]);
 
       setHabits(habitsData);
-      
+
       // Organize progress by habit_id and date
       const progressMap = {};
       progressData.forEach(p => {
@@ -101,7 +102,7 @@ export default function HabitsDashboard() {
         progressMap[key] = p.completed;
       });
       setProgress(progressMap);
-      
+
       setStats(statsData);
     } catch (err) {
       console.error('Error loading data:', err);
@@ -115,18 +116,18 @@ export default function HabitsDashboard() {
     try {
       const dateStr = typeof date === 'string' ? date : date.toISOString().split('T')[0];
       await toggleProgress(habitId, dateStr);
-      
+
       // Update local progress state
       const key = `${habitId}-${dateStr}`;
       setProgress(prev => ({
         ...prev,
         [key]: !prev[key]
       }));
-      
+
       // Reload stats to update completion rates
       const statsData = await getStats();
       setStats(statsData);
-      
+
       // Update habit streak count
       await loadData();
     } catch (err) {
@@ -147,14 +148,14 @@ export default function HabitsDashboard() {
     const today = selectedDate.toISOString().split('T')[0];
     let completed = 0;
     let total = habits.length;
-    
+
     habits.forEach(habit => {
       const key = `${habit.id}-${today}`;
       if (progress[key]) {
         completed++;
       }
     });
-    
+
     return { completed, total, pending: total - completed };
   };
 
@@ -299,7 +300,7 @@ export default function HabitsDashboard() {
 
       // Reload data
       await loadData();
-      
+
       // Close modal
       handleCloseModal();
     } catch (err) {
@@ -313,13 +314,13 @@ export default function HabitsDashboard() {
   // Handle ESC key to close modal
   useEffect(() => {
     if (!isModalOpen) return;
-    
+
     const handleEsc = (e) => {
       if (e.key === 'Escape') {
         handleCloseModal();
       }
     };
-    
+
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isModalOpen]);
@@ -347,7 +348,7 @@ export default function HabitsDashboard() {
               <span className={styles.primaryText}>Progressor</span> Habits
             </h1>
           </div>
-          
+
         </div>
 
         {/* Mini date strip + Add Habit */}
@@ -370,14 +371,18 @@ export default function HabitsDashboard() {
               );
             })}
           </div>
-          <button className={styles.addHabitBtn} onClick={handleOpenModal}>+ Add Habits</button>
+          <button className={styles.addHabitBtn} onClick={handleOpenModal}>
+            <span className={styles.addHabitBtnIcon}>
+              <FiPlus size={16} /></span>
+            Add Habits
+          </button>
         </div>
 
         {/* Error Display */}
         {error && (
           <div className={styles.errorCard}>
             <div className={styles.errorText}>{error}</div>
-            <button 
+            <button
               onClick={loadData}
               className={styles.quickActionButton}
               style={{ marginTop: '0.5rem' }}
@@ -426,7 +431,7 @@ export default function HabitsDashboard() {
                 return (
                   <div key={habit.id} className={styles.taskRow}>
                     <div className={styles.taskMeta}>
-                      <div 
+                      <div
                         className={styles.habitIcon}
                         style={{ background: habit.category_color || '#3B82F6' }}
                       />
@@ -469,12 +474,12 @@ export default function HabitsDashboard() {
                   const today = selectedDate.toISOString().split('T')[0];
                   const key = `${habit.id}-${today}`;
                   const isCompleted = progress[key];
-                  
+
                   return (
                     <div key={habit.id} className={styles.habitDetailCard}>
                       <div className={styles.habitDetailHeader}>
                         <div className={styles.habitDetailLeft}>
-                          <div 
+                          <div
                             className={styles.habitIcon}
                             style={{ background: habit.category_color || '#3B82F6' }}
                           />
@@ -485,9 +490,8 @@ export default function HabitsDashboard() {
                             </div>
                           </div>
                         </div>
-                        <div className={`${styles.statusBadge} ${
-                          isCompleted ? styles.completed : styles.pending
-                        }`}>
+                        <div className={`${styles.statusBadge} ${isCompleted ? styles.completed : styles.pending
+                          }`}>
                           {isCompleted ? '✓' : '!'}
                         </div>
                       </div>
@@ -606,7 +610,7 @@ export default function HabitsDashboard() {
               const isDone = !!progress[key];
               return (
                 <div key={habit.id} className={styles.habitCardItem}>
-                  <div 
+                  <div
                     className={styles.habitCardIcon}
                     style={{ background: habit.category_color || '#3B82F6' }}
                   />
@@ -706,10 +710,10 @@ export default function HabitsDashboard() {
                             className={`${styles.iconOption} ${isSelected ? styles.iconSelected : ''}`}
                             onClick={() => setSelectedIcon(iconOption.name)}
                             style={{
-                              background: isSelected 
+                              background: isSelected
                                 ? (customColorOpen ? customColor : selectedColor)
                                 : 'transparent',
-                              borderColor: isSelected 
+                              borderColor: isSelected
                                 ? (customColorOpen ? customColor : selectedColor)
                                 : 'rgba(255, 255, 255, 0.1)',
                             }}
@@ -785,11 +789,11 @@ export default function HabitsDashboard() {
               {!isCreatingCategory && selectedCategoryId && (() => {
                 const selectedCategory = categories.find(cat => cat.id === parseInt(selectedCategoryId));
                 if (!selectedCategory) return null;
-                
+
                 // Find icon component from category icon name
                 const iconOption = iconOptions.find(opt => opt.name === selectedCategory.icon);
                 const IconComponent = iconOption?.component || FiTarget;
-                
+
                 return (
                   <div className={styles.iconPreview}>
                     <label className={styles.formLabel}>Category Preview</label>
