@@ -1,511 +1,627 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { isAuthenticated } from '@/lib/auth';
-import { getPreferences, updatePreferences, changePassword } from '@/lib/api';
-import { 
-  FiSettings, 
-  FiBell, 
-  FiTarget,
-  FiActivity,
-  FiUsers,
-  FiLock,
-  FiBook,
+import { useState, useEffect } from "react";
+import {
+  FiSettings,
+  FiMoon,
+  FiSun,
+  FiBell,
+  FiMail,
+  FiGlobe,
+  FiShield,
+  FiDatabase,
+  FiSave,
   FiCheck,
   FiX,
-  FiLoader,
+  FiAlertCircle,
+  FiVolume2,
   FiEye,
-  FiEyeOff
-} from 'react-icons/fi';
-import styles from './settings.module.scss';
+  FiDownload,
+  FiTrash2,
+  FiRefreshCw
+} from "react-icons/fi";
+import styles from "./settings.module.scss";
+import { getPreferences, updatePreferences } from "@/lib/api";
+import { isAuthenticated } from "@/lib/auth";
 
 export default function SettingsPage() {
-  const router = useRouter();
-  const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-  
-  // Notification preferences
-  const [preferences, setPreferences] = useState({
-    notifications: true,
-    email_notifications: true,
-    weekly_reports: true,
+  const [message, setMessage] = useState({ type: "", text: "" });
+
+  // Appearance settings
+  const [appearance, setAppearance] = useState({
+    theme: "dark",
+    fontSize: "medium",
+    compactMode: false
   });
 
-  // Password change
-  const [passwordData, setPasswordData] = useState({
-    current_password: '',
-    new_password: '',
-    confirm_password: '',
-  });
-  const [showPasswords, setShowPasswords] = useState({
-    current: false,
-    new: false,
-    confirm: false,
+  // Notifications settings
+  const [notifications, setNotifications] = useState({
+    push: true,
+    email: true,
+    weeklyReports: true,
+    sounds: true,
+    habitReminders: true,
+    achievementAlerts: true
   });
 
+  // Language & Region settings
+  const [language, setLanguage] = useState({
+    language: "en",
+    dateFormat: "MM/DD/YYYY",
+    timezone: "UTC"
+  });
+
+  // Privacy & Security settings
+  const [privacy, setPrivacy] = useState({
+    profileVisibility: "public",
+    showStats: true,
+    showProgress: true,
+    allowMessages: true
+  });
+
+  // Load preferences on mount
   useEffect(() => {
     if (!isAuthenticated()) {
-      router.push('/login');
       return;
     }
     loadPreferences();
-  }, [router]);
+  }, []);
 
   const loadPreferences = async () => {
     try {
       setLoading(true);
       const data = await getPreferences();
-      setPreferences(data);
-    } catch (err) {
-      console.error('Error loading preferences:', err);
-      setError('Failed to load preferences');
+      
+      // Set appearance settings
+      if (data.theme) {
+        const savedTheme = localStorage.getItem("theme") || data.theme;
+        setAppearance(prev => ({
+          ...prev,
+          theme: savedTheme,
+          fontSize: data.fontSize || "medium",
+          compactMode: data.compactMode || false
+        }));
+        applyTheme(savedTheme);
+      }
+
+      // Set notification settings
+      setNotifications({
+        push: data.notifications !== false,
+        email: data.email_notifications !== false,
+        weeklyReports: data.weekly_reports !== false,
+        sounds: data.sounds !== false,
+        habitReminders: data.habit_reminders !== false,
+        achievementAlerts: data.achievement_alerts !== false
+      });
+
+      // Set language settings
+      setLanguage({
+        language: data.language || "en",
+        dateFormat: data.date_format || "MM/DD/YYYY",
+        timezone: data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+      });
+
+      // Set privacy settings
+      setPrivacy({
+        profileVisibility: data.profile_visibility || "public",
+        showStats: data.show_stats !== false,
+        showProgress: data.show_progress !== false,
+        allowMessages: data.allow_messages !== false
+      });
+    } catch (error) {
+      console.error("Failed to load preferences:", error);
+      showMessage("error", "Failed to load settings");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSidebarNavigation = (path) => {
-    router.push(path);
+  const applyTheme = (theme) => {
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    }
   };
 
-  const handlePreferenceChange = (key, value) => {
-    setPreferences(prev => ({
-      ...prev,
-      [key]: value
-    }));
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: "", text: "" }), 5000);
   };
 
-  const handleSavePreferences = async () => {
+  const handleAppearanceSave = async () => {
+    setSaving(true);
     try {
-      setSaving(true);
-      setError(null);
-      setSuccess(null);
-      await updatePreferences(preferences);
-      setSuccess('Preferences saved successfully!');
-      setTimeout(() => setSuccess(null), 3000);
-    } catch (err) {
-      console.error('Error saving preferences:', err);
-      setError(err.response?.data?.error || 'Failed to save preferences');
+      await updatePreferences({
+        theme: appearance.theme,
+        fontSize: appearance.fontSize,
+        compactMode: appearance.compactMode
+      });
+      applyTheme(appearance.theme);
+      showMessage("success", "Appearance settings saved!");
+    } catch (error) {
+      showMessage("error", error.response?.data?.error || "Failed to save appearance settings");
     } finally {
       setSaving(false);
     }
   };
 
-  const handlePasswordChange = (e) => {
-    setPasswordData({
-      ...passwordData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleChangePassword = async (e) => {
-    e.preventDefault();
-    
-    if (!passwordData.current_password || !passwordData.new_password) {
-      setError('Please fill in all password fields');
-      return;
-    }
-
-    if (passwordData.new_password !== passwordData.confirm_password) {
-      setError('New passwords do not match');
-      return;
-    }
-
-    if (passwordData.new_password.length < 8) {
-      setError('New password must be at least 8 characters long');
-      return;
-    }
-
+  const handleNotificationsSave = async () => {
+    setSaving(true);
     try {
-      setSaving(true);
-      setError(null);
-      setSuccess(null);
-      await changePassword({
-        current_password: passwordData.current_password,
-        new_password: passwordData.new_password,
+      await updatePreferences({
+        notifications: notifications.push,
+        email_notifications: notifications.email,
+        weekly_reports: notifications.weeklyReports,
+        sounds: notifications.sounds,
+        habit_reminders: notifications.habitReminders,
+        achievement_alerts: notifications.achievementAlerts
       });
-      setSuccess('Password changed successfully!');
-      setPasswordData({
-        current_password: '',
-        new_password: '',
-        confirm_password: '',
-      });
-      setTimeout(() => setSuccess(null), 3000);
-    } catch (err) {
-      console.error('Error changing password:', err);
-      setError(err.response?.data?.error || 'Failed to change password');
+      showMessage("success", "Notification settings saved!");
+    } catch (error) {
+      showMessage("error", error.response?.data?.error || "Failed to save notification settings");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleLanguageSave = async () => {
+    setSaving(true);
+    try {
+      await updatePreferences({
+        language: language.language,
+        date_format: language.dateFormat,
+        timezone: language.timezone
+      });
+      localStorage.setItem("language", language.language);
+      showMessage("success", "Language settings saved!");
+    } catch (error) {
+      showMessage("error", error.response?.data?.error || "Failed to save language settings");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handlePrivacySave = async () => {
+    setSaving(true);
+    try {
+      await updatePreferences({
+        profile_visibility: privacy.profileVisibility,
+        show_stats: privacy.showStats,
+        show_progress: privacy.showProgress,
+        allow_messages: privacy.allowMessages
+      });
+      showMessage("success", "Privacy settings saved!");
+    } catch (error) {
+      showMessage("error", error.response?.data?.error || "Failed to save privacy settings");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleExportData = () => {
+    // Mock export functionality
+    const data = {
+      preferences: {
+        appearance,
+        notifications,
+        language,
+        privacy
+      },
+      exportedAt: new Date().toISOString()
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `settings-export-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showMessage("success", "Settings exported successfully!");
+  };
+
+  const handleClearCache = () => {
+    if (confirm("Are you sure you want to clear cache? This will log you out.")) {
+      localStorage.clear();
+      sessionStorage.clear();
+      showMessage("success", "Cache cleared. Please refresh the page.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
   };
 
   if (loading) {
     return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.loadingSpinner}>
-          <FiLoader size={48} />
-        </div>
+      <div className={styles.page}>
+        <div className={styles.loading}>Loading settings...</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.dashboard}>
-      {/* Sidebar */}
-      <div className={styles.sidebar}>
-        <div 
-          className={`${styles.sidebarIcon} ${pathname === '/habits' ? styles.active : ''}`}
-          onClick={() => handleSidebarNavigation('/habits')}
-        >
-          <FiTarget size={20} />
-        </div>
-        <div 
-          className={`${styles.sidebarIcon} ${pathname === '/settings' ? styles.active : ''}`}
-          onClick={() => handleSidebarNavigation('/settings')}
-        >
-          <FiSettings size={20} />
-        </div>
-        <div 
-          className={`${styles.sidebarIcon} ${pathname === '/notifications' ? styles.active : ''}`}
-          onClick={() => handleSidebarNavigation('/notifications')}
-        >
-          <FiBell size={20} />
-        </div>
-        <div 
-          className={`${styles.sidebarIcon} ${pathname === '/activity' ? styles.active : ''}`}
-          onClick={() => handleSidebarNavigation('/activity')}
-        >
-          <FiActivity size={20} />
-        </div>
-        <div 
-          className={`${styles.sidebarIcon} ${pathname === '/users' ? styles.active : ''}`}
-          onClick={() => handleSidebarNavigation('/users')}
-        >
-          <FiUsers size={20} />
-        </div>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>
+          <FiSettings size={32} className={styles.titleIcon} />
+          <span className={styles.primaryText}>Settings</span>
+        </h1>
+        <p className={styles.subtitle}>Manage your account preferences and global settings</p>
       </div>
 
-      {/* Main Content */}
-      <div className={styles.mainContent}>
-        {/* Header */}
-        <div className={styles.header}>
-          <h1 className={styles.title}>
-            <span className={styles.primaryText}>Settings</span>
-          </h1>
+      {/* Message Banner */}
+      {message.text && (
+        <div className={`${styles.message} ${styles[message.type]}`}>
+          {message.type === "success" ? (
+            <FiCheck size={20} />
+          ) : message.type === "error" ? (
+            <FiAlertCircle size={20} />
+          ) : null}
+          <span>{message.text}</span>
+        </div>
+      )}
+
+      {/* Appearance Section */}
+      <SettingsSection
+        icon={FiMoon}
+        title="Appearance"
+        description="Customize the look and feel of the application"
+      >
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Theme</label>
+            <p className={styles.settingDescription}>Choose your preferred color scheme</p>
+          </div>
+          <div className={styles.themeButtons}>
+            <button
+              className={`${styles.themeButton} ${appearance.theme === "light" ? styles.active : ""}`}
+              onClick={() => setAppearance({ ...appearance, theme: "light" })}
+            >
+              <FiSun size={20} />
+              Light
+            </button>
+            <button
+              className={`${styles.themeButton} ${appearance.theme === "dark" ? styles.active : ""}`}
+              onClick={() => setAppearance({ ...appearance, theme: "dark" })}
+            >
+              <FiMoon size={20} />
+              Dark
+            </button>
+            <button
+              className={`${styles.themeButton} ${appearance.theme === "auto" ? styles.active : ""}`}
+              onClick={() => setAppearance({ ...appearance, theme: "auto" })}
+            >
+              <FiSettings size={20} />
+              Auto
+            </button>
+          </div>
         </div>
 
-        {/* Error/Success Messages */}
-        {error && (
-          <div className={styles.errorCard}>
-            <div className={styles.errorText}>{error}</div>
-            <button 
-              onClick={() => setError(null)}
-              className={styles.closeButton}
-            >
-              <FiX size={16} />
-            </button>
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Font Size</label>
+            <p className={styles.settingDescription}>Adjust text size for better readability</p>
           </div>
-        )}
-
-        {success && (
-          <div className={styles.successCard}>
-            <div className={styles.successText}>{success}</div>
-            <button 
-              onClick={() => setSuccess(null)}
-              className={styles.closeButton}
-            >
-              <FiX size={16} />
-            </button>
-          </div>
-        )}
-
-        {/* Notification Settings */}
-        <div className={styles.settingsCard}>
-          <div className={styles.cardHeader}>
-            <FiBell size={24} />
-            <h2 className={styles.cardTitle}>Notification Settings</h2>
-          </div>
-          
-          <div className={styles.settingsList}>
-            <div className={styles.settingItem}>
-              <div className={styles.settingInfo}>
-                <div className={styles.settingLabel}>Enable Notifications</div>
-                <div className={styles.settingDescription}>
-                  Receive notifications about your habits and progress
-                </div>
-              </div>
-              <label className={styles.toggle}>
-                <input
-                  type="checkbox"
-                  checked={preferences.notifications}
-                  onChange={(e) => handlePreferenceChange('notifications', e.target.checked)}
-                />
-                <span className={styles.toggleSlider}></span>
-              </label>
-            </div>
-
-            <div className={styles.settingItem}>
-              <div className={styles.settingInfo}>
-                <div className={styles.settingLabel}>Email Notifications</div>
-                <div className={styles.settingDescription}>
-                  Receive email updates about your progress
-                </div>
-              </div>
-              <label className={styles.toggle}>
-                <input
-                  type="checkbox"
-                  checked={preferences.email_notifications}
-                  onChange={(e) => handlePreferenceChange('email_notifications', e.target.checked)}
-                  disabled={!preferences.notifications}
-                />
-                <span className={styles.toggleSlider}></span>
-              </label>
-            </div>
-
-            <div className={styles.settingItem}>
-              <div className={styles.settingInfo}>
-                <div className={styles.settingLabel}>Weekly Reports</div>
-                <div className={styles.settingDescription}>
-                  Get weekly summaries of your habit progress
-                </div>
-              </div>
-              <label className={styles.toggle}>
-                <input
-                  type="checkbox"
-                  checked={preferences.weekly_reports}
-                  onChange={(e) => handlePreferenceChange('weekly_reports', e.target.checked)}
-                  disabled={!preferences.notifications}
-                />
-                <span className={styles.toggleSlider}></span>
-              </label>
-            </div>
-          </div>
-
-          <button
-            onClick={handleSavePreferences}
-            disabled={saving}
-            className={styles.saveButton}
+          <select
+            value={appearance.fontSize}
+            onChange={(e) => setAppearance({ ...appearance, fontSize: e.target.value })}
+            className={styles.select}
           >
-            {saving ? (
-              <>
-                <FiLoader size={16} className={styles.spinner} />
-                Saving...
-              </>
-            ) : (
-              <>
-                <FiCheck size={16} />
-                Save Preferences
-              </>
-            )}
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Compact Mode</label>
+            <p className={styles.settingDescription}>Reduce spacing for a more compact interface</p>
+          </div>
+          <ToggleSwitch
+            checked={appearance.compactMode}
+            onChange={(checked) => setAppearance({ ...appearance, compactMode: checked })}
+          />
+        </div>
+
+        <button
+          className={styles.saveButton}
+          onClick={handleAppearanceSave}
+          disabled={saving}
+        >
+          <FiSave size={18} />
+          {saving ? "Saving..." : "Save Appearance"}
+        </button>
+      </SettingsSection>
+
+      {/* Notifications Section */}
+      <SettingsSection
+        icon={FiBell}
+        title="Notifications"
+        description="Control how and when you receive notifications"
+      >
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Push Notifications</label>
+            <p className={styles.settingDescription}>Receive browser push notifications</p>
+          </div>
+          <ToggleSwitch
+            checked={notifications.push}
+            onChange={(checked) => setNotifications({ ...notifications, push: checked })}
+          />
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Email Notifications</label>
+            <p className={styles.settingDescription}>Receive notifications via email</p>
+          </div>
+          <ToggleSwitch
+            checked={notifications.email}
+            onChange={(checked) => setNotifications({ ...notifications, email: checked })}
+          />
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Weekly Reports</label>
+            <p className={styles.settingDescription}>Get weekly progress summaries</p>
+          </div>
+          <ToggleSwitch
+            checked={notifications.weeklyReports}
+            onChange={(checked) => setNotifications({ ...notifications, weeklyReports: checked })}
+          />
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Sounds</label>
+            <p className={styles.settingDescription}>Play sounds for notifications</p>
+          </div>
+          <ToggleSwitch
+            checked={notifications.sounds}
+            onChange={(checked) => setNotifications({ ...notifications, sounds: checked })}
+          />
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Habit Reminders</label>
+            <p className={styles.settingDescription}>Get reminders for incomplete habits</p>
+          </div>
+          <ToggleSwitch
+            checked={notifications.habitReminders}
+            onChange={(checked) => setNotifications({ ...notifications, habitReminders: checked })}
+          />
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Achievement Alerts</label>
+            <p className={styles.settingDescription}>Get notified when you achieve milestones</p>
+          </div>
+          <ToggleSwitch
+            checked={notifications.achievementAlerts}
+            onChange={(checked) => setNotifications({ ...notifications, achievementAlerts: checked })}
+          />
+        </div>
+
+        <button
+          className={styles.saveButton}
+          onClick={handleNotificationsSave}
+          disabled={saving}
+        >
+          <FiSave size={18} />
+          {saving ? "Saving..." : "Save Notifications"}
+        </button>
+      </SettingsSection>
+
+      {/* Language & Region Section */}
+      <SettingsSection
+        icon={FiGlobe}
+        title="Language & Region"
+        description="Set your language and regional preferences"
+      >
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Language</label>
+            <p className={styles.settingDescription}>Choose your preferred language</p>
+          </div>
+          <select
+            value={language.language}
+            onChange={(e) => setLanguage({ ...language, language: e.target.value })}
+            className={styles.select}
+          >
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+          </select>
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Date Format</label>
+            <p className={styles.settingDescription}>How dates should be displayed</p>
+          </div>
+          <select
+            value={language.dateFormat}
+            onChange={(e) => setLanguage({ ...language, dateFormat: e.target.value })}
+            className={styles.select}
+          >
+            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+            <option value="DD MMM YYYY">DD MMM YYYY</option>
+          </select>
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Timezone</label>
+            <p className={styles.settingDescription}>Your local timezone</p>
+          </div>
+          <select
+            value={language.timezone}
+            onChange={(e) => setLanguage({ ...language, timezone: e.target.value })}
+            className={styles.select}
+          >
+            {Intl.supportedValuesOf("timeZone").slice(0, 20).map(tz => (
+              <option key={tz} value={tz}>{tz}</option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          className={styles.saveButton}
+          onClick={handleLanguageSave}
+          disabled={saving}
+        >
+          <FiSave size={18} />
+          {saving ? "Saving..." : "Save Language"}
+        </button>
+      </SettingsSection>
+
+      {/* Privacy & Security Section */}
+      <SettingsSection
+        icon={FiShield}
+        title="Privacy & Security"
+        description="Control your privacy and security settings"
+      >
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Profile Visibility</label>
+            <p className={styles.settingDescription}>Who can see your profile</p>
+          </div>
+          <select
+            value={privacy.profileVisibility}
+            onChange={(e) => setPrivacy({ ...privacy, profileVisibility: e.target.value })}
+            className={styles.select}
+          >
+            <option value="public">Public</option>
+            <option value="friends">Friends Only</option>
+            <option value="private">Private</option>
+          </select>
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Show Statistics</label>
+            <p className={styles.settingDescription}>Allow others to see your statistics</p>
+          </div>
+          <ToggleSwitch
+            checked={privacy.showStats}
+            onChange={(checked) => setPrivacy({ ...privacy, showStats: checked })}
+          />
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Show Progress</label>
+            <p className={styles.settingDescription}>Allow others to see your progress</p>
+          </div>
+          <ToggleSwitch
+            checked={privacy.showProgress}
+            onChange={(checked) => setPrivacy({ ...privacy, showProgress: checked })}
+          />
+        </div>
+
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Allow Messages</label>
+            <p className={styles.settingDescription}>Let other users send you messages</p>
+          </div>
+          <ToggleSwitch
+            checked={privacy.allowMessages}
+            onChange={(checked) => setPrivacy({ ...privacy, allowMessages: checked })}
+          />
+        </div>
+
+        <button
+          className={styles.saveButton}
+          onClick={handlePrivacySave}
+          disabled={saving}
+        >
+          <FiSave size={18} />
+          {saving ? "Saving..." : "Save Privacy"}
+        </button>
+      </SettingsSection>
+
+      {/* Data & Storage Section */}
+      <SettingsSection
+        icon={FiDatabase}
+        title="Data & Storage"
+        description="Manage your data and storage settings"
+      >
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Export Settings</label>
+            <p className={styles.settingDescription}>Download your settings as a JSON file</p>
+          </div>
+          <button
+            className={styles.actionButton}
+            onClick={handleExportData}
+          >
+            <FiDownload size={18} />
+            Export Data
           </button>
         </div>
 
-        {/* Change Password */}
-        <div className={styles.settingsCard}>
-          <div className={styles.cardHeader}>
-            <FiLock size={24} />
-            <h2 className={styles.cardTitle}>Change Password</h2>
+        <div className={styles.settingItem}>
+          <div className={styles.settingLabel}>
+            <label>Clear Cache</label>
+            <p className={styles.settingDescription}>Clear all cached data and reload</p>
           </div>
-
-          <form onSubmit={handleChangePassword} className={styles.passwordForm}>
-            <div className={styles.inputGroup}>
-              <label className={styles.inputLabel}>Current Password</label>
-              <div className={styles.passwordInputWrapper}>
-                <input
-                  type={showPasswords.current ? 'text' : 'password'}
-                  name="current_password"
-                  value={passwordData.current_password}
-                  onChange={handlePasswordChange}
-                  className={styles.passwordInput}
-                  placeholder="Enter current password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPasswords({...showPasswords, current: !showPasswords.current})}
-                  className={styles.passwordToggle}
-                >
-                  {showPasswords.current ? <FiEyeOff size={18} /> : <FiEye size={18} />}
-                </button>
-              </div>
-            </div>
-
-            <div className={styles.inputGroup}>
-              <label className={styles.inputLabel}>New Password</label>
-              <div className={styles.passwordInputWrapper}>
-                <input
-                  type={showPasswords.new ? 'text' : 'password'}
-                  name="new_password"
-                  value={passwordData.new_password}
-                  onChange={handlePasswordChange}
-                  className={styles.passwordInput}
-                  placeholder="Enter new password (min 8 characters)"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPasswords({...showPasswords, new: !showPasswords.new})}
-                  className={styles.passwordToggle}
-                >
-                  {showPasswords.new ? <FiEyeOff size={18} /> : <FiEye size={18} />}
-                </button>
-              </div>
-            </div>
-
-            <div className={styles.inputGroup}>
-              <label className={styles.inputLabel}>Confirm New Password</label>
-              <div className={styles.passwordInputWrapper}>
-                <input
-                  type={showPasswords.confirm ? 'text' : 'password'}
-                  name="confirm_password"
-                  value={passwordData.confirm_password}
-                  onChange={handlePasswordChange}
-                  className={styles.passwordInput}
-                  placeholder="Confirm new password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPasswords({...showPasswords, confirm: !showPasswords.confirm})}
-                  className={styles.passwordToggle}
-                >
-                  {showPasswords.confirm ? <FiEyeOff size={18} /> : <FiEye size={18} />}
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={saving}
-              className={styles.saveButton}
-            >
-              {saving ? (
-                <>
-                  <FiLoader size={16} className={styles.spinner} />
-                  Changing Password...
-                </>
-              ) : (
-                <>
-                  <FiCheck size={16} />
-                  Change Password
-                </>
-              )}
-            </button>
-          </form>
+          <button
+            className={`${styles.actionButton} ${styles.dangerButton}`}
+            onClick={handleClearCache}
+          >
+            <FiTrash2 size={18} />
+            Clear Cache
+          </button>
         </div>
+      </SettingsSection>
+    </div>
+  );
+}
 
-        {/* Habits Guide */}
-        <div className={styles.settingsCard}>
-          <div className={styles.cardHeader}>
-            <FiBook size={24} />
-            <h2 className={styles.cardTitle}>Habits Guide</h2>
-          </div>
-
-          <div className={styles.guideContent}>
-            <section className={styles.guideSection}>
-              <h3 className={styles.guideSectionTitle}>Getting Started</h3>
-              <p className={styles.guideText}>
-                Welcome to Progressor! This guide will help you make the most of your habit tracking experience.
-              </p>
-            </section>
-
-            <section className={styles.guideSection}>
-              <h3 className={styles.guideSectionTitle}>Understanding the Habits Dashboard</h3>
-              <div className={styles.guideList}>
-                <div className={styles.guideItem}>
-                  <strong>Calendar Heatmap:</strong> The calendar shows your completion history. Each cell represents a day:
-                  <ul className={styles.guideSubList}>
-                    <li><span className={styles.colorIndicator} style={{background: 'var(--color-primary)'}}></span> Purple: All habits completed</li>
-                    <li><span className={styles.colorIndicator} style={{background: 'linear-gradient(135deg, var(--color-primary) 0%, rgba(139, 92, 246, 0.5) 50%, var(--color-bg-tertiary) 100%)'}}></span> Gradient: Partially completed</li>
-                    <li><span className={styles.colorIndicator} style={{background: 'var(--color-bg-tertiary)'}}></span> Gray: No habits completed</li>
-                    <li>Today's date is highlighted with an orange border</li>
-                  </ul>
-                </div>
-                <div className={styles.guideItem}>
-                  <strong>Hover over calendar cells</strong> to see the completion percentage for that day.
-                </div>
-                <div className={styles.guideItem}>
-                  <strong>Navigation arrows</strong> let you browse through different months to review your historical progress.
-                </div>
-              </div>
-            </section>
-
-            <section className={styles.guideSection}>
-              <h3 className={styles.guideSectionTitle}>Tracking Your Habits</h3>
-              <div className={styles.guideList}>
-                <div className={styles.guideItem}>
-                  <strong>Active Habits:</strong> View your current habits in the "Active Habits" section. Each habit displays with its category color.
-                </div>
-                <div className={styles.guideItem}>
-                  <strong>Pending Today:</strong> See which habits you haven't completed today. Click the checkmark button to mark them as complete.
-                </div>
-                <div className={styles.guideItem}>
-                  <strong>Habit Details:</strong> Each habit card shows:
-                  <ul className={styles.guideSubList}>
-                    <li>Streak count - your consecutive days of completion</li>
-                    <li>Target frequency (daily, weekly, etc.)</li>
-                    <li>Target count - how many times per period</li>
-                    <li>Mini heatmap - last 4 days completion status</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            <section className={styles.guideSection}>
-              <h3 className={styles.guideSectionTitle}>Understanding Statistics</h3>
-              <div className={styles.guideList}>
-                <div className={styles.guideItem}>
-                  <strong>Today's Completion Rate:</strong> Shows the percentage of your habits completed today.
-                </div>
-                <div className={styles.guideItem}>
-                  <strong>Longest Streak:</strong> Your record for consecutive days of completing habits.
-                </div>
-                <div className={styles.guideItem}>
-                  <strong>Category Stats:</strong> View your progress by habit category using the colored avatars.
-                </div>
-              </div>
-            </section>
-
-            <section className={styles.guideSection}>
-              <h3 className={styles.guideSectionTitle}>Tips for Success</h3>
-              <div className={styles.guideList}>
-                <div className={styles.guideItem}>
-                  ✓ <strong>Be Consistent:</strong> Try to complete your habits at the same time each day.
-                </div>
-                <div className={styles.guideItem}>
-                  ✓ <strong>Start Small:</strong> Begin with a few manageable habits and gradually add more.
-                </div>
-                <div className={styles.guideItem}>
-                  ✓ <strong>Check Daily:</strong> Review your progress daily to stay motivated.
-                </div>
-                <div className={styles.guideItem}>
-                  ✓ <strong>Track Progress:</strong> Use the calendar to visualize your consistency over time.
-                </div>
-                <div className={styles.guideItem}>
-                  ✓ <strong>Maintain Streaks:</strong> Focus on maintaining your current streak to build momentum.
-                </div>
-              </div>
-            </section>
-
-            <section className={styles.guideSection}>
-              <h3 className={styles.guideSectionTitle}>Need Help?</h3>
-              <p className={styles.guideText}>
-                If you have questions or need assistance, feel free to explore other sections in the sidebar:
-              </p>
-              <div className={styles.guideList}>
-                <div className={styles.guideItem}>
-                  <FiActivity size={16} /> <strong>Activity:</strong> View detailed activity logs and statistics
-                </div>
-                <div className={styles.guideItem}>
-                  <FiBell size={16} /> <strong>Notifications:</strong> Manage your notification preferences
-                </div>
-              </div>
-            </section>
-          </div>
+// Settings Section Component
+function SettingsSection({ icon: Icon, title, description, children }) {
+  return (
+    <div className={styles.section}>
+      <div className={styles.sectionHeader}>
+        <div className={styles.sectionIcon}>
+          <Icon size={24} />
+        </div>
+        <div>
+          <h2 className={styles.sectionTitle}>{title}</h2>
+          <p className={styles.sectionDescription}>{description}</p>
         </div>
       </div>
+      <div className={styles.sectionContent}>
+        {children}
+      </div>
     </div>
+  );
+}
+
+// Toggle Switch Component
+function ToggleSwitch({ checked, onChange }) {
+  return (
+    <button
+      className={`${styles.toggle} ${checked ? styles.toggleActive : ""}`}
+      onClick={() => onChange(!checked)}
+      role="switch"
+      aria-checked={checked}
+    >
+      <span className={styles.toggleThumb} />
+    </button>
   );
 }
 

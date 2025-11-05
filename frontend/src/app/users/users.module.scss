@@ -1,138 +1,217 @@
 @import '../../styles/base';
 @import '../../styles/mixins';
 
-.dashboard {
+.page {
   min-height: 100vh;
-  background: color(bg-primary);
-  display: flex;
-}
-
-.sidebar {
-  width: 80px;
-  background: color(bg-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: spacing(6) 0;
-  gap: spacing(6);
-  border-right: 1px solid color(border-primary);
-}
-
-.sidebarIcon {
-  @include neu-icon(medium);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all map-get($transitions, base) $transition-easing;
-
-  &.active {
-    background: color(primary);
-    
-    svg {
-      color: white;
-    }
-  }
-
-  svg {
-    color: color(text-secondary);
-    transition: color map-get($transitions, base) $transition-easing;
-  }
-
-  &:hover {
-    svg {
-      color: color(text-primary);
-    }
-  }
-}
-
-.mainContent {
-  flex: 1;
   padding: spacing(8);
-  overflow-y: auto;
-  @include custom-scrollbar();
+  background: color(border-dark);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .header {
-  margin-bottom: spacing(8);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: spacing(6);
+  flex-wrap: wrap;
+  gap: spacing(4);
+
+  @include responsive(sm) {
+    flex-direction: column;
+  }
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: spacing(3);
+  flex-wrap: wrap;
 }
 
 .title {
   font-size: font-size(3xl);
   font-weight: font-weight(bold);
   color: color(text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: spacing(3);
 
   .primaryText {
     color: color(primary);
   }
 }
 
-// Search Card
-.searchCard {
-  @include neu-card(medium);
-  margin-bottom: spacing(6);
-  padding: spacing(6);
-
-  @include responsive(sm) {
-    padding: spacing(4);
-  }
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: spacing(1) spacing(3);
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border-radius: spacing(3);
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  margin-left: spacing(2);
 }
 
-.searchWrapper {
+// Search and Filters
+.searchFiltersCard {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  padding: spacing(6);
+  margin-bottom: spacing(6);
+  display: flex;
+  flex-direction: column;
+  gap: spacing(5);
+}
+
+.searchContainer {
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: spacing(3);
 }
 
 .searchIcon {
   position: absolute;
   left: spacing(4);
   color: color(text-secondary);
-  pointer-events: none;
+  z-index: 1;
 }
 
 .searchInput {
-  @include neu-input(medium);
-  padding-left: spacing(12);
-  padding-right: spacing(12);
   width: 100%;
+  padding: spacing(3) spacing(4) spacing(3) spacing(12);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  color: color(text-primary);
+  font-size: font-size(base);
+  font-family: $font-family-heading;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: color(primary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &::placeholder {
+    color: color(text-muted);
+  }
 }
 
 .clearButton {
   position: absolute;
   right: spacing(4);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: spacing(1);
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(3);
+  color: color(text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
 
-  svg {
-    color: color(text-secondary);
-    transition: color map-get($transitions, base) $transition-easing;
-  }
-
-  &:hover svg {
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
     color: color(text-primary);
   }
 }
 
-.searchResults {
+.filtersRow {
+  display: flex;
+  gap: spacing(6);
+  flex-wrap: wrap;
+
+  @include responsive(md) {
+    flex-direction: column;
+    gap: spacing(4);
+  }
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(3);
+  flex: 1;
+}
+
+.filterLabel {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
   font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  color: color(text-primary);
+  margin-bottom: spacing(2);
+
+  svg {
+    color: color(primary);
+  }
+}
+
+.filterButtons {
+  display: flex;
+  gap: spacing(2);
+  flex-wrap: wrap;
+}
+
+.filterButton {
+  padding: spacing(2) spacing(4);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
   color: color(text-secondary);
-  padding-left: spacing(4);
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: $font-family-heading;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: color(text-primary);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+    border-color: #3b82f6;
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+}
+
+.sortSelect {
+  padding: spacing(2) spacing(4);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  color: color(text-primary);
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: $font-family-heading;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-color: color(primary);
+    background: rgba(255, 255, 255, 0.08);
+  }
 }
 
 // Users Grid
 .usersGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: spacing(6);
 
   @include responsive(sm) {
@@ -141,38 +220,34 @@
 }
 
 .userCard {
-  @include neu-card(medium);
-  padding: spacing(5);
-  transition: all map-get($transitions, base) $transition-easing;
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  padding: spacing(6);
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+  cursor: pointer;
+  transition: all 0.2s ease;
 
   &:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.12);
     transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
-}
-
-.userHeader {
-  display: flex;
-  align-items: center;
-  gap: spacing(4);
-  margin-bottom: spacing(5);
-  padding-bottom: spacing(4);
-  border-bottom: 1px solid color(border-primary);
 }
 
 .userAvatar {
   width: 64px;
   height: 64px;
-  border-radius: 50%;
+  border-radius: spacing(4);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: font-size(2xl);
+  font-size: font-size(xl);
   font-weight: font-weight(bold);
-  color: white;
-  flex-shrink: 0;
-  box-shadow: 
-    4px 4px 8px rgba(0, 0, 0, 0.3),
-    -2px -2px 4px rgba(255, 255, 255, 0.1);
+  margin-bottom: spacing(2);
 }
 
 .userInfo {
@@ -180,149 +255,335 @@
 }
 
 .userName {
-  font-size: font-size(lg);
+  font-size: font-size(xl);
   font-weight: font-weight(bold);
   color: color(text-primary);
-  margin-bottom: spacing(1);
+  margin: 0 0 spacing(1) 0;
 }
 
 .userUsername {
   font-size: font-size(sm);
   color: color(text-secondary);
+  margin: 0 0 spacing(3) 0;
+}
+
+.userMeta {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  font-size: font-size(xs);
+  color: color(text-muted);
+
+  svg {
+    flex-shrink: 0;
+  }
 }
 
 .userStats {
   display: flex;
-  gap: spacing(6);
-  margin-bottom: spacing(5);
+  gap: spacing(4);
+  padding: spacing(4) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .statItem {
   flex: 1;
   text-align: center;
-  padding: spacing(3);
-  @include neu-card(light);
-  border-radius: map-get($border-radius, base);
 }
 
 .statValue {
   font-size: font-size(2xl);
   font-weight: font-weight(bold);
-  color: color(text-primary);
+  color: color(primary);
   margin-bottom: spacing(1);
 }
 
 .statLabel {
   font-size: font-size(xs);
   color: color(text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.userActions {
-  display: flex;
-  gap: spacing(3);
-}
-
-.actionButton {
-  @include neu-button(medium);
-  flex: 1;
+.userFooter {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: spacing(2);
-  padding: spacing(3) spacing(4);
-  font-size: font-size(sm);
+}
+
+.lastActive {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  font-size: font-size(xs);
+  color: color(text-muted);
 
   svg {
     flex-shrink: 0;
-  }
-
-  &.follow {
-    background: color(primary);
-    color: white;
-    box-shadow: 
-      8px 8px 16px rgba(139, 92, 246, 0.4),
-      -8px -8px 16px rgba(64, 64, 64, 0.8);
-
-    &:hover {
-      box-shadow: 
-        12px 12px 24px rgba(139, 92, 246, 0.5),
-        -12px -12px 24px rgba(64, 64, 64, 0.9);
-    }
-  }
-
-  &.following {
-    background: color(success);
-    color: white;
-    box-shadow: 
-      8px 8px 16px rgba(16, 185, 129, 0.3),
-      -8px -8px 16px rgba(64, 64, 64, 0.8);
-
-    &:hover {
-      background: color(error);
-      box-shadow: 
-        8px 8px 16px rgba(239, 68, 68, 0.3),
-        -8px -8px 16px rgba(64, 64, 64, 0.8);
-
-      svg {
-        transform: rotate(45deg);
-      }
-    }
-  }
-
-  &.message {
-    background: color(bg-tertiary);
-    color: color(text-secondary);
-    opacity: 0.7;
-    cursor: not-allowed;
-
-    &:hover {
-      opacity: 0.8;
-    }
   }
 }
 
 // Empty State
 .emptyState {
   text-align: center;
-  padding: spacing(16);
+  padding: spacing(16) spacing(4);
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  grid-column: 1 / -1;
+}
+
+.emptyIcon {
+  color: color(text-secondary);
+  margin-bottom: spacing(4);
+  opacity: 0.5;
+}
+
+.emptyTitle {
+  font-size: font-size(xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin: 0 0 spacing(2) 0;
+}
+
+.emptyText {
+  font-size: font-size(base);
+  color: color(text-secondary);
+  margin: 0;
+}
+
+// Modal
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: spacing(4);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.2s ease;
+}
+
+.modalContent {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(8);
+  padding: spacing(8);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slide-in-up 0.3s ease;
+  @include custom-scrollbar();
+
+  @include responsive(sm) {
+    padding: spacing(6);
+    max-height: 95vh;
+  }
+}
+
+.modalClose {
+  position: absolute;
+  top: spacing(4);
+  right: spacing(4);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(3);
+  color: color(text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: color(text-primary);
+    border-color: color(primary);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  gap: spacing(6);
+  margin-bottom: spacing(8);
+  padding-bottom: spacing(6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  @include responsive(sm) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.modalAvatar {
+  width: 96px;
+  height: 96px;
+  border-radius: spacing(6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: font-size(3xl);
+  font-weight: font-weight(bold);
+  flex-shrink: 0;
+}
+
+.modalUserInfo {
+  flex: 1;
+}
+
+.modalUserName {
+  font-size: font-size(2xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin: 0 0 spacing(1) 0;
+}
+
+.modalUsername {
+  font-size: font-size(base);
+  color: color(text-secondary);
+  margin: 0 0 spacing(4) 0;
+}
+
+.modalMeta {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+
+  @include responsive(sm) {
+    align-items: center;
+  }
+}
+
+.modalMetaItem {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  font-size: font-size(sm);
+  color: color(text-muted);
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.modalStats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: spacing(4);
+  margin-bottom: spacing(8);
+
+  @include responsive(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modalStatCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  padding: spacing(5);
+  display: flex;
+  align-items: center;
+  gap: spacing(4);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.modalStatIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: spacing(4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modalStatContent {
+  flex: 1;
+}
+
+.modalStatValue {
+  font-size: font-size(2xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin-bottom: spacing(1);
+}
+
+.modalStatLabel {
+  font-size: font-size(xs);
   color: color(text-secondary);
 }
 
-.emptyStateText {
+.modalProgressSection {
+  padding-top: spacing(6);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modalSectionTitle {
   font-size: font-size(lg);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin: 0 0 spacing(4) 0;
+}
+
+.progressBar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: spacing(3);
+  overflow: hidden;
+  margin-bottom: spacing(4);
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: spacing(3);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+}
+
+.progressStats {
+  display: flex;
+  justify-content: space-between;
+  gap: spacing(4);
+  flex-wrap: wrap;
+}
+
+.progressStat {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(1);
+}
+
+.progressStatLabel {
+  font-size: font-size(xs);
   color: color(text-muted);
 }
 
-// Loading States
-.loadingContainer {
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loadingSpinner {
-  @include neu-icon(medium);
-  width: 128px;
-  height: 128px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    color: color(primary);
-    animation: spin 1s linear infinite;
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.progressStatValue {
+  font-size: font-size(lg);
+  font-weight: font-weight(bold);
+  color: color(primary);
 }
 

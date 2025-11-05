@@ -1,0 +1,224 @@
+@import '../base';
+@import '../mixins';
+
+.footer {
+  background: color(border-dark);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-top: 1px solid color(border-light);
+  margin-top: auto;
+  padding: 3rem 2rem 1.5rem;
+  box-shadow: 
+    0 -4px 16px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, border-color 0.3s ease;
+
+  @include responsive(sm) {
+    padding: 2rem 1rem 1rem;
+  }
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  margin-bottom: 2rem;
+
+  @include responsive(lg) {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.brandSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 280px;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: color(text-primary);
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: color(primary);
+  }
+}
+
+.tagline {
+  color: color(text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: color(text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: color(text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 100%;
+
+  
+  @include responsive(md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @include responsive(sm) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.linksSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  
+  &:not(:last-child) {
+    padding-right: 2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  @include responsive(md) {
+    &:not(:last-child) {
+      padding-right: 1.5rem;
+    }
+  }
+
+  @include responsive(sm) {
+    &:not(:last-child) {
+      padding-right: 0;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: color(text-primary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footerLink {
+  color: color(text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+
+  &:hover {
+    color: color(text-primary);
+    transform: translateX(4px);
+  }
+}
+
+.bottomBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  @include responsive(sm) {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+}
+
+.copyright {
+  color: color(text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.legalLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.legalLink {
+  color: color(text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: color(text-primary);
+  }
+}
+
+.separator {
+  color: color(text-muted);
+  font-size: 0.875rem;
+}
+

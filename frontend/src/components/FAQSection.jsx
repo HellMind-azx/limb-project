@@ -5,7 +5,7 @@ import { FiSearch, FiPlus, FiX, FiMail } from 'react-icons/fi';
 import styles from '@/styles/components/FAQSection.module.scss';
 
 export default function FAQSection() {
-  const [expandedFaq, setExpandedFaq] = useState(0);
+  const [expandedFaq, setExpandedFaq] = useState(-1);
   const [searchQuery, setSearchQuery] = useState('');
 
   const faqs = [
@@ -43,8 +43,7 @@ export default function FAQSection() {
   return (
     <section className={styles.faqSection}>
       <div className={styles.container}>
-        {/* Glassmorphic FAQ card */}
-        <div className={styles.faqCard}>
+        <div className={styles.content}>
           {/* Header */}
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>
@@ -83,20 +82,16 @@ export default function FAQSection() {
                   </h3>
                   <div className={styles.faqIcon}>
                     {expandedFaq === index ? (
-                      <FiX className={styles.expand} size={20} />
+                      <FiX size={20} />
                     ) : (
-                      <FiPlus className={styles.collapse} size={20} />
+                      <FiPlus size={20} />
                     )}
                   </div>
                 </button>
                 
-                {expandedFaq === index && (
-                  <div className={styles.faqAnswer}>
-                    <p>
-                      {faq.answer}
-                    </p>
-                  </div>
-                )}
+                <div className={`${styles.faqAnswer} ${expandedFaq === index ? styles.expanded : ''}`}>
+                  <p>{faq.answer}</p>
+                </div>
               </div>
             ))}
           </div>

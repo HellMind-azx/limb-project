@@ -1,59 +1,22 @@
 @import '../../styles/base';
 @import '../../styles/mixins';
 
-.dashboard {
+.page {
   min-height: 100vh;
-  background: color(bg-primary);
-  display: flex;
+  padding: spacing(8);
+  background: color(border-dark);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.sidebar {
-  width: 80px;
-  background: color(bg-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: spacing(6) 0;
-  gap: spacing(6);
-  border-right: 1px solid color(border-primary);
-}
-
-.sidebarIcon {
-  @include neu-icon(medium);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+.loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all map-get($transitions, base) $transition-easing;
-
-  &.active {
-    background: color(primary);
-    
-    svg {
-      color: white;
-    }
-  }
-
-  svg {
-    color: color(text-secondary);
-    transition: color map-get($transitions, base) $transition-easing;
-  }
-
-  &:hover {
-    svg {
-      color: color(text-primary);
-    }
-  }
-}
-
-.mainContent {
-  flex: 1;
-  padding: spacing(8);
-  overflow-y: auto;
-  @include custom-scrollbar();
+  min-height: 400px;
+  font-size: font-size(lg);
+  color: color(text-secondary);
 }
 
 .header {
@@ -64,363 +27,371 @@
   font-size: font-size(3xl);
   font-weight: font-weight(bold);
   color: color(text-primary);
+  margin: 0 0 spacing(2) 0;
+  display: flex;
+  align-items: center;
+  gap: spacing(4);
+
+  .titleIcon {
+    color: color(primary);
+  }
 
   .primaryText {
     color: color(primary);
   }
 }
 
-// Error/Success Cards
-.errorCard {
-  @include neu-card(medium);
-  background: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.5);
-  margin-bottom: spacing(4);
-  padding: spacing(4);
+.subtitle {
+  font-size: font-size(lg);
+  color: color(text-secondary);
+  margin: 0;
+}
+
+// Message Banner
+.message {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.errorText {
-  color: color(error);
-}
-
-.successCard {
-  @include neu-card(medium);
-  background: rgba(16, 185, 129, 0.2);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  margin-bottom: spacing(4);
-  padding: spacing(4);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.successText {
-  color: color(success);
-}
-
-.closeButton {
-  @include neu-icon(light);
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-
-  svg {
-    color: color(text-secondary);
-  }
-
-  &:hover svg {
-    color: color(text-primary);
-  }
-}
-
-// Settings Cards
-.settingsCard {
-  @include neu-card(medium);
+  gap: spacing(3);
+  padding: spacing(4) spacing(6);
+  border-radius: spacing(4);
   margin-bottom: spacing(6);
-  padding: spacing(6);
+  font-size: font-size(base);
+  font-weight: font-weight(medium);
+  animation: slide-in-down 0.3s ease;
 
-  @include responsive(sm) {
-    padding: spacing(4);
+  &.success {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+
+    svg {
+      color: #10b981;
+    }
+  }
+
+  &.error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+
+    svg {
+      color: #ef4444;
+    }
   }
 }
 
-.cardHeader {
+// Settings Section
+.section {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  padding: spacing(6);
+  margin-bottom: spacing(6);
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.sectionHeader {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: spacing(4);
   margin-bottom: spacing(6);
-
-  svg {
-    color: color(primary);
-  }
+  padding-bottom: spacing(4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.cardTitle {
-  font-size: font-size(2xl);
-  font-weight: font-weight(bold);
-  color: color(text-primary);
-}
-
-// Settings List
-.settingsList {
-  display: flex;
-  flex-direction: column;
-  gap: spacing(6);
-  margin-bottom: spacing(6);
-}
-
-.settingItem {
+.sectionIcon {
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: spacing(4);
-  @include neu-card(light);
-  border-radius: map-get($border-radius, base);
-
-  @include responsive(sm) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: spacing(3);
-  }
+  justify-content: center;
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: spacing(4);
+  color: color(primary);
+  flex-shrink: 0;
 }
 
-.settingInfo {
-  flex: 1;
-}
-
-.settingLabel {
-  font-size: font-size(lg);
-  font-weight: font-weight(semi);
+.sectionTitle {
+  font-size: font-size(xl);
+  font-weight: font-weight(bold);
   color: color(text-primary);
-  margin-bottom: spacing(1);
+  margin: 0 0 spacing(2) 0;
 }
 
-.settingDescription {
+.sectionDescription {
   font-size: font-size(sm);
   color: color(text-secondary);
+  margin: 0;
 }
 
-// Toggle Switch
-.toggle {
-  position: relative;
-  display: inline-block;
-  width: 52px;
-  height: 28px;
-  cursor: pointer;
-
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  input:disabled + .toggleSlider {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-}
-
-.toggleSlider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: color(bg-tertiary);
-  border-radius: map-get($border-radius, full);
-  transition: all map-get($transitions, base) $transition-easing;
-  @include neu-inset(light);
-
-  &::before {
-    content: '';
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background: color(surface);
-    border-radius: 50%;
-    transition: all map-get($transitions, base) $transition-easing;
-    box-shadow: 
-      2px 2px 4px color(shadow-dark),
-      -2px -2px 4px color(shadow-light);
-  }
-}
-
-.toggle input:checked + .toggleSlider {
-  background: color(primary);
-  box-shadow: 
-    inset 4px 4px 8px rgba(139, 92, 246, 0.5),
-    inset -4px -4px 8px rgba(255, 255, 255, 0.1);
-
-  &::before {
-    transform: translateX(24px);
-    background: white;
-  }
-}
-
-// Password Form
-.passwordForm {
+.sectionContent {
   display: flex;
   flex-direction: column;
   gap: spacing(5);
 }
 
-.inputGroup {
+// Setting Item
+.settingItem {
   display: flex;
-  flex-direction: column;
-  gap: spacing(2);
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: spacing(4);
+  padding: spacing(4) 0;
+
+  @include responsive(sm) {
+    flex-direction: column;
+    gap: spacing(3);
+  }
 }
 
-.inputLabel {
+.settingLabel {
+  flex: 1;
+  min-width: 0;
+
+  label {
+    display: block;
+    font-size: font-size(base);
+    font-weight: font-weight(medium);
+    color: color(text-primary);
+    margin-bottom: spacing(1);
+  }
+}
+
+.settingDescription {
+  font-size: font-size(sm);
+  color: color(text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+// Theme Buttons
+.themeButtons {
+  display: flex;
+  gap: spacing(3);
+  flex-wrap: wrap;
+
+  @include responsive(sm) {
+    width: 100%;
+  }
+}
+
+.themeButton {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  padding: spacing(3) spacing(5);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  color: color(text-secondary);
   font-size: font-size(sm);
   font-weight: font-weight(medium);
-  color: color(text-primary);
-}
-
-.passwordInputWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.passwordInput {
-  @include neu-input(medium);
-  padding-right: spacing(12);
-}
-
-.passwordToggle {
-  position: absolute;
-  right: spacing(3);
-  background: transparent;
-  border: none;
   cursor: pointer;
-  padding: spacing(1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: $font-family-heading;
 
-  svg {
-    color: color(text-secondary);
-    transition: color map-get($transitions, base) $transition-easing;
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: color(text-primary);
   }
 
-  &:hover svg {
+  &.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+    border-color: #3b82f6;
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// Select
+.select {
+  padding: spacing(3) spacing(4);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  color: color(text-primary);
+  font-size: font-size(base);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: $font-family-heading;
+  min-width: 200px;
+
+  @include responsive(sm) {
+    width: 100%;
+    min-width: unset;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: color(primary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  option {
+    background: #0b1220;
     color: color(text-primary);
+  }
+}
+
+// Toggle Switch
+.toggle {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: spacing(8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  background: color(text-primary);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggleActive {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-color: #3b82f6;
+
+  .toggleThumb {
+    transform: translateX(24px);
+    background: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
   }
 }
 
 // Save Button
 .saveButton {
-  @include neu-button-primary(medium);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: spacing(2);
-  padding: spacing(4) spacing(6);
-  width: 100%;
-  margin-top: spacing(4);
+  padding: spacing(3) spacing(6);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  border: 1px solid #3b82f6;
+  border-radius: spacing(4);
+  color: white;
+  font-size: font-size(base);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: $font-family-heading;
+  margin-top: spacing(2);
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
 
   svg {
     flex-shrink: 0;
   }
 }
 
-.spinner {
-  animation: spin 1s linear infinite;
+// Action Button
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: spacing(2);
+  padding: spacing(3) spacing(5);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  color: color(text-primary);
+  font-size: font-size(sm);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: $font-family-heading;
+  min-width: 140px;
+
+  @include responsive(sm) {
+    width: 100%;
+    min-width: unset;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
 }
 
-@keyframes spin {
+.dangerButton {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #dc2626;
+  }
+}
+
+// Animations
+@keyframes slide-in-down {
   from {
-    transform: rotate(0deg);
+    transform: translateY(-20px);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
-  }
-}
-
-// Guide Section
-.guideContent {
-  display: flex;
-  flex-direction: column;
-  gap: spacing(6);
-}
-
-.guideSection {
-  padding-bottom: spacing(6);
-  border-bottom: 1px solid color(border-primary);
-
-  &:last-child {
-    border-bottom: none;
-  }
-}
-
-.guideSectionTitle {
-  font-size: font-size(xl);
-  font-weight: font-weight(bold);
-  color: color(text-primary);
-  margin-bottom: spacing(3);
-  display: flex;
-  align-items: center;
-  gap: spacing(2);
-}
-
-.guideText {
-  font-size: font-size(base);
-  color: color(text-secondary);
-  line-height: 1.6;
-  margin-bottom: spacing(3);
-}
-
-.guideList {
-  display: flex;
-  flex-direction: column;
-  gap: spacing(3);
-}
-
-.guideItem {
-  font-size: font-size(base);
-  color: color(text-secondary);
-  line-height: 1.6;
-  display: flex;
-  align-items: flex-start;
-  gap: spacing(2);
-
-  strong {
-    color: color(text-primary);
-    font-weight: font-weight(semi);
-  }
-
-  svg {
-    color: color(primary);
-    flex-shrink: 0;
-    margin-top: spacing(0.5);
-  }
-}
-
-.guideSubList {
-  margin-top: spacing(2);
-  margin-left: spacing(4);
-  display: flex;
-  flex-direction: column;
-  gap: spacing(2);
-}
-
-.colorIndicator {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  margin-right: spacing(2);
-  vertical-align: middle;
-}
-
-// Loading States
-.loadingContainer {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: color(bg-primary);
-}
-
-.loadingSpinner {
-  @include neu-icon(medium);
-  width: 128px;
-  height: 128px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    color: color(primary);
-    animation: spin 1s linear infinite;
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 

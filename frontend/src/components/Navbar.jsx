@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getStoredUser, clearTokens, clearStoredUser } from '@/lib/auth';
@@ -9,27 +9,9 @@ import styles from '@/styles/components/Navbar.module.scss';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const pathname = usePathname();
   const user = getStoredUser();
 
-  useEffect(() => {
-    // Check localStorage for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = isDarkMode ? 'light' : 'dark';
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-  };
 
   const handleLogout = () => {
     clearTokens();
@@ -50,7 +32,7 @@ export default function Navbar() {
       <div className={styles.container}>
         {/* Logo */}
         <Link href="/" className={styles.logo}>
-          Progressor™
+          Progressor
         </Link>
 
         {/* Desktop Navigation */}

@@ -1,6 +1,7 @@
 import '../styles/globals.scss';
 import '../styles/polygon.scss';
 import Navbar from '@/components/Navbar'; 
+import Footer from '@/components/Footer';
 import WithSidebar from '@/components/WithSidebar';
 
 export const metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         <WithSidebar>{children}</WithSidebar>
+        <Footer />
       </body>
     </html>
   );

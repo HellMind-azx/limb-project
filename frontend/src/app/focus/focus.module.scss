@@ -1,0 +1,408 @@
+@import '../../styles/base';
+@import '../../styles/mixins';
+
+.page {
+  min-height: 100vh;
+  padding: spacing(8);
+  background: color(border-dark);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: spacing(8);
+}
+
+.title {
+  font-size: font-size(3xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin-bottom: spacing(2);
+
+  .primaryText {
+    color: color(primary);
+  }
+}
+
+.subtitle {
+  font-size: font-size(lg);
+  color: color(text-secondary);
+  margin: 0;
+}
+
+// Timers Grid
+.timersGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: spacing(6);
+  margin-bottom: spacing(8);
+
+  @include responsive(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.timerCard {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  padding: spacing(6);
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: spacing(3);
+  margin-bottom: spacing(2);
+
+  svg {
+    color: color(primary);
+  }
+}
+
+.cardTitle {
+  font-size: font-size(xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.sessionBadge {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  padding: spacing(1) spacing(3);
+  border-radius: spacing(3);
+  font-size: font-size(xs);
+  font-weight: font-weight(medium);
+}
+
+.timerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing(4);
+}
+
+// Circular Progress
+.circularProgress {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include responsive(sm) {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+.progressSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progressTrack {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 8;
+}
+
+.progressBar {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.timerContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.timerDisplay {
+  font-size: font-size(4xl);
+  font-weight: font-weight(bold);
+  color: color(text-primary);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.timerMode {
+  font-size: font-size(sm);
+  color: color(text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.timerInput {
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
+  margin-top: spacing(2);
+
+  span {
+    color: color(text-secondary);
+    font-size: font-size(lg);
+  }
+}
+
+.timeInput {
+  width: 60px;
+  padding: spacing(2);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(2);
+  color: color(text-primary);
+  font-size: font-size(lg);
+  font-weight: font-weight(bold);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: color(primary);
+  }
+}
+
+// Timer Controls
+.timerControls {
+  display: flex;
+  gap: spacing(3);
+  width: 100%;
+  justify-content: center;
+}
+
+.controlBtn {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  padding: spacing(3) spacing(6);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  color: color(text-primary);
+  font-size: font-size(base);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: $font-family-heading;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: color(primary);
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  svg {
+    color: color(primary);
+  }
+}
+
+// Tools Grid
+.toolsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: spacing(6);
+
+  @include responsive(lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.toolCard {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: spacing(6);
+  padding: spacing(6);
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+}
+
+// Task List
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+}
+
+.taskInput {
+  display: flex;
+  gap: spacing(2);
+}
+
+.taskInputField {
+  flex: 1;
+  padding: spacing(3) spacing(4);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: spacing(4);
+  color: color(text-primary);
+  font-size: font-size(base);
+  font-family: $font-family-base;
+
+  &:focus {
+    outline: none;
+    border-color: color(primary);
+  }
+
+  &::placeholder {
+    color: color(text-secondary);
+  }
+}
+
+.addTaskBtn {
+  padding: spacing(3) spacing(6);
+  background: color(primary);
+  border: none;
+  border-radius: spacing(4);
+  color: white;
+  font-size: font-size(base);
+  font-weight: font-weight(medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(color(primary), 0.9);
+    transform: translateY(-2px);
+  }
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+  max-height: 300px;
+  overflow-y: auto;
+  @include custom-scrollbar();
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  gap: spacing(3);
+  padding: spacing(3) spacing(4);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: spacing(4);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &.completed {
+    opacity: 0.6;
+
+    .taskText {
+      text-decoration: line-through;
+    }
+  }
+}
+
+.taskCheckbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: color(primary);
+}
+
+.taskText {
+  flex: 1;
+  color: color(text-primary);
+  font-size: font-size(base);
+}
+
+.deleteTaskBtn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: #ef4444;
+  font-size: font-size(xl);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.3);
+    transform: scale(1.1);
+  }
+}
+
+// Stats
+.statsContent {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(1);
+  padding: spacing(4);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: spacing(4);
+}
+
+.statValue {
+  font-size: font-size(3xl);
+  font-weight: font-weight(bold);
+  color: color(primary);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: font-size(sm);
+  color: color(text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.placeholderContent {
+  padding: spacing(8);
+  text-align: center;
+  color: color(text-secondary);
+  font-size: font-size(base);
+}
+
+.emptyState {
+  padding: spacing(6);
+  text-align: center;
+  color: color(text-muted);
+  font-size: font-size(sm);
+}
+

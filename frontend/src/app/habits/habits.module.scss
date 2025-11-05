@@ -674,7 +674,6 @@
 }
 
 .kpiCard {
-  @include soft-card;
   margin-top: spacing(3);
   padding: spacing(4);
   border-radius: spacing(6);
@@ -713,6 +712,17 @@
   background: color(border-primary);
   border-radius: spacing(6);
   border: 1px solid color(border-light);
+  transition: all map-get($transitions, base) $transition-easing;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: color(primary);
+  }
+}
+
+.taskRowCompleted {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
 .taskMeta {
@@ -777,7 +787,22 @@
 
 .taskBarWrap {
   width: 100%;
-  background: color(border-primary);  
+  background: color(border-primary);
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+}
+
+.taskCheckbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: color(primary);
+  color: color(text-dark);
+  flex-shrink: 0;
 }
 
 .taskBarBg {
@@ -894,6 +919,9 @@
   height: 48px;
   border-radius: 50%;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .habitName {
@@ -1352,13 +1380,54 @@
   border-radius: spacing(6);
   border: 1px solid color(border-light);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: spacing(3);
   transition: all map-get($transitions, base) $transition-easing;
+  position: relative;
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     transform: translateY(-1px);
+  }
+}
+
+.habitCardActions {
+  display: flex;
+  align-items: center;
+  gap: spacing(2);
+  align-self: flex-end;
+  margin-bottom: auto;
+}
+
+.habitCardContent {
+  display: flex;
+  align-items: center;
+  gap: spacing(3);
+  width: 100%;
+}
+
+.habitActionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: spacing(4);
+  background: transparent;
+  border: 1px solid color(border-light);
+  color: color(text-secondary);
+  cursor: pointer;
+  transition: all map-get($transitions, base) $transition-easing;
+
+  &:hover {
+    background: color(border-light);
+    border-color: color(primary);
+    color: color(primary);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }
 
@@ -1367,10 +1436,17 @@
   height: 40px;
   border-radius: 50%;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .habitCardInfo {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: spacing(1);
+  width: 100%;
 }
 
 .habitCardName {
@@ -1493,6 +1569,13 @@
   font-size: font-size(sm);
   font-weight: font-weight(medium);
   color: color(text-primary);
+}
+
+.formHint {
+  font-size: font-size(xs);
+  color: color(text-muted);
+  font-style: italic;
+  margin-top: -spacing(1);
 }
 
 .formInput,

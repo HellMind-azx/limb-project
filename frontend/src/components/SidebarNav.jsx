@@ -8,7 +8,7 @@ import {
   FiX,
   FiHome,
   FiTarget,
-  FiActivity,
+  FiCoffee,
   FiBell,
   FiUsers,
   FiSettings,
@@ -22,7 +22,7 @@ const NAV_ITEMS = [
   { href: "/", label: "Home", icon: FiHome },
   { href: "/habits", label: "Habits", icon: FiTarget },
   { href: "/calendar", label: "Calendar", icon: FiCalendar },
-  { href: "/activity", label: "Activity", icon: FiActivity },
+  { href: "/focus", label: "Focus", icon: FiCoffee },
   { href: "/notifications", label: "Notifications", icon: FiBell },
   { href: "/users", label: "Users", icon: FiUsers },
 ];

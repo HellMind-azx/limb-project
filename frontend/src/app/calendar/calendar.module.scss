@@ -1,19 +1,243 @@
-.page { min-height: 100vh; padding: 24px; }
-.card { background: #0b1220; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; }
-.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.title { color: #fff; font-weight: 700; font-size: 18px; }
-.navRow { display: flex; align-items: center; gap: 8px; }
-.navBtn { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.06); }
-.monthTitle { color: #fff; font-weight: 600; font-size: 16px; min-width: 160px; text-align: center; }
-.weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-top: 8px; margin-bottom: 4px; }
-.weekday { text-align: center; color: rgba(255,255,255,0.6); font-size: 10px; text-transform: uppercase; padding: 4px 0; }
-.grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-.cell { position: relative; width: 34px; height: 34px; max-width: 100%; margin: 0 auto; border-radius: 5px; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; }
-.empty { background: rgba(255,255,255,0.02); opacity: 0.4; }
-.completed { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%); border: 1px solid #3b82f6; }
-.partial { background: linear-gradient(135deg, #3b82f6 0%, rgba(139,92,246,0.6) 60%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(59,130,246,0.5); }
-.missed { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); }
-.today { outline: 2px solid #22d3ee; }
-.dayNum { color: rgba(255,255,255,0.8); font-size: 10px; font-weight: 600; }
-.percent { position: absolute; bottom: 1px; right: 1px; color: rgba(255,255,255,0.9); font-size: 6px; font-weight: 700; }
+@import '../../styles/base';
+@import '../../styles/mixins';
+
+.page { 
+  min-height: 100vh; 
+  padding: 24px; 
+  background: color(border-dark);
+}
+
+.card { 
+  background: #0b1220; 
+  border: 1px solid color(text-primary); 
+  border-radius: spacing(6); 
+  padding: 16px; 
+  margin-bottom: 24px;
+}
+
+.header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  margin-bottom: 8px; 
+}
+
+.title { 
+  color: #fff; 
+  font-weight: 700; 
+  font-size: 18px; 
+}
+
+.navRow { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+
+.navBtn { 
+  width: 36px; 
+  height: 36px; 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  border-radius: 8px; 
+  background: rgba(255,255,255,0.06); 
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.8);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255,255,255,0.1);
+  }
+}
+
+.monthTitle { 
+  color: #fff; 
+  font-weight: 600; 
+  font-size: 16px; 
+  min-width: 160px; 
+  text-align: center; 
+}
+
+.weekdays { 
+  display: grid; 
+  grid-template-columns: repeat(7, 1fr); 
+  gap: 2px; 
+  margin-top: 8px; 
+  margin-bottom: 4px; 
+}
+
+.weekday { 
+  text-align: center; 
+  color: rgba(255,255,255,0.6); 
+  font-size: 10px; 
+  text-transform: uppercase; 
+  padding: 4px 0; 
+}
+
+.grid { 
+  display: grid; 
+  grid-template-columns: repeat(7, 1fr); 
+  gap: 2px; 
+}
+
+.cell { 
+  position: relative; 
+  width: 34px; 
+  height: 34px; 
+  max-width: 100%; 
+  margin: 0 auto; 
+  border-radius: 5px; 
+  border: 1px solid rgba(255,255,255,0.08); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.empty { 
+  background: rgba(255,255,255,0.02); 
+  opacity: 0.4; 
+}
+
+.completed { 
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%); 
+  border: 1px solid #3b82f6; 
+}
+
+.partial { 
+  background: linear-gradient(135deg, #3b82f6 0%, rgba(139,92,246,0.6) 60%, rgba(255,255,255,0.02) 100%); 
+  border: 1px solid rgba(59,130,246,0.5); 
+}
+
+.missed { 
+  background: rgba(255,255,255,0.02); 
+  border: 1px solid rgba(255,255,255,0.05); 
+}
+
+.today { 
+  outline: 2px solid #22d3ee; 
+}
+
+.dayNum { 
+  color: rgba(255,255,255,0.8); 
+  font-size: 10px; 
+  font-weight: 600; 
+}
+
+.percent { 
+  position: absolute; 
+  bottom: 1px; 
+  right: 1px; 
+  color: rgba(255,255,255,0.9); 
+  font-size: 6px; 
+  font-weight: 700; 
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.loadingSpinner {
+  color: color(primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Analytics Dashboard
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+// KPI Card
+.kpiCard {
+  background: #0b1220;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kpiHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kpiTitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kpiIcon {
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpiValue {
+  color: #fff;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.kpiLabel {
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+}
+
+// Charts Grid
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chartCard {
+  background: #0b1220;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chartTitle {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.chartContainer {
+  width: 100%;
+  height: 300px;
+}
 

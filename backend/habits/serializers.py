@@ -24,12 +24,13 @@ class CategorySerializer(serializers.ModelSerializer):
 class HabitSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True)
     category_color = serializers.CharField(source='category.color', read_only=True)
+    category_icon = serializers.CharField(source='category.icon', read_only=True)
     streak_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Habit
         fields = ['id', 'title', 'description', 'category', 'category_name', 
-                 'category_color', 'frequency', 'target_count', 'is_active', 
+                 'category_color', 'category_icon', 'frequency', 'target_count', 'is_active', 
                  'created_at', 'streak_count']
         read_only_fields = ['created_at', 'streak_count']
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { isAuthenticated, getStoredUser } from '@/lib/auth';
-import { getHabits, getProgress, toggleProgress, getStats, createHabit, createCategory, getCategories } from '@/lib/api';
+import { getHabits, getProgress, toggleProgress, getStats, createHabit, updateHabit, deleteHabit, createCategory, getCategories } from '@/lib/api';
 import {
   FiSettings,
   FiBell,
@@ -36,7 +36,9 @@ import {
   FiShoppingBag,
   FiPlay,
   FiRadio,
-  FiPlus
+  FiPlus,
+  FiEdit,
+  FiTrash2
 } from 'react-icons/fi';
 import styles from './habits.module.scss';
 
@@ -53,8 +55,8 @@ export default function HabitsDashboard() {
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  // Modal state
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Create Modal state
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
@@ -64,8 +66,15 @@ export default function HabitsDashboard() {
   const [selectedColor, setSelectedColor] = useState('#3B82F6');
   const [customColorOpen, setCustomColorOpen] = useState(false);
   const [customColor, setCustomColor] = useState('#3B82F6');
-  const [modalError, setModalError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const [createModalError, setCreateModalError] = useState('');
+  const [creating, setCreating] = useState(false);
+
+  // Edit Modal state
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingHabit, setEditingHabit] = useState(null);
+  const [editHabitTitle, setEditHabitTitle] = useState('');
+  const [editModalError, setEditModalError] = useState('');
+  const [updating, setUpdating] = useState(false);
 
   const handleSidebarNavigation = (path) => {
     router.push(path);
@@ -197,12 +206,12 @@ export default function HabitsDashboard() {
     '#06B6D4', // cyan
   ];
 
-  // Load categories when modal opens
+  // Load categories when create modal opens
   useEffect(() => {
-    if (isModalOpen) {
+    if (isCreateModalOpen) {
       loadCategories();
     }
-  }, [isModalOpen]);
+  }, [isCreateModalOpen]);
 
   const loadCategories = async () => {
     try {
@@ -210,13 +219,13 @@ export default function HabitsDashboard() {
       setCategories(categoriesData);
     } catch (err) {
       console.error('Error loading categories:', err);
-      setModalError('Failed to load categories');
+      setCreateModalError('Failed to load categories');
     }
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-    setModalError('');
+  const handleOpenCreateModal = () => {
+    setIsCreateModalOpen(true);
+    setCreateModalError('');
     setHabitTitle('');
     setSelectedCategoryId('');
     setIsCreatingCategory(false);
@@ -227,9 +236,22 @@ export default function HabitsDashboard() {
     setCustomColorOpen(false);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setModalError('');
+  const handleCloseCreateModal = () => {
+    setIsCreateModalOpen(false);
+    setCreateModalError('');
+  };
+
+  const handleOpenEditModal = (habit) => {
+    setIsEditModalOpen(true);
+    setEditingHabit(habit);
+    setEditHabitTitle(habit.title || '');
+    setEditModalError('');
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingHabit(null);
+    setEditModalError('');
   };
 
   const handleCategoryChange = (e) => {
@@ -248,16 +270,16 @@ export default function HabitsDashboard() {
     setCustomColorOpen(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    setModalError('');
-    setSubmitting(true);
+    setCreateModalError('');
+    setCreating(true);
 
     try {
       // Validation
       if (!habitTitle.trim()) {
-        setModalError('Habit title is required');
-        setSubmitting(false);
+        setCreateModalError('Habit title is required');
+        setCreating(false);
         return;
       }
 
@@ -266,14 +288,14 @@ export default function HabitsDashboard() {
       // Create category if needed
       if (isCreatingCategory) {
         if (!newCategoryName.trim()) {
-          setModalError('Category name is required');
-          setSubmitting(false);
+          setCreateModalError('Category name is required');
+          setCreating(false);
           return;
         }
 
         if (!selectedIcon) {
-          setModalError('Please select an icon');
-          setSubmitting(false);
+          setCreateModalError('Please select an icon');
+          setCreating(false);
           return;
         }
 
@@ -285,12 +307,12 @@ export default function HabitsDashboard() {
         });
         categoryId = newCategory.id;
       } else if (!categoryId) {
-        setModalError('Please select or create a category');
-        setSubmitting(false);
+        setCreateModalError('Please select or create a category');
+        setCreating(false);
         return;
       }
 
-      // Create habit
+      // Create new habit
       await createHabit({
         title: habitTitle,
         category: categoryId,
@@ -302,28 +324,79 @@ export default function HabitsDashboard() {
       await loadData();
 
       // Close modal
-      handleCloseModal();
+      handleCloseCreateModal();
     } catch (err) {
       console.error('Error creating habit:', err);
-      setModalError(err.response?.data?.detail || err.message || 'Failed to create habit');
+      setCreateModalError(err.response?.data?.detail || err.message || 'Failed to create habit');
     } finally {
-      setSubmitting(false);
+      setCreating(false);
     }
   };
 
-  // Handle ESC key to close modal
-  useEffect(() => {
-    if (!isModalOpen) return;
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    setEditModalError('');
+    setUpdating(true);
 
+    try {
+      // Validation
+      if (!editHabitTitle.trim()) {
+        setEditModalError('Habit title is required');
+        setUpdating(false);
+        return;
+      }
+
+      // Update existing habit
+      await updateHabit(editingHabit.id, {
+        title: editHabitTitle,
+        category: editingHabit.category,
+        frequency: editingHabit.frequency || 'daily',
+        target_count: editingHabit.target_count || 1,
+      });
+
+      // Reload data
+      await loadData();
+
+      // Close modal
+      handleCloseEditModal();
+    } catch (err) {
+      console.error('Error updating habit:', err);
+      setEditModalError(err.response?.data?.detail || err.message || 'Failed to update habit');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleDeleteHabit = async (habitId) => {
+    if (!window.confirm('Are you sure you want to delete this habit? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      await deleteHabit(habitId);
+      await loadData();
+    } catch (err) {
+      console.error('Error deleting habit:', err);
+      alert('Failed to delete habit. Please try again.');
+    }
+  };
+
+  // Handle ESC key to close modals
+  useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape') {
-        handleCloseModal();
+        if (isCreateModalOpen) {
+          handleCloseCreateModal();
+        }
+        if (isEditModalOpen) {
+          handleCloseEditModal();
+        }
       }
     };
 
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [isModalOpen]);
+  }, [isCreateModalOpen, isEditModalOpen]);
 
   if (loading) {
     return (
@@ -371,7 +444,7 @@ export default function HabitsDashboard() {
               );
             })}
           </div>
-          <button className={styles.addHabitBtn} onClick={handleOpenModal}>
+          <button className={styles.addHabitBtn} onClick={handleOpenCreateModal}>
             <span className={styles.addHabitBtnIcon}>
               <FiPlus size={16} /></span>
             Add Habits
@@ -429,12 +502,24 @@ export default function HabitsDashboard() {
                 // simple per-habit bar: done = 100, not done = 0 (can be extended to target_count)
                 const percent = isDone ? 100 : 0;
                 return (
-                  <div key={habit.id} className={styles.taskRow}>
+                  <div 
+                    key={habit.id} 
+                    className={`${styles.taskRow} ${isDone ? styles.taskRowCompleted : ''}`}
+                    onClick={() => handleToggleProgress(habit.id, selectedDate)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <div className={styles.taskMeta}>
                       <div
                         className={styles.habitIcon}
                         style={{ background: habit.category_color || '#3B82F6' }}
-                      />
+                      >
+                        {(() => {
+                          const iconName = habit.category_icon || 'FiTarget';
+                          const iconOption = iconOptions.find(opt => opt.name === iconName);
+                          const IconComponent = iconOption?.component || FiTarget;
+                          return <IconComponent size={24} color="white" />;
+                        })()}
+                      </div>
                       <div className={styles.taskTitleWrap}>
                         <div className={styles.taskTitle}>{habit.title}</div>
                         <div className={styles.taskMetaLine}>
@@ -451,6 +536,9 @@ export default function HabitsDashboard() {
                     <div className={styles.taskBarWrap}>
                       <div className={styles.taskBarBg}>
                         <div className={styles.taskBarFill} style={{ width: `${percent}%` }} />
+                      </div>
+                      <div className={styles.taskCheckbox}>
+                        {isDone ? <FiCheck size={20} /> : null}
                       </div>
                     </div>
                   </div>
@@ -482,7 +570,14 @@ export default function HabitsDashboard() {
                           <div
                             className={styles.habitIcon}
                             style={{ background: habit.category_color || '#3B82F6' }}
-                          />
+                          >
+                            {(() => {
+                              const iconName = habit.category_icon || 'FiTarget';
+                              const iconOption = iconOptions.find(opt => opt.name === iconName);
+                              const IconComponent = iconOption?.component || FiTarget;
+                              return <IconComponent size={24} color="white" />;
+                            })()}
+                          </div>
                           <div className={styles.habitDetailInfo}>
                             <div className={styles.habitDetailName}>{habit.title}</div>
                             <div className={styles.habitDetailStreak}>
@@ -610,14 +705,45 @@ export default function HabitsDashboard() {
               const isDone = !!progress[key];
               return (
                 <div key={habit.id} className={styles.habitCardItem}>
-                  <div
-                    className={styles.habitCardIcon}
-                    style={{ background: habit.category_color || '#3B82F6' }}
-                  />
-                  <div className={styles.habitCardInfo}>
-                    <div className={styles.habitCardName}>{habit.title}</div>
-                    <div className={styles.habitCardMeta}>
-                      {habit.streak_count || 0}d streak • {habit.category_name || 'Uncategorized'}
+                  <div className={styles.habitCardActions}>
+                    <button
+                      className={styles.habitActionBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOpenEditModal(habit);
+                      }}
+                      title="Edit habit"
+                    >
+                      <FiEdit size={16} />
+                    </button>
+                    <button
+                      className={styles.habitActionBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteHabit(habit.id);
+                      }}
+                      title="Delete habit"
+                    >
+                      <FiTrash2 size={16} />
+                    </button>
+                  </div>
+                  <div className={styles.habitCardContent}>
+                    <div
+                      className={styles.habitCardIcon}
+                      style={{ background: habit.category_color || '#3B82F6' }}
+                    >
+                      {(() => {
+                        const iconName = habit.category_icon || 'FiTarget';
+                        const iconOption = iconOptions.find(opt => opt.name === iconName);
+                        const IconComponent = iconOption?.component || FiTarget;
+                        return <IconComponent size={20} color="white" />;
+                      })()}
+                    </div>
+                    <div className={styles.habitCardInfo}>
+                      <div className={styles.habitCardName}>{habit.title}</div>
+                      <div className={styles.habitCardMeta}>
+                        {habit.streak_count || 0}d streak • {habit.category_name || 'Uncategorized'}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -632,21 +758,21 @@ export default function HabitsDashboard() {
         </div>
       </div>
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div className={styles.modalBackdrop} onClick={handleCloseModal}>
+      {/* Create Habit Modal */}
+      {isCreateModalOpen && (
+        <div className={styles.modalBackdrop} onClick={handleCloseCreateModal}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
               <h2 className={styles.modalTitle}>Create New Habit</h2>
-              <button className={styles.modalCloseBtn} onClick={handleCloseModal}>
+              <button className={styles.modalCloseBtn} onClick={handleCloseCreateModal}>
                 <FiX size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className={styles.modalForm}>
-              {modalError && (
+            <form onSubmit={handleCreateSubmit} className={styles.modalForm}>
+              {createModalError && (
                 <div className={styles.modalError}>
-                  {modalError}
+                  {createModalError}
                 </div>
               )}
 
@@ -657,6 +783,7 @@ export default function HabitsDashboard() {
                   className={styles.formSelect}
                   value={isCreatingCategory ? 'new' : selectedCategoryId}
                   onChange={handleCategoryChange}
+                  required
                 >
                   <option value="">Select category</option>
                   {categories.map(cat => (
@@ -664,6 +791,9 @@ export default function HabitsDashboard() {
                   ))}
                   <option value="new">+ Create new category</option>
                 </select>
+                {!selectedCategoryId && !isCreatingCategory && (
+                  <div className={styles.formHint}>Please select a category</div>
+                )}
               </div>
 
               {/* New Category Name */}
@@ -814,23 +944,93 @@ export default function HabitsDashboard() {
                 <button
                   type="button"
                   className={styles.cancelBtn}
-                  onClick={handleCloseModal}
-                  disabled={submitting}
+                  onClick={handleCloseCreateModal}
+                  disabled={creating}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   className={styles.submitBtn}
-                  disabled={submitting}
+                  disabled={creating}
                 >
-                  {submitting ? (
+                  {creating ? (
                     <>
                       <FiLoader className={styles.spinner} size={16} />
                       Creating...
                     </>
                   ) : (
                     'Create Habit'
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Habit Modal */}
+      {isEditModalOpen && editingHabit && (
+        <div className={styles.modalBackdrop} onClick={handleCloseEditModal}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Edit Habit</h2>
+              <button className={styles.modalCloseBtn} onClick={handleCloseEditModal}>
+                <FiX size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleEditSubmit} className={styles.modalForm}>
+              {editModalError && (
+                <div className={styles.modalError}>
+                  {editModalError}
+                </div>
+              )}
+
+              {/* Category Display (read-only) */}
+              <div className={styles.formField}>
+                <label className={styles.formLabel}>Category</label>
+                <div className={styles.formInput} style={{ opacity: 0.7, cursor: 'not-allowed' }}>
+                  {editingHabit.category_name || 'Uncategorized'}
+                </div>
+                <div className={styles.formHint}>Category cannot be changed when editing</div>
+              </div>
+
+              {/* Habit Title */}
+              <div className={styles.formField}>
+                <label className={styles.formLabel}>Habit Name</label>
+                <input
+                  type="text"
+                  className={styles.formInput}
+                  value={editHabitTitle}
+                  onChange={(e) => setEditHabitTitle(e.target.value)}
+                  placeholder="Enter habit name"
+                  required
+                />
+              </div>
+
+              {/* Form Actions */}
+              <div className={styles.modalActions}>
+                <button
+                  type="button"
+                  className={styles.cancelBtn}
+                  onClick={handleCloseEditModal}
+                  disabled={updating}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.submitBtn}
+                  disabled={updating}
+                >
+                  {updating ? (
+                    <>
+                      <FiLoader className={styles.spinner} size={16} />
+                      Updating...
+                    </>
+                  ) : (
+                    'Update Habit'
                   )}
                 </button>
               </div>

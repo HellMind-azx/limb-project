@@ -2,184 +2,53 @@
 @import '../mixins';
 
 .aboutSection {
-  padding: 6rem 0;
-  background-color: color(bg-light);
-  transition: background-color 0.3s ease;
+  position: relative;
+  padding: 5rem 0;
+  background: color(border-dark);
+
+  @include responsive(md) {
+    padding: 6rem 0;
+  }
+
+  @include responsive(lg) {
+    padding: 8rem 0;
+  }
 }
 
 .container {
-  max-width: 1280px;
+  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
+
+  @include responsive(md) {
+    padding: 0 3rem;
+  }
+
+  @include responsive(lg) {
+    padding: 0 4rem;
+  }
 }
 
 .content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 4rem;
-  align-items: center;
-
-  @include responsive(lg) {
-    grid-template-columns: 1fr 1fr;
-  }
+  text-align: center;
 }
 
-.decorativeSection {
-  position: relative;
-}
-
-.backgroundDecorations {
-  position: absolute;
-  inset: 0;
-  opacity: 0.1;
-}
-
-.decorativeSquare {
-  position: absolute;
-  border-radius: 0.5rem;
-
-  &:nth-child(1) {
-    top: 0;
-    left: 0;
-    width: 4rem;
-    height: 4rem;
-    background: linear-gradient(90deg, #9796f0, #fbc7d4);
-    transform: rotate(12deg);
-  }
-
-  &:nth-child(2) {
-    top: 2rem;
-    right: 2rem;
-    width: 3rem;
-    height: 3rem;
-    background-color: color(accent-1);
-    transform: rotate(-12deg);
-  }
-
-  &:nth-child(3) {
-    top: 4rem;
-    left: 3rem;
-    width: 2rem;
-    height: 2rem;
-    background-color: color(accent-2);
-    transform: rotate(45deg);
-  }
-
-  &:nth-child(4) {
-    top: 6rem;
-    right: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: color(accent-3);
-    transform: rotate(-45deg);
-  }
-
-  &:nth-child(5) {
-    top: 8rem;
-    left: 1rem;
-    width: 3.5rem;
-    height: 3.5rem;
-    background-color: color(primary);
-    transform: rotate(12deg);
-  }
-
-  &:nth-child(6) {
-    top: 10rem;
-    right: 4rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    background-color: color(accent-1);
-    transform: rotate(-12deg);
-  }
-}
-
-.neuCards {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.neuCard {
-  @include neu-card;
-  padding: 1.5rem;
-  background-color: var(--surface);
-  transition: background-color 0.3s ease;
-
-  &:nth-child(2) {
-    margin-left: 2rem;
-  }
-
-  &:nth-child(3) {
-    margin-left: 1rem;
-  }
-}
-
-.cardContent {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.cardIcon {
-  @include neu-icon;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-  &.primary {
-    background-color: color(primary);
-  }
-
-  &.accent1 {
-    background-color: color(accent-1);
-  }
-
-  &.accent2 {
-    background-color: color(accent-2);
-  }
-}
-
-.cardIconInner {
-  color: white;
-  font-size: 1.25rem;
-}
-
-.cardText {
-  flex: 1;
-}
-
-.cardTitle {
-  color: white;
-  font-weight: font-weight(semi);
-  margin-bottom: 0.25rem;
-}
-
-.cardDescription {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-  transition: color 0.3s ease;
-}
-
-.textSection {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.sectionTitle {
-  font-size: 2.25rem;
+.title {
+  font-size: 2rem;
   font-weight: font-weight(bold);
-  color: white;
-  margin-bottom: 1.5rem;
+  color: color(text-primary);
+  margin-bottom: 2rem;
+  line-height: 1.3;
 
   @include responsive(md) {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @include responsive(lg) {
     font-size: 3rem;
+    margin-bottom: 3rem;
   }
 }
 
@@ -187,67 +56,32 @@
   color: color(primary);
 }
 
-.sectionDescription {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  transition: color 0.3s ease;
-}
-
-.featuresGrid {
-  display: grid;
-  grid-template-columns: 1fr;
+.description {
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
 
   @include responsive(md) {
-    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
   }
 }
 
-.featureCard {
-  @include neu-card;
-  padding: 1.5rem;
-  background-color: var(--surface);
-  transition: background-color 0.3s ease;
+.paragraph {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+
+  @include responsive(md) {
+    font-size: 1.125rem;
+    line-height: 1.9;
+  }
+
+  @include responsive(lg) {
+    font-size: 1.25rem;
+    line-height: 2;
+  }
 }
 
-.featureContent {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.featureIcon {
-  @include neu-icon;
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: color(primary);
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.featureIconInner {
-  color: white;
-  font-size: 1.125rem;
-}
-
-.featureText {
-  flex: 1;
-}
-
-.featureTitle {
-  color: white;
-  font-weight: font-weight(semi);
-  margin-bottom: 0.5rem;
-}
-
-.featureDescription {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  transition: color 0.3s ease;
-}
