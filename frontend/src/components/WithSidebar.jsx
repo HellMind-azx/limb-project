@@ -3,10 +3,25 @@
 import { usePathname } from "next/navigation";
 import SidebarNav from "@/components/SidebarNav";
 
+// Pages that should show the sidebar
+const SIDEBAR_PAGES = [
+  '/habits',
+  '/calendar',
+  '/focus',
+  '/notifications',
+  '/users',
+  '/settings'
+];
+
 export default function WithSidebar({ children }) {
   const pathname = usePathname();
 
-  if (pathname === "/") {
+  // Check if current path should show sidebar
+  const shouldShowSidebar = SIDEBAR_PAGES.some(page => 
+    pathname === page || pathname?.startsWith(page + '/')
+  );
+
+  if (!shouldShowSidebar) {
     return children;
   }
 

@@ -54,16 +54,16 @@ export default function Navbar() {
 
         {/* Auth Section */}
         <div className={styles.authSection}>
-          {/* Theme Toggle */}
           {user ? (
-            <>
-              <span className={styles.userName}>
-                {user?.first_name || user?.username || 'User'}
-              </span>
-              <button onClick={handleLogout} className={styles.signInButton}>
-                Sign Out
-              </button>
-            </>
+            <Link href="/profile" className={styles.avatarCircle}>
+              {user?.first_name && user?.last_name
+                ? `${user.first_name[0]}${user.last_name[0]}`.toUpperCase()
+                : user?.first_name
+                ? user.first_name[0].toUpperCase()
+                : user?.username
+                ? user.username[0].toUpperCase()
+                : 'U'}
+            </Link>
           ) : (
             <Link href="/login" className={styles.signInButton}>
               Sign In
@@ -97,9 +97,14 @@ export default function Navbar() {
             </Link>
           ))}
           {user ? (
-            <button onClick={handleLogout} className={styles.mobileLogoutButton}>
-              Sign Out
-            </button>
+            <>
+              <Link href="/profile" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+                Profile
+              </Link>
+              <button onClick={handleLogout} className={styles.mobileLogoutButton}>
+                Sign Out
+              </button>
+            </>
           ) : (
             <Link href="/login" className={styles.mobileSignInButton}>
               Sign In

@@ -1,148 +1,76 @@
-'use client';
+import { ArrowRight, CheckCircle2, TrendingUp, Target } from "lucide-react";
+import styles from "@/styles/components/HeroSection.module.scss";
 
-import Link from 'next/link';
-import { 
-  FiPlus, 
-  FiArrowRight, 
-  FiTarget, 
-  FiTrendingUp, 
-  FiCalendar,
-  FiCheck,
-  FiActivity
-} from 'react-icons/fi';
-import styles from '@/styles/components/HeroSection.module.scss';
-
-export default function HeroSection() {
+const HeroSection = () => {
   return (
     <section className={styles.heroSection}>
-      {/* Background with geometric patterns */}
-      <div className={styles.heroBackground}></div>
+      {/* Background Image with Overlay */}
+      <div className={styles.backgroundWrapper}>
+        <img 
+          src={'/images/hero-habits.jpg'} 
+          alt="Habit tracking progress visualization" 
+          className={styles.backgroundImage}
+        />
+        <div className={styles.backgroundOverlay} />
+      </div>
 
-      {/* Container with overlap layout */}
-      <div className={styles.heroContainer}>
-        {/* Left - Hero content */}
-        <div className={styles.heroLeft}>
-          <div className={styles.content}>
-            {/* Slogan */}
-            <div className={styles.slogan}>
-              <FiPlus className={styles.sloganIcon} size={16} />
-              <span className={styles.sloganText}>
-                Build Better Habits
-              </span>
-            </div>
-
-            {/* Main heading */}
-            <h1 className={styles.heading}>
-              Transform Your Life,<br />
-              <span className={styles.headingAccent}>One Habit at a Time</span>
-            </h1>
-
-            {/* Subheading */}
-            <p className={styles.subheading}>
-              Track progress, build streaks, and achieve your goals with powerful habit tracking tools designed for consistency and growth.
-            </p>
-
-            {/* CTA Button */}
-            <Link 
-              href="/habits" 
-              className={styles.ctaButton}
-            >
-              <span className={styles.ctaText}>Start Tracking</span>
-              <span className={styles.ctaIcon}>
-                <FiArrowRight size={20} />
-              </span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Right - Decorative widgets with diagonal layout */}
-        <div className={styles.widgetsGrid}>
-          {/* Card 1: Active Habits (top-right) */}
-          <div className={styles.habitCard}>
-            <div className={styles.cardHeader}>
-              <h3 className={styles.cardTitle}>Active Habits</h3>
-              <div className={styles.cardIcon}>
-                <FiTarget size={16} />
-              </div>
-            </div>
-            <div className={styles.habitList}>
-              <div className={styles.habitItem}>
-                <div className={`${styles.habitIcon} ${styles.green}`}>
-                  <FiCheck size={20} />
-                </div>
-                <div className={styles.habitInfo}>
-                  <div className={styles.habitName}>Morning Exercise</div>
-                  <div className={styles.habitProgress}>12 day streak</div>
-                </div>
-              </div>
-              <div className={styles.habitItem}>
-                <div className={`${styles.habitIcon} ${styles.yellow}`}>
-                  <FiCheck size={20} />
-                </div>
-                <div className={styles.habitInfo}>
-                  <div className={styles.habitName}>Reading</div>
-                  <div className={styles.habitProgress}>8 day streak</div>
-                </div>
-              </div>
-              <div className={styles.habitItem}>
-                <div className={`${styles.habitIcon} ${styles.cyan}`}>
-                  <FiCheck size={20} />
-                </div>
-                <div className={styles.habitInfo}>
-                  <div className={styles.habitName}>Meditation</div>
-                  <div className={styles.habitProgress}>20 day streak</div>
-                </div>
-              </div>
-            </div>
+      {/* Content */}
+      <div className={styles.content}>
+        <div className={styles.contentInner}>
+          {/* Logo/Brand */}
+          <div className={styles.brandBadge}>
+            <Target className={styles.brandIcon} />
+            <span>Progressor</span>
           </div>
 
-          {/* Card 2: Streak (mid-right) */}
-          <div className={styles.streakCard}>
-            <div className={styles.streakIcon}>
-              <FiCalendar size={32} />
-            </div>
-            <div className={styles.streakValue}>42</div>
-            <div className={styles.streakLabel}>Days Streak</div>
+          {/* Main Heading */}
+          <h1 className={styles.mainHeading}>
+            Построй жизнь своей{" "}
+            <span className={styles.gradientText}>
+              мечты
+            </span>
+          </h1>
+
+          {/* Subheading */}
+          <p className={styles.subheading}>
+            Превращай цели в привычки, привычки в достижения. 
+            Отслеживай прогресс и становись лучше каждый день.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className={styles.ctaButtons}>
+            <button className={styles.primaryButton}>
+              Log in
+              <ArrowRight className={styles.buttonIcon} />
+            </button>
+            <button className={styles.secondaryButton}>
+              Узнать больше
+            </button>
           </div>
 
-          {/* Card 3: Progress (middle, shifted left) */}
-          <div className={styles.progressCard}>
-            <div className={styles.progressHeader}>
-              <h3 className={styles.progressTitle}>Work Progress</h3>
-              <div className={styles.progressValue}>84%</div>
+          {/* Feature Pills */}
+          <div className={styles.featurePills}>
+            <div className={styles.featurePill}>
+              <CheckCircle2 className={`${styles.featureIcon} ${styles.primary}`} />
+              <span className={styles.featureText}>Простое отслеживание</span>
             </div>
-            <div className={styles.progressBar}>
-              <div className={styles.progressFill} style={{ width: '84%' }}></div>
+            <div className={styles.featurePill}>
+              <TrendingUp className={`${styles.featureIcon} ${styles.secondary}`} />
+              <span className={styles.featureText}>Визуализация прогресса</span>
             </div>
-            <div className={styles.progressLegend}>
-              <span className={styles.completed}>Completed</span>
-              <span className={styles.active}>Active</span>
-              <span className={styles.pending}>Pending</span>
-            </div>
-          </div>
-
-          {/* Card 4: Stats (bottom-left) */}
-          <div className={styles.statsCard}>
-            <div className={styles.statsHeader}>
-              <h3 className={styles.statsTitle}>Weekly Stats</h3>
-              <div className={styles.statsIcon}>
-                <FiTrendingUp size={16} />
-              </div>
-            </div>
-            <div className={styles.statsValue}>+15.3%</div>
-            <div className={styles.statsLabel}>vs last week</div>
-            <div className={styles.statsGraph}>
-              <div className={styles.graphBar} style={{ height: '60%' }}></div>
-              <div className={styles.graphBar} style={{ height: '80%' }}></div>
-              <div className={styles.graphBar} style={{ height: '45%' }}></div>
-              <div className={styles.graphBar} style={{ height: '90%' }}></div>
-              <div className={styles.graphBar} style={{ height: '70%' }}></div>
-              <div className={styles.graphBar} style={{ height: '100%' }}></div>
-              <div className={styles.graphBar} style={{ height: '85%' }}></div>
+            <div className={styles.featurePill}>
+              <Target className={`${styles.featureIcon} ${styles.primary}`} />
+              <span className={styles.featureText}>Достигай целей</span>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Decorative Elements */}
+      <div className={`${styles.decorativeBlob} ${styles.topLeft}`} />
+      <div className={`${styles.decorativeBlob} ${styles.bottomRight}`} />
     </section>
   );
-}
+};
+
+export default HeroSection;

@@ -1,4 +1,4 @@
-@import '../styles/base';
+@import '@/styles/base.scss';
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -114,7 +114,9 @@
   gap: 4px;
 }
 
-.logout { color: rgba(255, 255, 255, 0.9); }
+.logout { background: color(border-dark); color: color(text-primary); font-size: font-size(base);}
+.logout:hover { background: rgba(color(primary), 0.1); color: color(text-primary); }
+.logout:active { background: color(border-dark); color: color(text-primary); }
 
 .backdrop {
   position: fixed;
