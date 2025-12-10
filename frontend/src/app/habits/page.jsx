@@ -398,16 +398,6 @@ export default function HabitsDashboard() {
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isCreateModalOpen, isEditModalOpen]);
 
-  if (loading) {
-    return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.loadingSpinner}>
-          <FiLoader size={48} />
-        </div>
-      </div>
-    );
-  }
-
   const todayStats = getTodayCompletionStats();
 
   return (

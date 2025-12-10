@@ -15,7 +15,7 @@ import {
   FiLogOut,
   FiCalendar,
 } from "react-icons/fi";
-import styles from "./SidebarNav.module.scss";
+import styles from "@/styles/components/SidebarNav.module.scss";
 import { clearTokens, clearStoredUser } from "@/lib/auth";
 
 const NAV_ITEMS = [

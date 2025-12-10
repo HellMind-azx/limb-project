@@ -1,488 +1,401 @@
-@import '../base';
-@import '../mixins';
+// HeroSection.module.scss
 
-.heroSection {
-  position: relative;
+.hero {
   min-height: 100vh;
-  height: 105vh;
+  background: linear-gradient(135deg, #ffd4d4 0%, #ffc8c8 100%);
+  padding: 60px 20px 80px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
   overflow: hidden;
 }
 
-.heroBackground {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  background: color(border-dark);
-  transition: background 0.3s ease;
-}
-
-.heroContainer {
-  position: relative;
-  z-index: 10;
-  max-width: 1400px;
-  width: 100%;
+.container {
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 2rem;
-  min-height: 105vh;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
   align-items: center;
-
-  @include responsive(md) {
-    padding: 0 1.5rem;
+  
+  @media (max-width: 1024px) {
+    gap: 60px;
   }
-}
-
-.heroLeft {
-  position: relative;
-  z-index: 10;
-  max-width: 55%;
-  width: 100%;
-  margin-top: -3rem;
-
-  @include responsive(md) {
-    max-width: 60%;
-  }
-
-  @include responsive(lg) {
-    max-width: 50%;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
 
 .content {
-  text-align: left;
-  padding: 2rem 0;
-  position: relative;
-  z-index: 15;
-}
-
-.slogan {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.sloganIcon {
-  color: color(primary);
-  font-size: 1rem;
-}
-
-.sloganText {
-  color: #ffffff;
-  font-size: 0.875rem;
-  font-weight: font-weight(medium);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.heading {
-  font-size: 2rem;
-  font-weight: font-weight(bold);
-  color: #ea9697 !important;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-  font-family: $font-family-base;
-  position: relative; 
-  z-index: 10;
-  opacity: 1 !important;
-  visibility: visible !important;
-  // Override polygon.scss h1 styles
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #ea9697 !important;
-  background-clip: unset !important;
-
-  @include responsive(md) {
-    font-size: 2.5rem;
-  }
-
-  @include responsive(lg) {
-    font-size: 3rem;
-  }
-}
-
-.headingAccent {
-  color: color(primary);
-  background: linear-gradient(135deg, color(primary) 0%, color(primary-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.subheading {
-  font-size: 1.125rem;
-  color: color(text-primary);
-  font-family: $font-family-heading;
-  margin-bottom: 2.5rem;
-  line-height: 1.7;
-
-
-  @include responsive(md) {
-    font-size: 1rem;
-    width: 80%;
-  }
-}
-
-.ctaButton {
-  display: flex;
-  padding: 0.5rem 1.4rem;
-  width: 200px;
-  height: fit-content;
-  background-color: color(border-dark);
-  border-radius: 40px;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px solid color(primary);
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.ctaText {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.8em;
-  letter-spacing: 1.2px;
-}
-
-.ctaIcon {
-  position: relative;
-  right: -1rem;
-  width: 45px;
-  height: 45px;
-  background-color: color(primary);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
-
-// Widgets Grid (диагональное расположение)
-.widgetsGrid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  pointer-events: none;
-  overflow: hidden;
-
-
-  @include responsive(lg) {
-    pointer-events: all;
-  }
-
-  >* {
-    pointer-events: all;
-  }
-}
-
-.widget {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1.5rem;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  width: 280px;
-
-  @include responsive(lg) {
-    width: 320px;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-  }
-
-  // Диагональное расположение карточек
-  &:nth-child(1) {
-    top: 13.5%;
-    right: 5%;
-    width: 260px;
-  }
-
-  &:nth-child(2) {
-    top: 52%;
-    right: 24.6%;
-    width: 280px;
-  }
-
-  &:nth-child(3) {
-    top: 30%;
-    left: 54%;
-    width: 300px;
-  }
-
-  &:nth-child(4) {
-    top: 52%;
-    right: 0.8%;
-    width: 320px;
-  }
-}
-
-.habitCard {
-  @extend .widget;
-
-  .cardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .cardTitle {
-    font-size: 0.875rem;
-    font-weight: font-weight(semi);
-    color: rgba(255, 255, 255, 0.9);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .cardIcon {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(color(primary-light), 0.2);
-    color: color(primary-light);
-  }
-}
-
-.habitList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 24px;
+  
+  @media (max-width: 768px) {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: white;
+  border-radius: 20px;
+  width: fit-content;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.badgeText {
+  background: #1a1a1a;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badgeLabel {
+  font-size: 13px;
+  color: #666;
+}
+
+.title {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin: 0;
+  
+  @media (max-width: 1024px) {
+    font-size: 48px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 36px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 28px;
+  }
+}
+
+.description {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #555;
+  max-width: 500px;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.btnPrimary,
+.btnSecondary {
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+}
+
+.btnPrimary {
+  background: #1a1a1a;
+  color: white;
+  
+  &:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.btnSecondary {
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  &:hover {
+    background: #1a1a1a;
+    color: white;
+    transform: translateY(-2px);
+  }
+}
+
+.previewIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 10px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.avatars {
+  display: flex;
+  
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-left: -12px;
+    
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.statsText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  
+  strong {
+    font-size: 16px;
+    color: #1a1a1a;
+  }
+  
+  span {
+    font-size: 13px;
+    color: #666;
+  }
+}
+
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  @media (max-width: 768px) {
+    order: -1;
+  }
+}
+
+.mockup {
+  background: #000;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 450px;
+  
+  @media (max-width: 480px) {
+    padding: 12px;
+  }
+}
+
+.mockupHeader {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff5f57;
+  
+  &:nth-child(2) {
+    background: #ffbd2e;
+  }
+  
+  &:nth-child(3) {
+    background: #28ca42;
+  }
+}
+
+.mockupContent {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+  @media (max-width: 480px) {
+    padding: 16px;
+  }
+}
+
+.balanceCard {
+  background: #1a1a1a;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  
+  .flag {
+    font-size: 20px;
+  }
+  
+  .amount {
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
+.totalSection {
+  h3 {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+  }
+  
+  .totalValue {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+}
+
+.chart {
+  display: flex;
+  gap: 12px;
+}
+
+.chartLabels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #999;
+  padding: 8px 0;
+}
+
+.chartBar {
+  flex: 1;
+  background: #f0f0f0;
+  border-radius: 8px;
+  height: 180px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.barFill {
+  width: 100%;
+  height: 73%;
+  background: #1a1a1a;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12px;
+  transition: height 0.6s ease;
+  
+  .tooltip {
+    background: #1a1a1a;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+.habits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .habitItem {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  font-size: 13px;
+  
+  .habitIcon {
+    font-size: 18px;
+  }
+  
+  span:nth-child(2) {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  
+  .habitLabel {
+    color: #666;
+    margin-left: auto;
+  }
 }
 
-.habitIcon {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.75rem;
+.brands {
+  max-width: 1280px;
+  margin: 60px auto 0;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  flex-shrink: 0;
-
-  &.green {
-    background: rgba(color(primary-light), 0.2);
-    color: color(primary-light);
-  }
-
-  &.yellow {
-    background: rgba(color(primary-light), 0.2);
-    color: color(primary-light);
-  }
-
-  &.cyan {
-    background: rgba(color(primary-light), 0.2);
-    color: color(primary-light);
-  }
-}
-
-.habitInfo {
-  flex: 1;
-  min-width: 0;
-
-  .habitName {
-    font-size: 0.875rem;
-    font-weight: font-weight(medium);
-    color: white;
-    margin-bottom: 0.25rem;
-  }
-
-  .habitProgress {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
-  }
-}
-
-// Progress Card
-.progressCard {
-  @extend .widget;
-  position: absolute;
-}
-
-.progressHeader {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-
-  .progressTitle {
-    font-size: 0.875rem;
-    font-weight: font-weight(semi);
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .progressValue {
-    font-size: 1.25rem;
-    font-weight: font-weight(bold);
-    color: color(primary);
+  gap: 60px;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  
+  @media (max-width: 768px) {
+    gap: 40px;
+    margin-top: 40px;
   }
 }
 
-.progressBar {
-  width: 100%;
-  height: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 9999px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-
-  .progressFill {
-    height: 100%;
-    background: linear-gradient(90deg, color(primary-light) 0%, color(primary) 100%);
-    border-radius: 9999px;
-    transition: width 0.3s ease;
+.brandItem {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.3);
+  text-transform: lowercase;
+  
+  @media (max-width: 480px) {
+    font-size: 16px;
   }
-}
-
-.progressLegend {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-
-  span {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    &::before {
-      content: '';
-      width: 0.5rem;
-      height: 0.5rem;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    &.completed {
-      color: #10b981;
-    }
-
-    &.active {
-      color: #a78bfa;
-    }
-
-    &.pending {
-      color: #eab308;
-    }
-  }
-}
-
-// Stats Card
-.statsCard {
-  @extend .widget;
-}
-
-.statsHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-
-  .statsTitle {
-    font-size: 0.875rem;
-    font-weight: font-weight(semi);
-    color: rgba(255, 255, 255, 0.9);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .statsIcon {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(16, 185, 129, 0.2);
-    color: #10b981;
-  }
-}
-
-.statsValue {
-  font-size: 2rem;
-  font-weight: font-weight(bold);
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-.statsLabel {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 1.5rem;
-}
-
-.statsGraph {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5rem;
-  height: 4rem;
-
-  .graphBar {
-    flex: 1;
-    border-radius: 0.25rem 0.25rem 0 0;
-    background: linear-gradient(180deg, color(primary-light) 0%, color(primary) 100%);
-    transition: all 0.3s ease;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-}
-
-// Streak Card
-.streakCard {
-  @extend .widget;
-  text-align: center;
-}
-
-.streakIcon {
-  width: 4rem;
-  height: 4rem;
-  margin: 0 auto 1rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(color(primary), 0.2);
-  color: color(primary);
-  font-size: 2rem;
-}
-
-.streakValue {
-  font-size: 2.5rem;
-  font-weight: font-weight(bold);
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-.streakLabel {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
 }

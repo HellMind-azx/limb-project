@@ -132,16 +132,6 @@ export default function ProfilePage() {
     return 'U';
   };
 
-  if (loading) {
-    return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.loadingSpinner}>
-          <FiLoader size={48} />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profileHeader}>
