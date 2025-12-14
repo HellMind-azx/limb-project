@@ -1,8 +1,8 @@
-// HeroSection.module.scss
+@import '../base.scss';
 
 .hero {
   min-height: 100vh;
-  background: linear-gradient(135deg, #ffd4d4 0%, #ffc8c8 100%);
+  background: color(bg-primary);
   padding: 60px 20px 80px;
   display: flex;
   flex-direction: column;
@@ -47,6 +47,7 @@
   padding: 6px 16px;
   background: white;
   border-radius: 20px;
+  border: 2px solid color(bg-light);
   width: fit-content;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
@@ -69,7 +70,7 @@
   font-size: 56px;
   font-weight: 700;
   line-height: 1.1;
-  color: #1a1a1a;
+  color: color(text-primary);
   margin: 0;
   
   @media (max-width: 1024px) {
@@ -88,7 +89,7 @@
 .description {
   font-size: 18px;
   line-height: 1.6;
-  color: #555;
+  color: color(text-primary);
   max-width: 500px;
   margin: 0;
   
@@ -124,7 +125,7 @@
 }
 
 .btnPrimary {
-  background: #1a1a1a;
+  background: #232323;
   color: white;
   
   &:hover {
@@ -135,9 +136,9 @@
 }
 
 .btnSecondary {
-  background: transparent;
-  color: #1a1a1a;
-  border: 1px solid #1a1a1a;
+  background: color(bg-primary);
+  color: color(text-primary);
+  border: 1px solid color(bg-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -195,12 +196,12 @@
   
   strong {
     font-size: 16px;
-    color: #1a1a1a;
+    color: color(text-secondary);
   }
   
   span {
     font-size: 13px;
-    color: #666;
+    color: color(text-primary);
   }
 }
 
@@ -218,6 +219,7 @@
   background: #000;
   border-radius: 16px;
   padding: 16px;
+  border: 2px solid color(bg-light);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 450px;

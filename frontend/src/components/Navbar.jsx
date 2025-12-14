@@ -22,7 +22,7 @@ export default function Navbar() {
   const navItems = [
     { href: '/', label: 'Home' },
     { href: '/habits', label: 'Habits' },
-    { href: '/profile', label: 'Profile' },
+    { href: '/support', label: 'Support' },
   ];
 
   const isActive = (href) => pathname === href;
