@@ -11,7 +11,7 @@
 
 body {
   font-family: font-family(base);
-  background-color: var(--bg-primary);
+  background-color: white;
   color: var(--text-primary);
   line-height: 1.6;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -365,7 +365,7 @@ body {
 }
 
 .bg-primary {
-  background-color: #1e0974; // Keep primary brand color
+  background-color: color(bg-primary); // Keep primary brand color
 }
 
 .bg-white {

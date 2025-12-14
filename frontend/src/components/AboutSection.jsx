@@ -30,15 +30,7 @@ export default function About() {
     <div className={styles.aboutPage}>
       {/* Hero Section */}
       <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <h2 className={styles.heroTitle}>
-            О трекере привычек
-          </h2>
-          <p className={styles.heroSubtitle}>
-            Инструмент для формирования полезных привычек и достижения ваших целей
-          </p>
-        </div>
-        <div className={styles.heroImage}>
+      <div className={styles.heroImage}>
           <div className={styles.mockupCard}>
             <div className={styles.mockupHeader}></div>
             <div className={styles.mockupContent}>
@@ -47,6 +39,14 @@ export default function About() {
               <div className={styles.mockupItem}></div>
             </div>
           </div>
+        </div>
+        <div className={styles.heroContent}>
+          <h2 className={styles.heroTitle}>
+            О трекере привычек
+          </h2>
+          <p className={styles.heroSubtitle}>
+            Инструмент для формирования полезных привычек и достижения ваших целей
+          </p>
         </div>
       </section>
 

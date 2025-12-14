@@ -213,9 +213,9 @@ export default function FocusPage() {
               <svg className={styles.progressSvg} viewBox="0 0 100 100">
                 <defs>
                   <linearGradient id="pomodoroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="50%" stopColor="#8b5cf6" />
-                    <stop offset="100%" stopColor="#a855f7" />
+                    <stop offset="0%" stopColor="##06b6d4" />
+                    <stop offset="50%" stopColor="#0066a6" />
+                    <stop offset="100%" stopColor="#0663d4" />
                   </linearGradient>
                 </defs>
                 <circle

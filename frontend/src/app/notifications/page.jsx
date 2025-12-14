@@ -192,9 +192,9 @@ export default function NotificationsPage() {
     <div className={styles.page}>
       <div className={styles.header}>
         <div>
-          <h1 className={styles.title}>
+          <h2 className={styles.title}>
             <span className={styles.primaryText}>Notifications</span>
-          </h1>
+          </h2>
           {unreadCount > 0 && (
             <span className={styles.unreadBadge}>{unreadCount} unread</span>
           )}

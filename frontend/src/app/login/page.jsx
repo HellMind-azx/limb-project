@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import AuthIllustration from '@/components/AuthIllustration';
 import api from '@/lib/api';
 import { setTokens, setStoredUser } from '@/lib/auth';
 import { FiCheck } from 'react-icons/fi';
@@ -58,7 +57,7 @@ export default function Login() {
 
           {/* Welcome Text */}
           <div className={styles.welcomeSection}>
-            <h1 className={styles.welcomeTitle}>Hello, Welcome Back</h1>
+            <h2 className={styles.welcomeTitle}>Hello, Welcome Back</h2>
             <p className={styles.welcomeSubtitle}>
               Hey, welcome back to your special place
             </p>
@@ -136,7 +135,7 @@ export default function Login() {
 
       {/* Right Section - Illustration */}
       <div className={styles.illustrationSection}>
-        <AuthIllustration />
+        <img className={styles.illustrationImage}src="images/login.jpg"/>
       </div>
     </div>
   );

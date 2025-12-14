@@ -43,13 +43,13 @@
   height: 36px;
   border-radius: 8px;
   background: color(bg-primary);
-  border: 1px solid color(primary);
+  border: 1px solid color(bg-light);
   flex: 0 0 36px;
   transition: all 0.3s ease;
   cursor: pointer;
 
   svg {
-    color: color(primary);
+    color: color(bg-light);
     transition: transform 1s ease;
   }
 
@@ -94,12 +94,12 @@
 }
 
 .navItem:hover {
-  background: rgba(color(primary), 0.1);
+  background: rgba(color(bg-light), 0.1);
   color: color(text-primary);
 }
 
 .active {
-  background: color(primary);
+  background: color(bg-light);
   color: color(text-dark);
 }
 
@@ -114,9 +114,9 @@
   gap: 4px;
 }
 
-.logout { background: color(border-dark); color: color(text-primary); font-size: font-size(base);}
-.logout:hover { background: rgba(color(primary), 0.1); color: color(text-primary); }
-.logout:active { background: color(border-dark); color: color(text-primary); }
+.logout { background: transparent; color: color(text-primary); font-size: font-size(base);}
+.logout:hover { background: rgba(color(bg-light), 0.1); color: color(text-dark); }
+.logout:active { background: color(bg-light); color: color(text-dark); }
 
 .backdrop {
   position: fixed;

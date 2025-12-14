@@ -9,11 +9,11 @@
 // Hero Section
 .heroSection {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 4rem;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 60px 20px 80px;
+  padding: 60px 0 80px;
   align-items: center;
 
   @media (max-width: 768px) {
@@ -84,11 +84,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  max-width: 1200px;
+  max-width: 1380px;
   margin: 0 auto;
   padding: 5rem 2rem;
   align-items: center;
-  border-top: 1px solid color(surface-light);
+  border-bottom: 1px solid color(surface-light);
   background: color(bg-primary);
 
   @media (max-width: 768px) {
@@ -108,9 +108,6 @@
   }
 }
 
-.splitContent {
-  padding: 1rem;
-}
 
 .sectionTitle {
   font-size: 2.5rem;
@@ -142,16 +139,16 @@
 
 // Stats Card
 .statsCard {
-  background-color:hsla(0,100%,50%,1);
+  background-color: hsla(0, 100%, 50%, 1);
   background-image:
-  radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
-  radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
-  radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
-  radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
-  radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
-  radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
-  radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
-  border-radius: 20px;
+    radial-gradient(at 40% 20%, hsla(28, 100%, 74%, 1) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 1) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(340, 100%, 76%, 1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(22, 100%, 77%, 1) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, hsla(242, 100%, 70%, 1) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, hsla(343, 100%, 76%, 1) 0px, transparent 50%);
+  border-radius: spacing(4);
   padding: 3rem 2rem;
   box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
   color: white;
@@ -211,15 +208,15 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color:#ff999c;
-background-image:
-radial-gradient(at 65% 97%, hsla(88,74%,79%,1) 0px, transparent 50%),
-radial-gradient(at 99% 22%, hsla(134,63%,72%,1) 0px, transparent 50%),
-radial-gradient(at 50% 29%, hsla(199,94%,77%,1) 0px, transparent 50%),
-radial-gradient(at 20% 81%, hsla(318,95%,61%,1) 0px, transparent 50%),
-radial-gradient(at 61% 77%, hsla(337,92%,68%,1) 0px, transparent 50%),
-radial-gradient(at 68% 61%, hsla(157,60%,67%,1) 0px, transparent 50%),
-radial-gradient(at 19% 38%, hsla(12,77%,68%,1) 0px, transparent 50%);
+  background-color: #ff999c;
+  background-image:
+    radial-gradient(at 65% 97%, hsla(88, 74%, 79%, 1) 0px, transparent 50%),
+    radial-gradient(at 99% 22%, hsla(134, 63%, 72%, 1) 0px, transparent 50%),
+    radial-gradient(at 50% 29%, hsla(199, 94%, 77%, 1) 0px, transparent 50%),
+    radial-gradient(at 20% 81%, hsla(318, 95%, 61%, 1) 0px, transparent 50%),
+    radial-gradient(at 61% 77%, hsla(337, 92%, 68%, 1) 0px, transparent 50%),
+    radial-gradient(at 68% 61%, hsla(157, 60%, 67%, 1) 0px, transparent 50%),
+    radial-gradient(at 19% 38%, hsla(12, 77%, 68%, 1) 0px, transparent 50%);
   flex-shrink: 0;
   box-shadow: 0 0 0 4px #f3f4f6;
 }
@@ -241,7 +238,7 @@ radial-gradient(at 19% 38%, hsla(12,77%,68%,1) 0px, transparent 50%);
 
 // Features Section
 .featuresSection {
-  max-width: 1200px;
+  max-width: 1380px;
   margin: 0 auto;
   padding: 5rem 2rem;
   border: 1px solid color(bg-light);
@@ -274,7 +271,7 @@ radial-gradient(at 19% 38%, hsla(12,77%,68%,1) 0px, transparent 50%);
 .featureCard {
   padding: 2rem;
   background: color(bg-primary);
-  border: 1px solid color(bg-light); 
+  border: 1px solid color(bg-light);
   border-radius: spacing(4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 

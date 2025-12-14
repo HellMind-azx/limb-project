@@ -407,11 +407,10 @@ export default function HabitsDashboard() {
         {/* Header with mini date strip */}
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            <h1 className={styles.title}>
-              <span className={styles.primaryText}>Progressor</span> Habits
-            </h1>
+            <h2 className={styles.title}>
+              Habits
+            </h2>
           </div>
-
         </div>
 
         {/* Mini date strip + Add Habit */}

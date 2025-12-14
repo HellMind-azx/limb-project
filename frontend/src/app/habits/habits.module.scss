@@ -3,7 +3,7 @@
 
 .dashboard {
   min-height: 100vh;
-  background: color(border-dark);
+  background: color(bg-primary);
   display: flex;
   font-family: $font-family-heading;
 }
@@ -32,7 +32,6 @@
     gap: spacing(4);
   }
 }
-
 // Mini date strip
 .dateStripRow {
   display: flex;
@@ -57,10 +56,11 @@
   justify-content: center;
   min-width: 56px;
   font-family: $font-family-heading;
+  font-weight: font-weight(semi);
   padding: spacing(2);
   border-radius: spacing(5);
-  background: color(border-dark);
-  border: 2px solid color(primary);
+  background: color(bg-primary);
+  border: 2px solid color(bg-light);
   color: color(text-secondary);
   transition: all map-get($transitions, base) $transition-easing;
 
@@ -71,12 +71,11 @@
 }
 
 .selected {
-  background: color(primary);
-  border: 1px solid color(border-primary);
+  background: color(bg-light);
   color: color(text-dark);
 
   &:hover {
-    background: rgba(color(primary), 0.9);
+    background: rgba(color(bg-light), 0.9);
     color: color(text-dark);
   }
 }
@@ -92,10 +91,10 @@
 }
 
 .addHabitBtn {
-  background: color(border-dark);
-  color: color(primary);
+  background: color(bg-primary);
+  color: color(text-secondary);
   padding: spacing(3) spacing(6);
-  border: 2px solid color(primary);
+  border: 2px solid color(text-secondary);
   border-radius: spacing(6);
   white-space: nowrap;
   transition: all 0.3s ease;
@@ -222,365 +221,6 @@
   }
 }
 
-.calendarHeaderWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: spacing(3); // Уменьшено
-  flex-wrap: wrap;
-  gap: spacing(2);
-
-  @include responsive(sm) {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: spacing(2);
-  }
-}
-
-.calendarSectionTitle {
-  font-size: font-size(xl);
-  font-weight: font-weight(bold);
-  color: color(text-primary);
-}
-
-// Statistics Section (legacy - kept for compatibility)
-.statisticsCard {
-  @include soft-card;
-  margin-bottom: spacing(6);
-  padding: spacing(4);
-  border-radius: spacing(6);
-}
-
-.statisticsHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: spacing(4);
-
-  @include responsive(sm) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: spacing(3);
-  }
-}
-
-.statisticsTitle {
-  font-size: font-size(2xl);
-  font-weight: font-weight(bold);
-  color: color(text-primary);
-}
-
-.tabGroup {
-  display: flex;
-  gap: spacing(2);
-}
-
-.tab {
-  padding: spacing(2) spacing(4);
-  border-radius: 12px; // Компактнее скругление
-  font-size: font-size(sm);
-  font-weight: font-weight(medium);
-  transition: all map-get($transitions, base) $transition-easing;
-  border: 1px solid rgba(255, 255, 255, 0.08); // Тонкий border без градиента
-  background: transparent;
-  color: color(text-secondary);
-  cursor: pointer;
-
-  &:hover {
-    color: color(text-primary);
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  &.active {
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%); // Градиент
-    border: 1px solid #3b82f6; // Solid color border
-    color: white;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3); // Только внешняя тень
-  }
-}
-
-// Calendar Heatmap
-.calendarContainer {
-  margin-bottom: 0; // Убрано, так как это последний элемент
-
-  @include responsive(sm) {
-    margin-bottom: 0;
-    padding: 0;
-  }
-}
-
-.calendarNavigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; // Распределить навигацию
-  margin-bottom: spacing(2); // Уменьшено еще больше
-  padding: 0 spacing(1);
-
-  @include responsive(sm) {
-    margin-bottom: spacing(2);
-  }
-}
-
-.calendarNavButton {
-  @include neu-icon(light);
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  border-radius: 50%;
-
-  &:hover {
-    background: color(primary);
-
-    svg {
-      color: white;
-    }
-  }
-}
-
-.calendarMonthTitle {
-  color: color(text-primary);
-  font-size: font-size(lg);
-  font-weight: font-weight(semi);
-
-  @include responsive(sm) {
-    font-size: font-size(base);
-  }
-}
-
-.calendarGrid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px; // Компактнее
-  margin-bottom: 0; // Убрано
-  justify-items: center;
-
-  @include responsive(sm) {
-    gap: 2px;
-    justify-items: stretch;
-  }
-}
-
-.calendarHeader {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px; // Компактнее
-  margin-bottom: spacing(1); // Уменьшено
-
-  @include responsive(sm) {
-    gap: 2px;
-    margin-bottom: spacing(1);
-  }
-}
-
-.weekday {
-  text-align: center;
-  font-size: font-size(xs);
-  font-weight: font-weight(medium);
-  color: color(text-secondary);
-  text-transform: uppercase;
-
-  @include responsive(sm) {
-    font-size: 8px;
-  }
-}
-
-.calendarCell {
-  aspect-ratio: 1;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all map-get($transitions, fast) $transition-easing;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  width: 34px; // Компактный размер
-  height: 34px;
-  max-width: 34px;
-  max-height: 34px;
-  min-width: 34px;
-  min-height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: font-weight(medium);
-  margin: 0 auto;
-
-  @include responsive(lg) {
-    width: 28px;
-    height: 28px;
-    max-width: 28px;
-    max-height: 28px;
-    min-width: 28px;
-    min-height: 28px;
-    font-size: 9px;
-  }
-
-  @include responsive(sm) {
-    width: 100%;
-    height: 0;
-    padding-bottom: 100%;
-    max-width: none;
-    max-height: none;
-    min-width: 0;
-    min-height: 0;
-    border-radius: 4px;
-    font-size: 8px;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity map-get($transitions, fast) $transition-easing;
-    z-index: 1;
-
-    @include responsive(sm) {
-      width: 4px;
-      height: 4px;
-    }
-  }
-
-  &:hover {
-    transform: scale(1.08); // Менее выраженное увеличение
-    border-color: color(primary);
-    z-index: 10;
-    @include soft-shadow(1.2); // Только внешние тени, БЕЗ inset
-
-    @include responsive(sm) {
-      transform: scale(1.05);
-    }
-  }
-
-  &.empty {
-    background: color(bg-tertiary);
-    opacity: 0.3;
-    cursor: default;
-
-    &:hover {
-      transform: none;
-      border-color: transparent;
-    }
-  }
-
-  &.completed {
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%); // Градиент
-    border: 1px solid #3b82f6; // Solid color border
-    @include soft-shadow(1.5); // Только внешние тени, БЕЗ inset
-
-    &::after {
-      opacity: 1;
-      background: white;
-    }
-  }
-
-  &.partial {
-    background: linear-gradient(135deg, #3b82f6 0%, rgba(139, 92, 246, 0.6) 60%, color(bg-tertiary) 100%);
-    border: 1px solid rgba(59, 130, 246, 0.5); // Solid color border
-    position: relative;
-    @include soft-shadow(1.2);
-
-    &::after {
-      opacity: 0.5;
-      background: rgba(255, 255, 255, 0.6);
-    }
-  }
-
-  &.missed {
-    background: color(bg-tertiary);
-    border: 1px solid rgba(255, 255, 255, 0.05); // Тонкий border
-  }
-
-  &.today {
-    border: 2px solid color(accent-1); // Ярче для выделения
-    @include soft-shadow(1.3);
-  }
-
-  .calendarDayNumber {
-    position: relative;
-    z-index: 2;
-    color: color(text-secondary);
-    font-size: 9px;
-    font-weight: font-weight(medium);
-    line-height: 1;
-    pointer-events: none;
-    transition: color map-get($transitions, fast) $transition-easing;
-
-    @include responsive(sm) {
-      font-size: 7px;
-    }
-  }
-
-  &.completed .calendarDayNumber,
-  &.partial .calendarDayNumber {
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  &.empty .calendarDayNumber {
-    color: color(text-muted);
-    opacity: 0.4;
-  }
-}
-
-.calendarCellPercentage {
-  font-size: 6px;
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: font-weight(bold);
-  pointer-events: none;
-  line-height: 1;
-  z-index: 3;
-
-  @include responsive(sm) {
-    font-size: 5px;
-    bottom: 0.5px;
-    right: 0.5px;
-  }
-}
-
-.dateLabel {
-  font-size: font-size(xs);
-  color: color(text-muted);
-  text-align: center;
-  margin-top: spacing(1);
-}
-
-// Charts
-.chartPlaceholder {
-  height: 200px; // Уменьшено для компактности
-  background: color(bg-tertiary);
-  border-radius: spacing(4); // 16px
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: spacing(3);
-  @include soft-shadow(0.8);
-
-  svg {
-    color: color(primary);
-  }
-}
-
-.chartTitle {
-  color: color(text-primary);
-  font-weight: font-weight(medium);
-}
-
-.chartSubtitle {
-  font-size: font-size(sm);
-  color: color(text-secondary);
-}
-
-
-
 // Habit Details Grid
 .habitDetails {
   display: flex;
@@ -609,9 +249,9 @@
 
 .habitCard {
   padding: spacing(3);
-  border: 1px solid color(border-light);
+  border: 1px solid color(bg-light);
   border-radius: spacing(6);
-  background: color(border-primary);
+  background: color(bg-primary);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -677,8 +317,27 @@
   margin-top: spacing(3);
   padding: spacing(4);
   border-radius: spacing(6);
-  background: color(border-primary);
-  
+  background: color(bg-primary);
+}
+.kpiCard:nth-child(1) {
+  background: rgba(color(accent-4), 0.1);
+  border: 1px solid color(accent-4);
+}
+.kpiCard:nth-child(2) {
+  background: rgba(color(accent-6), 0.1);
+  border: 1px solid color(accent-6);
+}
+.kpiCard:nth-child(3) {
+  background: rgba(color(accent-2), 0.1);
+  border: 1px solid color(accent-2);
+}
+.kpiCard:nth-child(4) {
+  background: rgba(color(accent-5), 0.1);
+  border: 1px solid color(accent-5);
+}
+.kpiCard:nth-child(5) {
+  background: rgba(color(accent-1), 0.1);
+  border: 1px solid color(accent-1);
 }
 
 .kpiTitle {
@@ -709,14 +368,13 @@
   align-items: center;
   gap: spacing(4);
   padding: spacing(3);
-  background: color(border-primary);
+  background: color(bg-primary);
   border-radius: spacing(6);
-  border: 1px solid color(border-light);
+  border: 1px solid color(bg-light);
   transition: all map-get($transitions, base) $transition-easing;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: color(primary);
+    border-color: color(bg-secondary);
   }
 }
 
@@ -763,8 +421,8 @@
 
 .taskTagMuted {
   @extend .taskTag;
-  color: color(text-muted);
-  background: rgba(156, 163, 175, 0.1);
+  color: rgba(color(accent-3), 0.9);
+  background: rgba(12, 32, 65, 0.676);
 }
 
 .taskTagPending {
@@ -787,7 +445,7 @@
 
 .taskBarWrap {
   width: 100%;
-  background: color(border-primary);
+  background: color(bg-primary);
   display: flex;
   align-items: center;
   gap: spacing(2);
@@ -800,8 +458,9 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: color(primary);
-  color: color(text-dark);
+  background: color(bg-primary);
+  border: 1px solid color(bg-light);
+  color: color(text-light);
   flex-shrink: 0;
 }
 
@@ -809,8 +468,8 @@
   width: 100%;
   height: 10px;
   border-radius: 10px;
-  background: color(border-primary);
-  border: 1px solid color(border-light);
+  background: color(bg-primary);
+  border: 1px solid color(bg-secondary);
   overflow: hidden;
 }
 
@@ -933,8 +592,8 @@
 .habitDetailCard {
   padding: spacing(4);
   border-radius: spacing(6);
-  border: 1px solid color(border-light);
-  background: color(border-primary);
+  border: 1px solid color(bg-light);
+  background: color(bg-primary);
 }
 
 .habitDetailHeader {
@@ -1197,10 +856,11 @@
 
 // Analytics Card
 .analyticsCard {
+  position: relative;
   padding: spacing(4);
   border-radius: spacing(6);
-  border: 1px solid color(border-light);
-  background: color(border-primary);
+  border: 1px solid color(bg-light);
+  background: color(bg-primary);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1232,7 +892,7 @@
 .analyticsPercentage {
   font-size: font-size(4xl);
   font-weight: font-weight(bold);
-  color: color(primary);
+  color: color(text-secondary);
   line-height: 1;
   margin-bottom: spacing(2);
   background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
@@ -1248,12 +908,13 @@
 }
 
 .analyticsStats {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: spacing(3) 0;
-  border-top: 1px solid color(border-light);
-  border-bottom: 1px solid color(border-light);
+  border-top: 1px solid color(surface-light);
+  border-bottom: 1px solid color(surface-light);
 }
 
 .analyticsStatItem {
@@ -1375,10 +1036,10 @@
 }
 
 .habitCardItem {
-  background: color(border-primary);
+  background: color(bg-primary);
   padding: spacing(3);
   border-radius: spacing(6);
-  border: 1px solid color(border-light);
+  border: 1px solid color(bg-light);
   display: flex;
   flex-direction: column;
   gap: spacing(3);
@@ -1414,15 +1075,15 @@
   height: 32px;
   border-radius: spacing(4);
   background: transparent;
-  border: 1px solid color(border-light);
+  border: 1px solid color(surface-light);
   color: color(text-secondary);
   cursor: pointer;
   transition: all map-get($transitions, base) $transition-easing;
 
   &:hover {
-    background: color(border-light);
-    border-color: color(primary);
-    color: color(primary);
+    background: color(surface-dark);
+    border-color: color(bg-light);
+    color: color(text-secondary);
     transform: scale(1.1);
   }
 
@@ -1468,8 +1129,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -1488,8 +1149,8 @@
 }
 
 .modalContent {
-  background: color(border-primary);
-  border: 1px solid color(border-light);
+  background: color(bg-primary);
+  border: 1px solid color(surface-light);
   border-radius: spacing(6);
   width: 90%;
   max-width: 600px;
@@ -1581,8 +1242,8 @@
 .formInput,
 .formSelect {
   padding: spacing(3);
-  background: color(border-primary);
-  border: 1px solid color(border-light);
+  background: color(surface-dark);
+  border: 1px solid color(surface-light);
   border-radius: spacing(2);
   color: color(text-muted);
   font-size: font-size(base);
@@ -1590,7 +1251,7 @@
 
   &:focus {
     outline: none;
-    border-color: color(primary);
+    border-color: color(bg-secondary);
   }
 
   &::placeholder {
@@ -1626,7 +1287,7 @@
   color: color(text-secondary);
 
   &:hover {
-    border-color: color(primary);
+    border-color: color(bg-light);
     background: rgba(59, 130, 246, 0.1);
     transform: scale(1.05);
   }
@@ -1667,13 +1328,13 @@
 }
 
 .colorSelected {
-  border-color: color(primary) !important;
+  border-color: color(surface-light) !important;
 }
 
 .customColorBtn {
   padding: spacing(2) spacing(4);
-  background: color(border-primary);
-  border: 1px solid color(border-light);
+  background: color(bg-primary);
+  border: 1px solid color(bg-light);
   border-radius: spacing(2);
   color: color(text-muted);
   font-size: font-size(sm);
@@ -1682,14 +1343,14 @@
   align-self: flex-start;
 
   &:hover {
-    background: color(border-primary);
-    border-color: color(primary);
+    background: color(bg-secondary);
+    border-color: color(text-primary);
   }
 }
 
 .customColorActive {
-  background: color(primary);
-  border-color: color(primary);
+  background: color(bg-primary);
+  border-color: color(bg-light);
   color: white;
 }
 
@@ -1769,8 +1430,8 @@
 
 .submitBtn {
   padding: spacing(3) spacing(6);
-  background: color(primary);
-  border: none;
+  background: color(bg-primary);
+  border: 1px solid color(surface-light);
   border-radius: spacing(6);
   color: white;
   font-size: font-size(base);
@@ -1782,7 +1443,7 @@
   gap: spacing(2);
 
   &:hover:not(:disabled) {
-    background: rgba(color(primary), 0.9);
+    background: rgba(color(bg-secondary), 0.9);
   }
 
   &:disabled {

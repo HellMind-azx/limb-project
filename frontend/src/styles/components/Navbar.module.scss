@@ -49,10 +49,10 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: color(bg-primary);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 2px solid color(surface-light);
   border-radius: 2rem;
   padding: 0.25rem;
   box-shadow: 

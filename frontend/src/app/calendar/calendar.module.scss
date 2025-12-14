@@ -4,11 +4,11 @@
 .page { 
   min-height: 100vh; 
   padding: 24px; 
-  background: color(border-dark);
+  background: color(bg-primary);
 }
 
 .card { 
-  background: #0b1220; 
+  background: color(bg-primary); 
   border: 1px solid color(text-primary); 
   border-radius: spacing(6); 
   padding: 16px; 
@@ -129,7 +129,7 @@
   position: absolute; 
   bottom: 1px; 
   right: 1px; 
-  color: rgba(255,255,255,0.9); 
+  color: color(text-primary); 
   font-size: 6px; 
   font-weight: 700; 
 }
@@ -139,16 +139,6 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-}
-
-.loadingSpinner {
-  color: color(primary);
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 // Analytics Dashboard
@@ -161,8 +151,8 @@
 
 // KPI Card
 .kpiCard {
-  background: #0b1220;
-  border: 1px solid rgba(255,255,255,0.08);
+  background: color(bg-primary);
+  border: 1px solid color(bg-light);
   border-radius: 16px;
   padding: 24px;
   display: flex;
@@ -186,7 +176,7 @@
 }
 
 .kpiIcon {
-  color: #3b82f6;
+  color: color(text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -197,7 +187,7 @@
   font-size: 48px;
   font-weight: 700;
   line-height: 1;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
+  background: color(text-secondary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -220,8 +210,8 @@
 }
 
 .chartCard {
-  background: #0b1220;
-  border: 1px solid rgba(255,255,255,0.08);
+  background: color(bg-primary);
+  border: 1px solid color(text-primary);
   border-radius: 16px;
   padding: 24px;
   display: flex;

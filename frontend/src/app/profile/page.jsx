@@ -7,6 +7,7 @@ import { getProfile, updateProfile } from '@/lib/api';
 import { FiUser, FiMail, FiCalendar, FiClock, FiEdit2, FiSave, FiX, FiLoader } from 'react-icons/fi';
 import styles from './profile.module.scss';
 
+
 export default function ProfilePage() {
   const router = useRouter();
   const [user, setUser] = useState(null);

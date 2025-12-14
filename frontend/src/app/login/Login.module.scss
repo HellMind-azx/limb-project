@@ -5,7 +5,7 @@
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: #F5F5F5;
+  background: color(bg-primary);
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -17,7 +17,7 @@
 }
 
 .formSection {
-  background: white;
+  background: color(bg-primary);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,7 +29,6 @@
 }
 
 .illustrationSection {
-  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,31 +39,9 @@
     display: none;
   }
 }
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 2.5rem;
-}
-
-.logoIcon {
-  width: 36px;
-  height: 36px;
-  background: #8B5CF6;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 1.25rem;
-}
-
-.logoText {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1F2937;
+.illustrationImage {
+  width: 90%;
+  height: 100%;
 }
 
 .welcomeSection {
@@ -74,7 +51,7 @@
 .welcomeTitle {
   font-size: 2rem;
   font-weight: 700;
-  color: #1F2937;
+  color: color(text-primary);
   margin-bottom: 0.5rem;
   line-height: 1.2;
 
@@ -85,7 +62,7 @@
 
 .welcomeSubtitle {
   font-size: 0.9375rem;
-  color: #6B7280;
+  color: color(text-secondary);
   line-height: 1.5;
 }
 
@@ -111,7 +88,6 @@
 
   &:focus {
     outline: none;
-    border-color: #8B5CF6;
     background: white;
   }
 
@@ -154,7 +130,6 @@
 .checkmark {
   width: 18px;
   height: 18px;
-  border: 2px solid #8B5CF6;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -163,8 +138,7 @@
   transition: all 0.2s ease;
 
   .checkbox:checked + & {
-    background: #8B5CF6;
-    color: white;
+    color: text-dark;
   }
 
   svg {
@@ -175,46 +149,31 @@
 
 .checkboxText {
   font-size: 0.875rem;
-  color: #4B5563;
+  color: color(text-secondary);
 }
 
 .forgotLink {
   font-size: 0.875rem;
-  color: #4B5563;
+  color: color(text-secondary);
   text-decoration: none;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #8B5CF6;
+    color: color(text-primary);
   }
 }
 
 .submitButton {
-  width: 100%;
+  width: 30%;
   padding: 0.875rem;
-  background: #8B5CF6;
-  color: white;
+  background: color(text-light);
+  color: color(text-dark);
   border: none;
   border-radius: 8px;
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background: #7C3AED;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
 }
 
 .signupRow {
@@ -224,18 +183,18 @@
 
 .signupText {
   font-size: 0.875rem;
-  color: #4B5563;
+  color: color(text-secondary);
   margin-right: 0.5rem;
 }
 
 .signupLink {
   font-size: 0.875rem;
-  color: #8B5CF6;
+  color: color(text-secondary);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #7C3AED;
+    color: color(text-primary);
   }
 }

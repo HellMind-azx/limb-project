@@ -19,7 +19,7 @@ body {
   font-weight: font-weight(regular);
   line-height: map-get($line-heights, normal);
   color: var(--text-primary);
-  background: var(--bg-primary);
+  background: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @include custom-scrollbar();
@@ -255,7 +255,6 @@ p {
 .text-success { color: color(success); }
 .text-error { color: color(error); }
 
-.bg-primary { background: #1e0974; }
 .bg-surface { background: var(--surface); transition: background 0.3s ease; }
 .bg-surface-light { background: var(--surface-light); transition: background 0.3s ease; }
 

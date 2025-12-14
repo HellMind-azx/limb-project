@@ -4,9 +4,7 @@
 .page {
   min-height: 100vh;
   padding: spacing(8);
-  background: color(border-dark);
-  max-width: 1400px;
-  margin: 0 auto;
+  background: color(bg-primary);
   width: 100%;
 }
 
@@ -40,7 +38,7 @@
   gap: spacing(3);
 
   .primaryText {
-    color: color(primary);
+    color: color(text-primary);
   }
 }
 
@@ -48,12 +46,12 @@
   display: inline-flex;
   align-items: center;
   padding: spacing(1) spacing(3);
-  background: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+  background: rgba(color(accent-1), 0.2);
+  color: color(accent-1);
   border-radius: spacing(3);
   font-size: font-size(sm);
   font-weight: font-weight(medium);
-  margin-left: spacing(2);
+  margin-top: spacing(2);
 }
 
 .headerActions {
@@ -83,20 +81,20 @@
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-color: color(primary);
+    border-color: color(accent-1);
     transform: translateY(-2px);
   }
 
   svg {
-    color: color(primary);
+    color: color(accent-1);
   }
 }
 
 // Filters Card
 .filtersCard {
-  background: #0b1220;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: spacing(6);
+  background: color(bg-primary);
+  border: 1px solid color(bg-light);
+  border-radius: spacing(4);
   padding: spacing(6);
   margin-bottom: spacing(6);
   display: flex;
@@ -124,7 +122,7 @@
   margin-bottom: spacing(2);
 
   svg {
-    color: color(primary);
+    color: color(accent-1);
   }
 }
 
@@ -152,10 +150,9 @@
   }
 
   &.active {
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
-    border-color: #3b82f6;
+    background: color(accent-1);
+    border-color: color(accent-1);
     color: white;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   }
 }
 
@@ -178,7 +175,7 @@
   color: color(text-primary);
   margin: 0;
   padding-bottom: spacing(2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid color(surface-light);
 }
 
 .notificationsList {
@@ -189,8 +186,8 @@
 
 // Notification Card
 .notificationCard {
-  background: #0b1220;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color(bg-primary);
+  border: 1px solid color(surface-light);
   border-radius: spacing(6);
   padding: spacing(4);
   display: flex;
@@ -206,8 +203,8 @@
   }
 
   &.unread {
-    border-left: 3px solid color(primary);
-    background: rgba(59, 130, 246, 0.05);
+    border-left: 3px solid color(accent-1);
+    background: rgba(color(accent-1), 0.05);
   }
 }
 
@@ -282,11 +279,12 @@
   &:hover {
     background: rgba(255, 255, 255, 0.1);
     color: color(text-primary);
-    border-color: color(primary);
+    border-color: color(accent-1);
 
     &:last-child {
       color: #ef4444;
       border-color: rgba(239, 68, 68, 0.3);
+      border: 1px solid #ef4444;
     }
   }
 }

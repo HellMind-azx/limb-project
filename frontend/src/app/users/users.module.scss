@@ -4,9 +4,7 @@
 .page {
   min-height: 100vh;
   padding: spacing(8);
-  background: color(border-dark);
-  max-width: 1400px;
-  margin: 0 auto;
+  background: color(bg-primary);
   width: 100%;
 }
 
@@ -40,7 +38,7 @@
   gap: spacing(3);
 
   .primaryText {
-    color: color(primary);
+    color: color(text-primary);
   }
 }
 
@@ -48,8 +46,8 @@
   display: inline-flex;
   align-items: center;
   padding: spacing(1) spacing(3);
-  background: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+  background: rgba(color(accent-4), 0.2);
+  color: color(accent-4);
   border-radius: spacing(3);
   font-size: font-size(sm);
   font-weight: font-weight(medium);
@@ -58,9 +56,9 @@
 
 // Search and Filters
 .searchFiltersCard {
-  background: #0b1220;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: spacing(6);
+  background: color(bg-primary);
+  border: 1px solid color(surface-light);
+  border-radius: spacing(4);
   padding: spacing(6);
   margin-bottom: spacing(6);
   display: flex;
@@ -94,7 +92,7 @@
 
   &:focus {
     outline: none;
-    border-color: color(primary);
+    border-color: color(surface-light);
     background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
@@ -153,7 +151,7 @@
   margin-bottom: spacing(2);
 
   svg {
-    color: color(primary);
+    color: color(accent-4);
   }
 }
 
@@ -181,10 +179,8 @@
   }
 
   &.active {
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%);
-    border-color: #3b82f6;
+    background: color(accent-4);
     color: white;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   }
 }
 
@@ -203,7 +199,7 @@
 
   &:focus {
     outline: none;
-    border-color: color(primary);
+    border-color: color(surface-light);
     background: rgba(255, 255, 255, 0.08);
   }
 }
@@ -213,15 +209,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: spacing(6);
-
-  @include responsive(sm) {
-    grid-template-columns: 1fr;
-  }
 }
 
 .userCard {
-  background: #0b1220;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color(bg-primary);
+  border: 1px solid color(surface-light);
   border-radius: spacing(6);
   padding: spacing(6);
   display: flex;
@@ -301,7 +293,7 @@
 .statValue {
   font-size: font-size(2xl);
   font-weight: font-weight(bold);
-  color: color(primary);
+  color: color(accent-4);
   margin-bottom: spacing(1);
 }
 
@@ -375,8 +367,8 @@
 }
 
 .modalContent {
-  background: #0b1220;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color(bg-primary);
+  border: 1px solid color(surface-light);
   border-radius: spacing(8);
   padding: spacing(8);
   max-width: 700px;
@@ -385,7 +377,6 @@
   overflow-y: auto;
   position: relative;
   animation: slide-in-up 0.3s ease;
-  @include custom-scrollbar();
 
   @include responsive(sm) {
     padding: spacing(6);
@@ -413,7 +404,7 @@
   &:hover {
     background: rgba(255, 255, 255, 0.1);
     color: color(text-primary);
-    border-color: color(primary);
+    border-color: color(surface-light);
   }
 }
 
@@ -560,7 +551,6 @@
   height: 100%;
   border-radius: spacing(3);
   transition: width 0.3s ease;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
 }
 
 .progressStats {
@@ -584,6 +574,6 @@
 .progressStatValue {
   font-size: font-size(lg);
   font-weight: font-weight(bold);
-  color: color(primary);
+  color: color(text-secondary);
 }
 

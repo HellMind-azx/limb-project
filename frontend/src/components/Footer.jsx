@@ -2,6 +2,7 @@
 import { FaGithub, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import styles from '@/styles/components/Footer.module.scss';
+import Link from 'next/link';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -22,10 +23,10 @@ const Footer = () => {
           <div className={styles.section}>
             <h4 className={styles.heading}>Навигация</h4>
             <ul className={styles.list}>
-              <li><a href="/dashboard">Панель</a></li>
-              <li><a href="/habits">Мои привычки</a></li>
-              <li><a href="/statistics">Статистика</a></li>
-              <li><a href="/profile">Профиль</a></li>
+              <li><Link href="/dashboard">Панель</Link></li>
+              <li><Link href="/habits">Мои привычки</Link></li>
+              <li><Link href="/statistics">Статистика</Link></li>
+              <li><Link href="/profile">Профиль</Link></li>
             </ul>
           </div>
 
@@ -33,10 +34,10 @@ const Footer = () => {
           <div className={styles.section}>
             <h4 className={styles.heading}>Ресурсы</h4>
             <ul className={styles.list}>
-              <li><a href="/blog">Блог</a></li>
-              <li><a href="/guides">Гайды</a></li>
-              <li><a href="/faq">FAQ</a></li>
-              <li><a href="/support">Поддержка</a></li>
+              <li><Link href="/blog">Блог</Link></li>
+              <li><Link href="/guides">Гайды</Link></li>
+              <li><Link href="/faq">FAQ</Link></li>
+              <li><Link href="/support">Поддержка</Link></li>
             </ul>
           </div>
 
@@ -44,21 +45,21 @@ const Footer = () => {
           <div className={styles.section}>
             <h4 className={styles.heading}>Связаться</h4>
             <div className={styles.social}>
-              <a href="https://github.com" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+              <Link href="https://github.com" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                 <FaGithub />
-              </a>
-              <a href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+              </Link>
+              <Link href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                 <FaTwitter />
-              </a>
-              <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              </Link>
+              <Link href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin />
-              </a>
-              <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              </Link>
+              <Link href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <FaInstagram />
-              </a>
-              <a href="mailto:info@habittracker.com" aria-label="Email">
+              </Link>
+              <Link href="mailto:info@habittracker.com" aria-label="Email">
                 <MdEmail />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -70,8 +71,8 @@ const Footer = () => {
           © {currentYear} HabitTracker. Все права защищены.
         </p>
         <div className={styles.links}>
-          <a href="/privacy">Конфиденциальность</a>
-          <a href="/terms">Условия использования</a>
+          <Link href="/privacy">Конфиденциальность</Link>
+          <Link href="/terms">Условия использования</Link>
         </div>
       </div>
     </footer>

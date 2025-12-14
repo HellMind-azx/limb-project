@@ -265,9 +265,9 @@ export default function UsersPage() {
     <div className={styles.page}>
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-          <h1 className={styles.title}>
+          <h2 className={styles.title}>
             <span className={styles.primaryText}>Users</span>
-          </h1>
+          </h2>
           <span className={styles.countBadge}>
             {filteredAndSortedUsers.length} {filteredAndSortedUsers.length === 1 ? 'user' : 'users'}
           </span>
