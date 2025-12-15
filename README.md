@@ -137,12 +137,7 @@ Frontend will be available at http://localhost:3000
 
 ### Statistics
 - `GET /api/stats/` - Get user statistics
-
-## Default Credentials
-
-- **Username**: admin
-- **Password**: admin
-
+- 
 ## Development Notes
 
 - Backend uses SQLite for development (easy setup)
