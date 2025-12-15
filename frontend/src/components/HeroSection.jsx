@@ -1,5 +1,12 @@
 // HeroSection.jsx
 import styles from '@/styles/components/HeroSection.module.scss';
+import Link from 'next/link';
+
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/habits', label: 'Habits' },
+  { href: '/support', label: 'Support' },
+];
 
 export default function HeroSection() {
   return (
@@ -21,9 +28,11 @@ export default function HeroSection() {
           </p>
           
           <div className={styles.buttons}>
+            <Link href='/habits'>
             <button className={styles.btnPrimary}>
               Попробовать бесплатно
             </button>
+            </Link>
             <button className={styles.btnSecondary}>
               <span className={styles.previewIcon}>▶</span>
               Предварительный просмотр

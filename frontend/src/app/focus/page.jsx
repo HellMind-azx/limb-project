@@ -192,9 +192,9 @@ export default function FocusPage() {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <h1 className={styles.title}>
-          <span className={styles.primaryText}>Focus</span> Workspace
-        </h1>
+        <h2 className={styles.title}>
+          Focus Workspace
+        </h2>
         <p className={styles.subtitle}>Your productivity hub</p>
       </div>
 
