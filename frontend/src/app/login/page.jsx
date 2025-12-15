@@ -135,7 +135,10 @@ export default function Login() {
 
       {/* Right Section - Illustration */}
       <div className={styles.illustrationSection}>
-        <img className={styles.illustrationImage}src="images/login.jpg"/>
+        <img 
+        className={styles.illustrationImage}
+        src='images/login.avif'
+        />
       </div>
     </div>
   );

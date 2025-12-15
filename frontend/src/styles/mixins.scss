@@ -342,12 +342,12 @@
   }
   
   &::-webkit-scrollbar-thumb {
-    background: color(border-dark);
+    background: color(bg-primary);
     border-radius: map-get($border-radius, full);
     box-shadow: map-get(map-get($neu-shadows, inset), light);
     
     &:hover {
-      background: color(primary);
+      background: color(bg-light);
     }
   }
 }

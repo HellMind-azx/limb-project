@@ -13,7 +13,11 @@ const Footer = () => {
         <div className={styles.content}>
           {/* О проекте */}
           <div className={styles.section}>
-            <h3 className={styles.title}>HabitTracker</h3>
+            <img 
+            className={styles.footerImage}
+            src="images/Progressor.png" 
+            alt="Progressor-logo" 
+            />
             <p className={styles.description}>
               Создавай полезные привычки и достигай своих целей каждый день
             </p>
@@ -68,7 +72,7 @@ const Footer = () => {
       {/* Нижняя часть */}
       <div className={styles.bottom}>
         <p className={styles.copyright}>
-          © {currentYear} HabitTracker. Все права защищены.
+          © {currentYear} Progressor. Все права защищены.
         </p>
         <div className={styles.links}>
           <Link href="/privacy">Конфиденциальность</Link>

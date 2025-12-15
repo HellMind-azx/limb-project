@@ -32,7 +32,11 @@ export default function Navbar() {
       <div className={styles.container}>
         {/* Logo */}
         <Link href="/" className={styles.logo}>
-          Progressor
+          <img
+          className={styles.logoImage} 
+          src='images/Progressor.png'
+          alt='Progressor-logo'
+          />
         </Link>
 
         {/* Desktop Navigation */}
